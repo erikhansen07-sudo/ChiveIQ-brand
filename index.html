@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChiveIQ — Brand Identity</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f8f8f8;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    .container { max-width: 1400px; margin: 0 auto; padding: 60px 40px; }
+    
+    /* HEADER */
+    header {
+      background: white;
+      padding: 40px 0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 80px;
+    }
+    
+    .logo-section { display: grid; grid-template-columns: 200px 1fr; gap: 60px; align-items: center; }
+    .logo-placeholder { width: 200px; height: 100px; background: linear-gradient(135deg, #1e7145 0%, #0f3d24 100%); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; text-align: center; }
+    
+    .header-text h1 { font-size: 48px; font-weight: 800; margin-bottom: 15px; }
+    .header-text p { font-size: 18px; color: #666; }
+    
+    /* SECTION */
+    section { margin-bottom: 100px; }
+    section h2 { font-size: 36px; font-weight: 800; margin-bottom: 30px; color: #1e7145; }
+    
+    /* POSITIONING */
+    .positioning { background: white; padding: 40px; border-radius: 8px; border-left: 4px solid #1e7145; }
+    .positioning h3 { font-size: 20px; font-weight: 700; margin-bottom: 15px; }
+    .positioning p { font-size: 16px; margin-bottom: 15px; color: #555; }
+    
+    /* COLOR PALETTE */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .color-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .color-swatch { height: 150px; }
+    .color-info { padding: 20px; }
+    .color-name { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .color-hex { font-family: 'Space Mono', monospace; font-size: 14px; color: #999; }
+    
+    /* TYPOGRAPHY */
+    .typography { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .typography-example { background: white; padding: 30px; border-radius: 8px; }
+    .typography-example h3 { font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #1e7145; }
+    
+    .headline { font-family: 'Inter'; font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 20px; }
+    .body-text { font-family: 'Inter'; font-size: 16px; font-weight: 400; line-height: 1.8; margin-bottom: 20px; }
+    .label { font-family: 'Space Mono'; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+    
+    /* PRINCIPLES */
+    .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .principle { background: white; padding: 30px; border-radius: 8px; }
+    .principle h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #1e7145; }
+    .principle p { font-size: 14px; color: #666; line-height: 1.7; }
+    
+    /* MESSAGING */
+    .messaging { background: white; padding: 40px; border-radius: 8px; }
+    .messaging h3 { font-size: 18px; font-weight: 700; margin-bottom: 20px; color: #1e7145; }
+    .tagline { font-size: 24px; font-weight: 700; margin-bottom: 30px; }
+    .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .pillar { background: #f8f8f8; padding: 20px; border-radius: 6px; }
+    .pillar-title { font-weight: 700; margin-bottom: 8px; color: #1e7145; }
+    .pillar-desc { font-size: 14px; color: #666; }
+    
+    /* FOOTER */
+    footer { text-align: center; padding: 40px 0; border-top: 1px solid #e0e0e0; margin-top: 80px; font-size: 14px; color: #999; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="logo-section">
+        <div class="logo-placeholder">Your Logo Here</div>
+        <div class="header-text">
+          <h1>ChiveIQ</h1>
+          <p>Brand Identity System — Checkpoint 1</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- POSITIONING -->
+    <section>
+      <h2>Brand Positioning</h2>
+      
+      <div class="positioning">
+        <h3>Core Positioning</h3>
+        <p><strong>ChiveIQ</strong> is the unified operations platform for multi-unit QSR brands that replaces fragmented tech stacks.</p>
+        
+        <h3 style="margin-top: 25px;">The Problem</h3>
+        <p>Restaurant operators juggle disconnected systems—POS, inventory, labor, reporting—that don't integrate. This creates messy data, manual reconciliation, and operational friction.</p>
+        
+        <h3 style="margin-top: 25px;">The Solution</h3>
+        <p>One coherent platform that consolidates workflows and unifies operational data. Fewer systems. Smarter operations. Designed to work even when integrations fail.</p>
+        
+        <h3 style="margin-top: 25px;">Core Promise</h3>
+        <p>ChiveIQ helps restaurant operators eliminate system sprawl, streamline workflows, and run their business with clarity and confidence.</p>
+      </div>
+    </section>
+
+    <!-- COLOR PALETTE -->
+    <section>
+      <h2>Color Palette</h2>
+      
+      <div class="color-grid">
+        <div class="color-card">
+          <div class="color-swatch" style="background: #1e7145;"></div>
+          <div class="color-info">
+            <div class="color-name">Primary Green</div>
+            <div class="color-hex">#1e7145</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Core brand color. Confident, grounded, operational.</p>
+          </div>
+        </div>
+        
+        <div class="color-card">
+          <div class="color-swatch" style="background: #2ba854;"></div>
+          <div class="color-info">
+            <div class="color-name">Bright Green</div>
+            <div class="color-hex">#2ba854</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Accent for emphasis and calls-to-action.</p>
+          </div>
+        </div>
+        
+        <div class="color-card">
+          <div class="color-swatch" style="background: #0f3d24;"></div>
+          <div class="color-info">
+            <div class="color-name">Dark Green</div>
+            <div class="color-hex">#0f3d24</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Bold emphasis, backgrounds, primary text.</p>
+          </div>
+        </div>
+        
+        <div class="color-card">
+          <div class="color-swatch" style="background: #ffffff; border: 1px solid #e0e0e0;"></div>
+          <div class="color-info">
+            <div class="color-name">White</div>
+            <div class="color-hex">#ffffff</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Primary background, content areas.</p>
+          </div>
+        </div>
+        
+        <div class="color-card">
+          <div class="color-swatch" style="background: #f8f8f8;"></div>
+          <div class="color-info">
+            <div class="color-name">Light Gray</div>
+            <div class="color-hex">#f8f8f8</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Secondary backgrounds, subtle contrast.</p>
+          </div>
+        </div>
+        
+        <div class="color-card">
+          <div class="color-swatch" style="background: #333333;"></div>
+          <div class="color-info">
+            <div class="color-name">Charcoal</div>
+            <div class="color-hex">#333333</div>
+            <p style="font-size: 12px; color: #999; margin-top: 8px;">Primary text, headlines.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TYPOGRAPHY -->
+    <section>
+      <h2>Typography System</h2>
+      
+      <div class="typography">
+        <div>
+          <div class="typography-example">
+            <h3>Headlines</h3>
+            <div class="headline">Cleaner Operations</div>
+            <p style="font-size: 12px; color: #999;">Family: Inter Bold (800)<br>Size: 48px • Line height: 1.1</p>
+          </div>
+          
+          <div class="typography-example" style="margin-top: 30px;">
+            <h3>Body Text</h3>
+            <div class="body-text">ChiveIQ consolidates your restaurant operations into one intelligent platform.</div>
+            <p style="font-size: 12px; color: #999;">Family: Inter Regular (400)<br>Size: 16px • Line height: 1.8</p>
+          </div>
+        </div>
+        
+        <div>
+          <div class="typography-example">
+            <h3>Labels & UI</h3>
+            <div class="label">Primary Action</div>
+            <p style="font-size: 12px; color: #999; margin-top: 15px;">Family: Space Mono Bold (700)<br>Size: 12px • Letter spacing: 1px</p>
+          </div>
+          
+          <div class="typography-example" style="margin-top: 30px;">
+            <h3>Design Principles</h3>
+            <p style="font-size: 14px; color: #666;">
+              • <strong>Clarity first</strong> — every design decision serves operational understanding<br>
+              • <strong>Minimal not sparse</strong> — intentional whitespace, not emptiness<br>
+              • <strong>Approachable maturity</strong> — professional but never intimidating
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRINCIPLES -->
+    <section>
+      <h2>Design Principles</h2>
+      
+      <div class="principles-grid">
+        <div class="principle">
+          <h3>Minimal & Clean</h3>
+          <p>Every element serves a purpose. No visual clutter. White space is intentional and creates breathing room.</p>
+        </div>
+        
+        <div class="principle">
+          <h3>Data-Driven Clarity</h3>
+          <p>Information architecture supports quick decision-making. Clear hierarchy guides the operator's attention.</p>
+        </div>
+        
+        <div class="principle">
+          <h3>Approachable Maturity</h3>
+          <p>Professional and confident, but never intimidating. Designed for busy operators who value efficiency.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MESSAGING -->
+    <section>
+      <h2>Brand Voice & Messaging</h2>
+      
+      <div class="messaging">
+        <div class="tagline">Run your restaurant with clarity.</div>
+        
+        <h3>Core Message Pillars</h3>
+        <div class="pillars">
+          <div class="pillar">
+            <div class="pillar-title">Consolidation</div>
+            <div class="pillar-desc">One platform replaces your fragmented tech stack.</div>
+          </div>
+          
+          <div class="pillar">
+            <div class="pillar-title">Clarity</div>
+            <div class="pillar-desc">See your business in real-time. Make better decisions faster.</div>
+          </div>
+          
+          <div class="pillar">
+            <div class="pillar-title">Confidence</div>
+            <div class="pillar-desc">Built by operators. Designed for operators. Proven to work.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="container">
+      ChiveIQ Brand Identity — Checkpoint 1 | Design System v0.1
+    </div>
+  </footer>
+</body>
+</html>
