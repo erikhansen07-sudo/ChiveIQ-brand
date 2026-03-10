@@ -3,319 +3,362 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChiveIQ — Brand Identity System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+  <title>ChiveIQ — Restaurant Operations Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    body { 
-      font-family: 'Inter', sans-serif; 
-      background: #ffffff;
-      color: #1a1a1a;
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #e5e5e5;
       line-height: 1.6;
+    }
+    
+    /* HEADER / NAV */
+    header {
+      padding: 40px 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(20px);
+    }
+    
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo-text {
+      font-family: 'Sora', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: #2ba854;
     }
     
     /* HERO */
     .hero {
-      min-height: 100vh;
+      padding: 120px 60px;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 80px;
+      gap: 100px;
       align-items: center;
-      padding: 100px 60px;
-      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     
-    .hero-content h1 {
+    .hero h1 {
       font-family: 'Sora', sans-serif;
-      font-size: 72px;
-      font-weight: 700;
-      line-height: 1.1;
+      font-size: 80px;
+      font-weight: 800;
+      line-height: 1;
       margin-bottom: 24px;
-      color: #1a1a1a;
+      color: #ffffff;
       letter-spacing: -0.02em;
     }
     
-    .hero-content p {
+    .hero p {
       font-size: 18px;
-      color: #666;
+      color: #a8a8a8;
       margin-bottom: 16px;
       font-weight: 300;
+      line-height: 1.7;
     }
     
-    .logo-showcase {
+    .logo-frame {
       width: 100%;
-      height: 500px;
-      background: linear-gradient(135deg, #1e7145 0%, #0f3d24 100%);
-      border-radius: 16px;
+      height: 400px;
+      background: linear-gradient(135deg, rgba(43, 168, 84, 0.1), rgba(30, 113, 69, 0.05));
+      border: 1px solid rgba(43, 168, 84, 0.2);
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
-      color: white;
-      font-weight: 600;
+      font-size: 14px;
+      color: #a8a8a8;
     }
     
     /* SECTIONS */
     section {
       padding: 100px 60px;
-      max-width: 1400px;
-      margin: 0 auto;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
     
     section h2 {
       font-family: 'Sora', sans-serif;
       font-size: 56px;
-      font-weight: 700;
+      font-weight: 800;
       margin-bottom: 60px;
-      color: #1a1a1a;
+      color: #ffffff;
       letter-spacing: -0.02em;
     }
     
     /* POSITIONING */
-    .positioning-box {
-      background: #f9f9f9;
-      padding: 60px;
+    .positioning {
+      background: rgba(43, 168, 84, 0.05);
+      border: 1px solid rgba(43, 168, 84, 0.15);
       border-radius: 16px;
-      border-left: 4px solid #1e7145;
+      padding: 60px;
     }
     
-    .positioning-box h3 {
+    .positioning h3 {
       font-family: 'Sora', sans-serif;
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 700;
+      color: #2ba854;
       margin-bottom: 16px;
-      color: #1a1a1a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 13px;
     }
     
-    .positioning-box p {
-      font-size: 17px;
-      color: #555;
-      margin-bottom: 20px;
+    .positioning p {
+      font-size: 16px;
+      color: #d0d0d0;
+      margin-bottom: 32px;
       line-height: 1.8;
     }
     
-    /* COLOR GRID */
+    /* COLOR PALETTE */
     .color-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      gap: 30px;
     }
     
     .color-card {
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .color-card:hover {
+      border-color: rgba(43, 168, 84, 0.4);
+      background: rgba(43, 168, 84, 0.08);
     }
     
     .color-swatch {
       width: 100%;
-      height: 200px;
+      height: 160px;
     }
     
     .color-info {
-      padding: 32px;
-      background: white;
+      padding: 28px;
     }
     
     .color-name {
       font-family: 'Sora', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
+      color: #ffffff;
       margin-bottom: 8px;
-      color: #1a1a1a;
     }
     
     .color-hex {
       font-family: 'Inter', monospace;
-      font-size: 15px;
-      color: #999;
-      font-weight: 500;
+      font-size: 14px;
+      color: #2ba854;
+      font-weight: 600;
+    }
+    
+    .color-desc {
+      font-size: 13px;
+      color: #a8a8a8;
+      margin-top: 12px;
     }
     
     /* TYPOGRAPHY */
-    .typography-grid {
+    .type-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
     }
     
     .type-sample {
-      background: #f9f9f9;
-      padding: 40px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 16px;
+      padding: 48px;
     }
     
-    .type-sample h3 {
-      font-family: 'Sora', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 20px;
-      color: #1e7145;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .headline {
-      font-family: 'Inter', sans-serif;
-      font-size: 48px;
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      color: #1a1a1a;
-    }
-    
-    .body-text {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 20px;
-      line-height: 1.8;
-    }
-    
-    .label-text {
+    .type-label {
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: #1e7145;
+      color: #2ba854;
+      margin-bottom: 24px;
     }
     
-    /* PRINCIPLES GRID */
+    .type-display {
+      font-family: 'Sora', sans-serif;
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: #ffffff;
+    }
+    
+    .type-body {
+      font-size: 16px;
+      color: #d0d0d0;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .type-meta {
+      font-size: 12px;
+      color: #a8a8a8;
+    }
+    
+    /* PRINCIPLES */
     .principles-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
+      gap: 30px;
     }
     
-    .principle-card {
-      background: white;
-      padding: 40px;
+    .principle {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 16px;
-      border: 1px solid #f0f0f0;
+      padding: 40px;
       transition: all 0.3s ease;
     }
     
-    .principle-card:hover {
-      border-color: #1e7145;
-      box-shadow: 0 8px 30px rgba(30, 113, 69, 0.1);
+    .principle:hover {
+      border-color: rgba(43, 168, 84, 0.4);
+      background: rgba(43, 168, 84, 0.08);
     }
     
-    .principle-card h3 {
+    .principle h3 {
       font-family: 'Sora', sans-serif;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
+      color: #2ba854;
       margin-bottom: 16px;
-      color: #1e7145;
     }
     
-    .principle-card p {
+    .principle p {
       font-size: 15px;
-      color: #666;
+      color: #d0d0d0;
       line-height: 1.8;
     }
     
     /* MESSAGING */
-    .messaging-container {
-      background: #f9f9f9;
-      padding: 60px;
+    .messaging {
+      background: rgba(43, 168, 84, 0.05);
+      border: 1px solid rgba(43, 168, 84, 0.15);
       border-radius: 16px;
+      padding: 60px;
     }
     
     .tagline {
       font-family: 'Sora', sans-serif;
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 50px;
-      color: #1a1a1a;
+      font-size: 48px;
+      font-weight: 800;
+      color: #2ba854;
+      margin-bottom: 60px;
+      letter-spacing: -0.02em;
     }
     
-    .pillars-grid {
+    .pillars {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
     }
     
     .pillar {
-      background: white;
-      padding: 32px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
       border-radius: 12px;
-      border: 1px solid #f0f0f0;
+      padding: 32px;
     }
     
-    .pillar-title {
+    .pillar h4 {
       font-family: 'Sora', sans-serif;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
+      color: #ffffff;
       margin-bottom: 12px;
-      color: #1e7145;
     }
     
-    .pillar-text {
-      font-size: 15px;
-      color: #666;
+    .pillar p {
+      font-size: 14px;
+      color: #a8a8a8;
       line-height: 1.7;
     }
     
     /* FOOTER */
     footer {
-      background: #1a1a1a;
-      color: white;
+      padding: 60px;
       text-align: center;
-      padding: 60px 40px;
-      font-size: 14px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+      color: #666666;
     }
     
     /* RESPONSIVE */
     @media (max-width: 1024px) {
-      .hero { grid-template-columns: 1fr; padding: 60px 40px; }
+      .hero { grid-template-columns: 1fr; gap: 60px; padding: 80px 40px; }
       .color-grid { grid-template-columns: repeat(2, 1fr); }
-      .typography-grid { grid-template-columns: 1fr; }
+      .type-grid { grid-template-columns: 1fr; }
       .principles-grid { grid-template-columns: 1fr; }
-      .pillars-grid { grid-template-columns: 1fr; }
+      .pillars { grid-template-columns: 1fr; }
+      section { padding: 80px 40px; }
+      section h2 { font-size: 44px; }
+      .hero h1 { font-size: 56px; }
     }
     
     @media (max-width: 768px) {
       section { padding: 60px 24px; }
-      section h2 { font-size: 40px; }
-      .hero-content h1 { font-size: 48px; }
+      section h2 { font-size: 36px; margin-bottom: 40px; }
       .color-grid { grid-template-columns: 1fr; }
+      header { padding: 24px; }
     }
   </style>
 </head>
 <body>
 
+  <header>
+    <div class="nav">
+      <div class="logo-text">ChiveIQ</div>
+    </div>
+  </header>
+
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
+    <div>
       <h1>ChiveIQ</h1>
-      <p>Brand Identity System</p>
-      <p style="margin-top: 40px; font-size: 16px; color: #555; font-weight: 400;">
-        ChiveIQ is the unified operations platform for multi-unit QSR brands. One system replaces your fragmented tech stack, consolidating inventory, POS, recipes, and live P&L into a single source of truth.
-      </p>
+      <p>The unified operations platform for multi-unit QSR brands.</p>
+      <p style="margin-top: 32px; font-size: 16px; color: #d0d0d0;">Consolidate your fragmented tech stack. One platform for inventory, POS, recipes, and live P&L. Run your restaurant with clarity.</p>
     </div>
-    
-    <div class="logo-showcase">
+    <div class="logo-frame">
       Your Logo Here
     </div>
   </section>
 
   <!-- POSITIONING -->
   <section>
-    <h2>Positioning</h2>
+    <h2>Brand Position</h2>
     
-    <div class="positioning-box">
-      <h3>Core Brand Positioning</h3>
-      <p><strong>The Problem:</strong> Restaurant operators juggle disconnected systems—POS, inventory, labor, reporting—that don't integrate. This creates messy data, manual reconciliation, and operational friction.</p>
+    <div class="positioning">
+      <h3>The Problem</h3>
+      <p>Restaurant operators juggle disconnected systems—POS, inventory, labor, reporting—that don't integrate. This creates messy data, manual reconciliation, and operational friction.</p>
       
-      <h3 style="margin-top: 32px;">The Solution</h3>
+      <h3>The Solution</h3>
       <p>ChiveIQ consolidates workflows and unifies operational data into one intelligent platform. Fewer systems. Smarter operations. Designed to work even when integrations fail.</p>
       
-      <h3 style="margin-top: 32px;">Brand Promise</h3>
-      <p>ChiveIQ helps restaurant operators eliminate system sprawl, streamline workflows, and run their business with clarity and confidence.</p>
+      <h3>Core Promise</h3>
+      <p>Help restaurant operators eliminate system sprawl, streamline workflows, and run their business with clarity and confidence.</p>
     </div>
   </section>
 
-  <!-- COLOR PALETTE -->
+  <!-- COLOR SYSTEM -->
   <section>
     <h2>Color System</h2>
     
@@ -325,7 +368,7 @@
         <div class="color-info">
           <div class="color-name">Primary Green</div>
           <div class="color-hex">#1e7145</div>
-          <p style="font-size: 13px; color: #999; margin-top: 12px;">Core brand identity. Confident, grounded, operational.</p>
+          <div class="color-desc">Core brand identity. Confident, grounded, operational.</div>
         </div>
       </div>
       
@@ -334,7 +377,7 @@
         <div class="color-info">
           <div class="color-name">Bright Green</div>
           <div class="color-hex">#2ba854</div>
-          <p style="font-size: 13px; color: #999; margin-top: 12px;">Accent for emphasis and CTAs.</p>
+          <div class="color-desc">Accent for emphasis, highlights, CTAs.</div>
         </div>
       </div>
       
@@ -343,7 +386,7 @@
         <div class="color-info">
           <div class="color-name">Dark Green</div>
           <div class="color-hex">#0f3d24</div>
-          <p style="font-size: 13px; color: #999; margin-top: 12px;">Bold emphasis and primary text.</p>
+          <div class="color-desc">Bold emphasis and primary interactive elements.</div>
         </div>
       </div>
     </div>
@@ -353,41 +396,43 @@
   <section>
     <h2>Typography</h2>
     
-    <div class="typography-grid">
+    <div class="type-grid">
       <div class="type-sample">
-        <h3>Headlines</h3>
-        <div class="headline">Cleaner Operations</div>
-        <p style="font-size: 13px; color: #999;">Inter Bold (800) • 48px • Line height 1.1</p>
+        <div class="type-label">Headlines</div>
+        <div class="type-display">Cleaner Operations</div>
+        <div class="type-meta">Sora Bold (800) • 52px • Line height 1.1</div>
       </div>
       
       <div class="type-sample">
-        <h3>Body & Interface</h3>
-        <div class="body-text">ChiveIQ consolidates your restaurant operations into one intelligent platform. Fewer systems, smarter decisions.</div>
-        <p style="font-size: 13px; color: #999;">Inter Regular (400) • 16px • Line height 1.8</p>
-        <div class="label-text" style="margin-top: 24px;">Primary Action</div>
-        <p style="font-size: 13px; color: #999;">Inter Bold (700) • 12px • Letter spacing 1px</p>
+        <div class="type-label">Body & UI</div>
+        <div class="type-body">ChiveIQ consolidates your restaurant operations into one intelligent platform.</div>
+        <div class="type-meta">Inter Regular (400) • 16px • Line height 1.8</div>
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.05);">
+          <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #2ba854; margin-bottom: 8px;">Label</div>
+          <div class="type-meta">Inter Bold (700) • 12px • Letter spacing 1px</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- DESIGN PRINCIPLES -->
+  <!-- PRINCIPLES -->
   <section>
     <h2>Design Principles</h2>
     
     <div class="principles-grid">
-      <div class="principle-card">
+      <div class="principle">
         <h3>Minimal & Clear</h3>
-        <p>Every element serves operational clarity. White space breathes. No visual noise. Information hierarchy guides decision-making instantly.</p>
+        <p>Every element serves operational clarity. No visual noise. Information hierarchy guides decision-making instantly.</p>
       </div>
       
-      <div class="principle-card">
+      <div class="principle">
         <h3>Data-Driven</h3>
-        <p>Design supports fast comprehension. Numbers and trends are presented with precision. Operators see what matters most, instantly.</p>
+        <p>Numbers and trends are presented with precision. Operators see what matters most, immediately.</p>
       </div>
       
-      <div class="principle-card">
+      <div class="principle">
         <h3>Approachable Authority</h3>
-        <p>Professional and confident, but never intimidating. Built by operators, for operators. Direct. No corporate pretense.</p>
+        <p>Professional and confident. Built by operators, for operators. Direct. No corporate pretense.</p>
       </div>
     </div>
   </section>
@@ -396,31 +441,30 @@
   <section>
     <h2>Voice & Messaging</h2>
     
-    <div class="messaging-container">
+    <div class="messaging">
       <div class="tagline">Run your restaurant with clarity.</div>
       
-      <div class="pillars-grid">
+      <div class="pillars">
         <div class="pillar">
-          <div class="pillar-title">Consolidation</div>
-          <div class="pillar-text">One platform replaces your fragmented tech stack. Fewer moving parts. More control.</div>
+          <h4>Consolidation</h4>
+          <p>One platform replaces your fragmented tech stack. Fewer moving parts. More control.</p>
         </div>
         
         <div class="pillar">
-          <div class="pillar-title">Clarity</div>
-          <div class="pillar-text">See your business in real-time. Live P&L, inventory, recipes—all unified. Make decisions with confidence.</div>
+          <h4>Clarity</h4>
+          <p>See your business in real-time. Live P&L, inventory, recipes—all unified. Confidence at a glance.</p>
         </div>
         
         <div class="pillar">
-          <div class="pillar-title">Confidence</div>
-          <div class="pillar-text">Built by restaurant operators. Designed for restaurants. Proven approach to complexity.</div>
+          <h4>Confidence</h4>
+          <p>Built by restaurant operators. Designed for restaurants. Proven approach to complexity.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
   <footer>
-    ChiveIQ Brand Identity System • Checkpoint 1 | Design v1.0
+    ChiveIQ Brand Identity • Checkpoint 1 | v1.0
   </footer>
 
 </body>
