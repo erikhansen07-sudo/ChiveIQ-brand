@@ -1329,35 +1329,31 @@ nav {
               <stop offset="60%"  stop-color="#093a20" stop-opacity=".12"/>
               <stop offset="100%" stop-color="#010a04" stop-opacity="0"/>
             </radialGradient>
-            <!-- Reusable body path -->
-            <path id="bod" d="M 250 22
-  C 318 20 344 58 340 96
-  C 336 134 314 160 283 170
-  L 271 170
-  C 268 180 265 192 262 202
-  C 280 197 326 208 378 236
-  C 398 252 404 278 396 308
-  C 402 342 404 392 394 440
-  C 384 488 370 564 358 654
-  L 320 654
-  C 330 564 340 488 346 440
-  C 352 394 350 346 346 310
-  C 341 280 328 260 298 250
-  C 299 368 300 488 286 654
-  L 214 654
-  C 200 488 201 368 202 250
-  C 172 260 159 280 154 310
-  C 150 346 148 394 154 440
-  C 160 488 170 564 180 654
-  L 142 654
-  C 130 564 116 488 106 440
-  C 96 392 98 342 104 308
-  C 96 278 102 252 122 236
-  C 174 208 220 197 238 202
-  C 235 192 232 180 229 170
-  L 217 170
-  C 186 160 164 134 160 96
-  C 156 58 182 20 250 22 Z"/>
+            <!-- Reusable body path — anatomically corrected -->
+            <path id="bod" d="
+  M 250 20
+  C 320 18 342 54 338 92
+  C 334 130 312 156 284 168
+  C 280 182 282 200 292 214
+  C 330 218 374 222 404 238
+  C 420 254 426 280 422 310
+  C 420 390 416 480 412 654
+  L 372 654
+  C 374 480 376 390 376 322
+  C 368 280 344 258 316 254
+  C 312 360 308 480 306 654
+  L 194 654
+  C 192 480 188 360 184 254
+  C 156 258 132 280 124 322
+  C 124 390 126 480 128 654
+  L 88 654
+  C 84 480 80 390 78 310
+  C 74 280 80 254 96 238
+  C 126 222 170 218 208 214
+  C 218 200 220 182 216 168
+  C 188 156 166 130 162 92
+  C 158 54 180 18 250 20 Z
+            "/>
           </defs>
 
           <!-- Ambient aureole -->
@@ -1365,94 +1361,86 @@ nav {
             fill="url(#aura)" style="animation:fig-glow 4.5s ease-in-out infinite;"/>
 
           <!-- Edge glow (blurred body shape) -->
-          <use href="#bod" fill="#1c7040" filter="url(#body-edge)"
+          <use href="#bod" fill="#24894e" filter="url(#body-edge)"
             style="animation:fig-breathe 4.5s ease-in-out infinite;"/>
 
           <!-- Main silhouette -->
-          <use href="#bod" fill="#040e07"/>
+          <use href="#bod" fill="#050f08"/>
 
-          <!-- Silhouette hairline stroke (very subtle) -->
-          <use href="#bod" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.14"/>
+          <!-- Silhouette hairline stroke — slightly more visible -->
+          <use href="#bod" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.22"/>
 
-          <!-- ── Interior anatomy lines (like reference) ─────────────── -->
-          <!-- Left clavicle line -->
-          <path d="M 238 208 Q 200 218 160 242"
-            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.22"/>
-          <!-- Right clavicle line -->
-          <path d="M 262 208 Q 300 218 340 242"
-            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.22"/>
-          <!-- Left pec lower border -->
-          <path d="M 204 268 Q 230 295 248 300"
-            fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.18"/>
-          <!-- Right pec lower border -->
-          <path d="M 296 268 Q 270 295 252 300"
-            fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.18"/>
+          <!-- ── Interior anatomy lines ────────────────────────────────── -->
+          <!-- Right clavicle -->
+          <path d="M 284 222 Q 330 232 380 248"
+            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.20"/>
+          <!-- Left clavicle -->
+          <path d="M 216 222 Q 170 232 120 248"
+            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.20"/>
+          <!-- Right pec arc -->
+          <path d="M 210 292 Q 240 314 254 318"
+            fill="none" stroke="#2ba854" stroke-width="0.8" opacity="0.16"/>
+          <!-- Left pec arc -->
+          <path d="M 290 292 Q 260 314 246 318"
+            fill="none" stroke="#2ba854" stroke-width="0.8" opacity="0.16"/>
+          <!-- Sternum center -->
+          <path d="M 250 254 L 250 370"
+            fill="none" stroke="#2ba854" stroke-width="0.6" opacity="0.12"/>
 
           <!-- ── Energy veins ──────────────────────────────────────────── -->
           <!-- Spine -->
           <path class="vein v-spine"
-            d="M 250 206 C 250 390 250 530 250 654"
+            d="M 250 220 C 250 400 250 530 250 654"
             fill="none" stroke="#2ba854" stroke-width="1.5"
             filter="url(#glow-soft)" opacity=".72"/>
 
-          <!-- Chest band -->
+          <!-- Chest band upper -->
           <path class="vein v-chest"
-            d="M 208 285 Q 250 268 292 285"
+            d="M 200 295 Q 250 276 300 295"
             fill="none" stroke="#2ba854" stroke-width="1.1"
-            filter="url(#glow-soft)" opacity=".60"
+            filter="url(#glow-soft)" opacity=".58"
             style="animation-delay:-.8s"/>
+          <!-- Chest band lower -->
           <path class="vein v-chest"
-            d="M 214 348 Q 250 333 286 348"
+            d="M 206 358 Q 250 342 294 358"
             fill="none" stroke="#2ba854" stroke-width="0.9"
-            filter="url(#glow-soft)" opacity=".50"
+            filter="url(#glow-soft)" opacity=".48"
             style="animation-delay:-1.6s"/>
 
-          <!-- Right shoulder → arm -->
+          <!-- Right shoulder → arm (along arm center) -->
           <path class="vein v-arm"
-            d="M 268 206 Q 298 230 318 282 L 336 430 L 344 654"
+            d="M 290 222 Q 358 256 397 330 C 408 420 410 530 412 654"
             fill="none" stroke="#2ba854" stroke-width="1.2"
-            filter="url(#glow-soft)" opacity=".64"
+            filter="url(#glow-soft)" opacity=".62"
             style="animation-delay:-.5s"/>
 
           <!-- Left shoulder → arm -->
           <path class="vein v-arm"
-            d="M 232 206 Q 202 230 182 282 L 164 430 L 156 654"
+            d="M 210 222 Q 142 256 103 330 C 92 420 90 530 88 654"
             fill="none" stroke="#2ba854" stroke-width="1.2"
-            filter="url(#glow-soft)" opacity=".64"
+            filter="url(#glow-soft)" opacity=".62"
             style="animation-delay:-1.4s"/>
-
-          <!-- Head ring -->
-          <ellipse class="vein v-head" cx="250" cy="98"
-            rx="60" ry="56"
-            fill="none" stroke="#2ba854" stroke-width="1.0"
-            filter="url(#glow-soft)" opacity=".50"
-            style="animation-delay:-1.0s"/>
 
           <!-- ── Particles ────────────────────────────────────────────── -->
           <circle r="3" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 250 206 C 250 390 250 530 250 654" dur="2.5s" repeatCount="indefinite"/>
+            <animateMotion path="M 250 220 C 250 400 250 530 250 654" dur="2.5s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.5s" repeatCount="indefinite"/>
           </circle>
           <circle r="2.2" fill="#80ffc0" filter="url(#dot-glow)">
-            <animateMotion path="M 250 206 C 250 390 250 530 250 654" dur="2.5s" begin="-1.25s" repeatCount="indefinite"/>
+            <animateMotion path="M 250 220 C 250 400 250 530 250 654" dur="2.5s" begin="-1.25s" repeatCount="indefinite"/>
             <animate attributeName="opacity" values="0;.8;.8;0" keyTimes="0;.1;.9;1" dur="2.5s" begin="-1.25s" repeatCount="indefinite"/>
           </circle>
           <circle r="2.6" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 268 206 Q 298 230 318 282 L 336 430 L 344 654" dur="3.1s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.1s" repeatCount="indefinite"/>
+            <animateMotion path="M 290 222 Q 358 256 397 330 C 408 420 410 530 412 654" dur="3.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.2s" repeatCount="indefinite"/>
           </circle>
           <circle r="2.6" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 232 206 Q 202 230 182 282 L 164 430 L 156 654" dur="3.1s" begin="-1.55s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.1s" begin="-1.55s" repeatCount="indefinite"/>
-          </circle>
-          <!-- Head ring particle -->
-          <circle r="2.2" fill="#d0fff0" filter="url(#dot-glow)">
-            <animateMotion path="M 310 98 A 60 56 0 1 1 309.99 97.9" dur="4.2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.85;.85;0" keyTimes="0;.06;.94;1" dur="4.2s" repeatCount="indefinite"/>
+            <animateMotion path="M 210 222 Q 142 256 103 330 C 92 420 90 530 88 654" dur="3.2s" begin="-1.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.2s" begin="-1.6s" repeatCount="indefinite"/>
           </circle>
 
           <!-- Chest heartbeat -->
-          <circle cx="250" cy="316" r="4.5" fill="#64ffb0" filter="url(#dot-glow)">
+          <circle cx="250" cy="330" r="4.5" fill="#64ffb0" filter="url(#dot-glow)">
             <animate attributeName="r" values="4.5;8;4.5" dur="1.5s" repeatCount="indefinite"
               calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
             <animate attributeName="opacity" values=".6;1;.6" dur="1.5s" repeatCount="indefinite"/>

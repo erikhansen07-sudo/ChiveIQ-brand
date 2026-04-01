@@ -1197,10 +1197,10 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- VARIANT: LIVING SYSTEM — Clean anatomical silhouette + energy flows -->
+  <!-- VARIANT: LIVING SYSTEM — Jade Bust -->
   <style>
     #variant-living {
-      background: #010a04;
+      background: #020c05;
       min-height: 100vh;
       overflow: hidden;
     }
@@ -1216,6 +1216,7 @@ nav {
       display: flex;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
     .lv-svg {
       width: 100%;
@@ -1265,20 +1266,26 @@ nav {
       font-family: 'DM Mono', monospace; font-size: .66rem;
       letter-spacing: .08em; border-radius: 4px; cursor: pointer;
     }
-    @keyframes vein-march  { to { stroke-dashoffset: -56; } }
-    @keyframes fig-breathe { 0%,100%{opacity:.42} 50%{opacity:.65} }
-    @keyframes fig-glow    { 0%,100%{opacity:.22} 50%{opacity:.40} }
-    .vein { animation: vein-march linear infinite; }
-    .v-spine { stroke-dasharray: 18 10; animation-duration: 1.9s; }
-    .v-chest { stroke-dasharray: 14 14; animation-duration: 2.4s; }
-    .v-arm   { stroke-dasharray: 16 12; animation-duration: 2.8s; }
-    .v-head  { stroke-dasharray: 22 12; animation-duration: 3.4s; }
+    /* ── Jade animations ── */
+    @keyframes jade-breathe  { 0%,100%{opacity:.88} 50%{opacity:1}   }
+    @keyframes jade-glow     { 0%,100%{opacity:.28} 50%{opacity:.52}  }
+    @keyframes jade-sss      { 0%,100%{opacity:.18} 50%{opacity:.34}  }
+    @keyframes vein-flow     { to { stroke-dashoffset: -80; }          }
+    @keyframes facet-shimmer { 0%,100%{opacity:.22} 40%{opacity:.38} 70%{opacity:.18} }
+    @keyframes dot-travel    { 0%{opacity:0} 8%{opacity:1} 92%{opacity:.9} 100%{opacity:0} }
+    .jvein { stroke-dasharray: 24 14; animation: vein-flow linear infinite; }
+    .jv1   { animation-duration: 2.2s; }
+    .jv2   { animation-duration: 3.0s; animation-delay: -.6s; }
+    .jv3   { animation-duration: 2.7s; animation-delay: -1.2s; }
+    .jv4   { animation-duration: 3.4s; animation-delay: -1.8s; }
+    .jv5   { animation-duration: 2.5s; animation-delay: -.9s; }
+    .jv6   { animation-duration: 3.8s; animation-delay: -2.4s; }
     .lv-pill {
       position: absolute;
-      background: rgba(1,12,5,.94);
-      border: 1px solid rgba(43,168,84,.18);
+      background: rgba(1,10,4,.92);
+      border: 1px solid rgba(43,168,84,.20);
       border-radius: 6px; padding: 10px 16px;
-      backdrop-filter: blur(12px); z-index: 8;
+      backdrop-filter: blur(14px); z-index: 8;
       animation: lv-float 5s ease-in-out infinite;
     }
     .lv-pill:nth-child(2){ animation-delay:-2.1s; animation-duration:6.4s; }
@@ -1295,158 +1302,313 @@ nav {
     <div class="lv-wrap">
       <div class="lv-fig-col">
 
-        <div class="lv-pill" style="top:11%;right:4%;">
+        <div class="lv-pill" style="top:12%;right:3%;">
           <div class="lv-pill-label">Labor Cost</div>
           <div class="lv-pill-value">26.4%</div>
           <div class="lv-pill-delta">↓ 1.8% this week</div>
         </div>
-        <div class="lv-pill" style="top:44%;right:2%;">
+        <div class="lv-pill" style="top:46%;right:2%;">
           <div class="lv-pill-label">Live P&amp;L</div>
           <div class="lv-pill-value">$4,218</div>
           <div class="lv-pill-delta">↑ On track</div>
         </div>
-        <div class="lv-pill" style="top:73%;right:5%;">
+        <div class="lv-pill" style="top:74%;right:4%;">
           <div class="lv-pill-label">Inventory</div>
           <div class="lv-pill-value">97%</div>
           <div class="lv-pill-delta">✓ Fully stocked</div>
         </div>
 
+        <!-- ═══ JADE BUST SVG ════════════════════════════════════════════ -->
         <svg class="lv-svg" viewBox="0 0 500 690" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <filter id="glow-soft" x="-80%" y="-40%" width="260%" height="180%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="3.5" result="b"/>
+
+            <!-- ── Filters ─────────────────────────────────────────────── -->
+            <!-- Outer halo / background glow -->
+            <filter id="halo" x="-60%" y="-40%" width="220%" height="180%">
+              <feGaussianBlur stdDeviation="38"/>
+            </filter>
+            <!-- Bust edge glow -->
+            <filter id="bust-edge" x="-22%" y="-10%" width="144%" height="120%">
+              <feGaussianBlur stdDeviation="22"/>
+            </filter>
+            <!-- Jade marble texture -->
+            <filter id="jade-tex" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+              <feTurbulence type="turbulence" baseFrequency="0.016 0.028" numOctaves="5" seed="9" result="noise"/>
+              <feColorMatrix type="matrix"
+                values="0 0 0 0 0.02
+                        0 0 0 0 0.36
+                        0 0 0 0 0.10
+                        0 0 0 0 0.38"
+                in="noise" result="jade-tint"/>
+              <feBlend in="SourceGraphic" in2="jade-tint" mode="overlay" result="blended"/>
+              <feComposite in="blended" in2="SourceGraphic" operator="in"/>
+            </filter>
+            <!-- Subsurface scatter: inner light bloom -->
+            <filter id="sss-blur" x="-30%" y="-20%" width="160%" height="140%">
+              <feGaussianBlur stdDeviation="26"/>
+            </filter>
+            <!-- Vein glow -->
+            <filter id="vglow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
               <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
-            <filter id="dot-glow" x="-300%" y="-300%" width="700%" height="700%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b"/>
+            <!-- Dot glow -->
+            <filter id="dglow" x="-400%" y="-400%" width="900%" height="900%">
+              <feGaussianBlur stdDeviation="6" result="b"/>
               <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
-            <filter id="body-edge" x="-20%" y="-8%" width="140%" height="116%">
-              <feGaussianBlur stdDeviation="18"/>
+            <!-- Facet soft edge -->
+            <filter id="facet-f" x="-8%" y="-8%" width="116%" height="116%">
+              <feGaussianBlur stdDeviation="5"/>
             </filter>
-            <radialGradient id="aura" cx="50%" cy="44%" r="50%">
-              <stop offset="0%"   stop-color="#1a7040" stop-opacity=".36"/>
-              <stop offset="60%"  stop-color="#093a20" stop-opacity=".12"/>
-              <stop offset="100%" stop-color="#010a04" stop-opacity="0"/>
+
+            <!-- ── Gradients ───────────────────────────────────────────── -->
+            <!-- Primary jade fill: warm center radiating from brow -->
+            <radialGradient id="jade-fill" cx="50%" cy="30%" r="52%">
+              <stop offset="0%"   stop-color="#d6f8e2" stop-opacity=".96"/>
+              <stop offset="18%"  stop-color="#7ed8a0" stop-opacity=".90"/>
+              <stop offset="42%"  stop-color="#2ba854" stop-opacity=".82"/>
+              <stop offset="72%"  stop-color="#145a2c" stop-opacity=".90"/>
+              <stop offset="100%" stop-color="#061a0d" stop-opacity=".98"/>
             </radialGradient>
-            <!-- Reusable body path — anatomically corrected -->
-            <path id="bod" d="
-  M 250 20
-  C 320 18 342 54 338 92
-  C 334 130 312 156 284 168
-  C 280 182 282 200 292 214
-  C 330 218 374 222 404 238
-  C 420 254 426 280 422 310
-  C 420 390 416 480 412 654
-  L 372 654
-  C 374 480 376 390 376 322
-  C 368 280 344 258 316 254
-  C 312 360 308 480 306 654
-  L 194 654
-  C 192 480 188 360 184 254
-  C 156 258 132 280 124 322
-  C 124 390 126 480 128 654
-  L 88 654
-  C 84 480 80 390 78 310
-  C 74 280 80 254 96 238
-  C 126 222 170 218 208 214
-  C 218 200 220 182 216 168
-  C 188 156 166 130 162 92
-  C 158 54 180 18 250 20 Z
+            <!-- Secondary: deeper blue-green depth -->
+            <radialGradient id="jade-depth" cx="50%" cy="62%" r="46%">
+              <stop offset="0%"   stop-color="#1a6644" stop-opacity=".50"/>
+              <stop offset="100%" stop-color="#030f06" stop-opacity=".70"/>
+            </radialGradient>
+            <!-- Subsurface scatter core (light from within) -->
+            <radialGradient id="sss-core" cx="50%" cy="27%" r="38%">
+              <stop offset="0%"   stop-color="#eafff2" stop-opacity=".55"/>
+              <stop offset="45%"  stop-color="#60dda0" stop-opacity=".22"/>
+              <stop offset="100%" stop-color="#2ba854" stop-opacity="0"/>
+            </radialGradient>
+            <!-- Background ambient gradient -->
+            <radialGradient id="bg-aura" cx="50%" cy="38%" r="50%">
+              <stop offset="0%"   stop-color="#1c6638" stop-opacity=".45"/>
+              <stop offset="55%"  stop-color="#0a3318" stop-opacity=".18"/>
+              <stop offset="100%" stop-color="#020c05" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- ── Bust shape (head + neck + upper chest) ──────────────── -->
+            <path id="bust" d="
+              M 250 24
+              C 316 22 342 60 338 98
+              C 334 136 312 162 284 172
+              L 274 178
+              C 272 194 272 214 280 232
+              C 314 238 358 248 402 272
+              C 424 288 432 314 428 342
+              C 424 400 420 460 416 530
+              L 500 610
+              L 500 690
+              L 0   690
+              L 0   610
+              C 84 530 76 460 72 342
+              C 68 314 76 288 98 272
+              C 142 248 186 238 220 232
+              C 228 214 228 194 226 178
+              L 216 172
+              C 188 162 166 136 162 98
+              C 158 60 184 22 250 24 Z
             "/>
+            <!-- Clip to bust shape -->
+            <clipPath id="bust-clip">
+              <use href="#bust"/>
+            </clipPath>
+
           </defs>
 
-          <!-- Ambient aureole -->
-          <ellipse cx="250" cy="370" rx="230" ry="300"
-            fill="url(#aura)" style="animation:fig-glow 4.5s ease-in-out infinite;"/>
+          <!-- ── Background halo ──────────────────────────────────────── -->
+          <ellipse cx="250" cy="300" rx="260" ry="360"
+            fill="url(#bg-aura)"
+            style="animation: jade-glow 5s ease-in-out infinite;"/>
 
-          <!-- Edge glow (blurred body shape) -->
-          <use href="#bod" fill="#24894e" filter="url(#body-edge)"
-            style="animation:fig-breathe 4.5s ease-in-out infinite;"/>
+          <!-- ── Bust outer glow (blurred silhouette) ─────────────────── -->
+          <use href="#bust" fill="#2ba854" filter="url(#bust-edge)"
+            style="animation: jade-glow 5s ease-in-out infinite;"/>
 
-          <!-- Main silhouette -->
-          <use href="#bod" fill="#050f08"/>
+          <!-- ── Base jade fill ────────────────────────────────────────── -->
+          <use href="#bust" fill="#071a0e"/>
+          <use href="#bust" fill="url(#jade-fill)"
+            style="animation: jade-breathe 5s ease-in-out infinite;"/>
+          <use href="#bust" fill="url(#jade-depth)" opacity=".6"/>
 
-          <!-- Silhouette hairline stroke — slightly more visible -->
-          <use href="#bod" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.22"/>
+          <!-- ── Jade marble texture overlay ──────────────────────────── -->
+          <use href="#bust" fill="url(#jade-fill)" filter="url(#jade-tex)"
+            opacity=".42" style="animation: jade-breathe 5s ease-in-out infinite;"/>
 
-          <!-- ── Interior anatomy lines ────────────────────────────────── -->
+          <!-- ── Face polygon facets (low-poly jade planes) ────────────── -->
+          <g clip-path="url(#bust-clip)" filter="url(#facet-f)">
+            <!-- Forehead center — brightest plane -->
+            <polygon points="222,42 278,42 294,78 250,90 206,78"
+              fill="#c8f5d8" opacity=".30"
+              style="animation: facet-shimmer 6s ease-in-out infinite;"/>
+            <!-- Right forehead slope -->
+            <polygon points="278,42 318,62 308,86 294,78"
+              fill="#9de8b8" opacity=".22"
+              style="animation: facet-shimmer 6s ease-in-out infinite; animation-delay:-.8s;"/>
+            <!-- Left forehead slope -->
+            <polygon points="222,42 182,62 192,86 206,78"
+              fill="#9de8b8" opacity=".22"
+              style="animation: facet-shimmer 6s ease-in-out infinite; animation-delay:-1.4s;"/>
+            <!-- Right brow / temple -->
+            <polygon points="294,78 318,86 320,114 298,124 276,108"
+              fill="#5cc880" opacity=".18"/>
+            <!-- Left brow / temple -->
+            <polygon points="206,78 182,86 180,114 202,124 224,108"
+              fill="#5cc880" opacity=".18"/>
+            <!-- Right eye socket — dark recession -->
+            <polygon points="276,108 298,124 294,144 272,148 262,128"
+              fill="#041208" opacity=".55"/>
+            <!-- Left eye socket — dark recession -->
+            <polygon points="224,108 202,124 206,144 228,148 238,128"
+              fill="#041208" opacity=".55"/>
+            <!-- Nose bridge highlight -->
+            <polygon points="248,90 252,90 258,150 250,158 242,150"
+              fill="#ddfbeb" opacity=".22"/>
+            <!-- Right cheek -->
+            <polygon points="272,148 296,142 308,172 290,184 272,168"
+              fill="#3db870" opacity=".16"/>
+            <!-- Left cheek -->
+            <polygon points="228,148 204,142 192,172 210,184 228,168"
+              fill="#3db870" opacity=".16"/>
+            <!-- Philtrum / upper lip shadow -->
+            <polygon points="238,154 262,154 268,170 250,176 232,170"
+              fill="#093020" opacity=".35"/>
+            <!-- Jaw center -->
+            <polygon points="232,170 268,170 276,188 250,196 224,188"
+              fill="#0e3a1e" opacity=".40"/>
+            <!-- Right jaw side -->
+            <polygon points="276,188 296,182 292,204 276,210"
+              fill="#156030" opacity=".25"/>
+            <!-- Left jaw side -->
+            <polygon points="224,188 204,182 208,204 224,210"
+              fill="#156030" opacity=".25"/>
+            <!-- Chin -->
+            <polygon points="224,204 276,204 278,220 250,226 222,220"
+              fill="#0a2818" opacity=".38"/>
+            <!-- Neck right highlight -->
+            <polygon points="278,230 302,238 306,274 282,268"
+              fill="#2ba854" opacity=".12"/>
+            <!-- Neck left highlight -->
+            <polygon points="222,230 198,238 194,274 218,268"
+              fill="#2ba854" opacity=".12"/>
+            <!-- Chest right plane -->
+            <polygon points="280,270 360,280 380,340 300,330"
+              fill="#1a6840" opacity=".14"/>
+            <!-- Chest left plane -->
+            <polygon points="220,270 140,280 120,340 200,330"
+              fill="#1a6840" opacity=".14"/>
+            <!-- Sternum highlight -->
+            <polygon points="238,268 262,268 268,380 250,390 232,380"
+              fill="#60e890" opacity=".10"/>
+          </g>
+
+          <!-- ── Subsurface scatter (inner light) ──────────────────────── -->
+          <!-- Face glow — brightest near forehead/brow -->
+          <ellipse cx="250" cy="118" rx="68" ry="82"
+            fill="url(#sss-core)" filter="url(#sss-blur)"
+            clip-path="url(#bust-clip)"
+            style="animation: jade-sss 5s ease-in-out infinite;"/>
+          <!-- Secondary chest glow -->
+          <ellipse cx="250" cy="360" rx="90" ry="110"
+            fill="#1a7040" opacity=".18" filter="url(#sss-blur)"
+            clip-path="url(#bust-clip)"
+            style="animation: jade-sss 5s ease-in-out infinite; animation-delay:-2.5s;"/>
+
+          <!-- ── Jade veins (traced along facet edges, animated) ─────────── -->
+          <!-- Crown vein splits down both brow ridges -->
+          <path class="jvein jv1"
+            d="M 250 26 C 258 40 272 56 284 72 C 292 84 296 96 294 110"
+            fill="none" stroke="#7dffc0" stroke-width="0.9"
+            filter="url(#vglow)" opacity=".65"/>
+          <path class="jvein jv2"
+            d="M 250 26 C 242 40 228 56 216 72 C 208 84 204 96 206 110"
+            fill="none" stroke="#7dffc0" stroke-width="0.9"
+            filter="url(#vglow)" opacity=".65"/>
+          <!-- Right orbital edge → cheekbone -->
+          <path class="jvein jv3"
+            d="M 294 78 C 310 90 320 108 298 124 C 286 134 278 146 272 162"
+            fill="none" stroke="#50e894" stroke-width="0.8"
+            filter="url(#vglow)" opacity=".55"/>
+          <!-- Left orbital edge → cheekbone -->
+          <path class="jvein jv4"
+            d="M 206 78 C 190 90 180 108 202 124 C 214 134 222 146 228 162"
+            fill="none" stroke="#50e894" stroke-width="0.8"
+            filter="url(#vglow)" opacity=".55"/>
+          <!-- Center face: nose bridge down through philtrum -->
+          <path class="jvein jv1"
+            d="M 250 90 C 250 116 250 140 250 160 C 250 180 250 200 250 226"
+            fill="none" stroke="#a0ffd0" stroke-width="1.0"
+            filter="url(#vglow)" opacity=".60"/>
+          <!-- Right cheek to jaw -->
+          <path class="jvein jv5"
+            d="M 308 172 C 298 184 292 196 280 210 C 274 222 272 240 278 258"
+            fill="none" stroke="#50e894" stroke-width="0.7"
+            filter="url(#vglow)" opacity=".48"/>
+          <!-- Left cheek to jaw -->
+          <path class="jvein jv6"
+            d="M 192 172 C 202 184 208 196 220 210 C 226 222 228 240 222 258"
+            fill="none" stroke="#50e894" stroke-width="0.7"
+            filter="url(#vglow)" opacity=".48"/>
+          <!-- Right clavicle vein -->
+          <path class="jvein jv2"
+            d="M 282 270 C 318 278 356 288 398 308"
+            fill="none" stroke="#3dcc78" stroke-width="1.0"
+            filter="url(#vglow)" opacity=".50"/>
+          <!-- Left clavicle vein -->
+          <path class="jvein jv4"
+            d="M 218 270 C 182 278 144 288 102 308"
+            fill="none" stroke="#3dcc78" stroke-width="1.0"
+            filter="url(#vglow)" opacity=".50"/>
+          <!-- Sternum vein (vertical center) -->
+          <path class="jvein jv3"
+            d="M 250 260 C 250 320 250 400 250 500"
+            fill="none" stroke="#60e890" stroke-width="1.3"
+            filter="url(#vglow)" opacity=".58"/>
+
+          <!-- ── Flowing particles ──────────────────────────────────────── -->
+          <!-- Crown down center face -->
+          <circle r="2.8" fill="#d0fff0" filter="url(#dglow)">
+            <animateMotion path="M 250 26 C 250 80 250 140 250 226" dur="2.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;.9;0" keyTimes="0;.1;.88;1" dur="2.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle r="2.0" fill="#90ffc8" filter="url(#dglow)">
+            <animateMotion path="M 250 26 C 250 80 250 140 250 226" dur="2.2s" begin="-1.1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.8;.8;0" keyTimes="0;.1;.88;1" dur="2.2s" begin="-1.1s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Sternum down -->
+          <circle r="2.5" fill="#b8ffd8" filter="url(#dglow)">
+            <animateMotion path="M 250 260 C 250 340 250 430 250 500" dur="2.8s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="2.8s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Right orbital vein -->
+          <circle r="2.0" fill="#80ffc0" filter="url(#dglow)">
+            <animateMotion path="M 294 78 C 310 90 320 108 298 124 C 286 134 278 146 272 162" dur="2.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.85;.85;0" keyTimes="0;.1;.9;1" dur="2.6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Left orbital vein -->
+          <circle r="2.0" fill="#80ffc0" filter="url(#dglow)">
+            <animateMotion path="M 206 78 C 190 90 180 108 202 124 C 214 134 222 146 228 162" dur="2.6s" begin="-1.3s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.85;.85;0" keyTimes="0;.1;.9;1" dur="2.6s" begin="-1.3s" repeatCount="indefinite"/>
+          </circle>
           <!-- Right clavicle -->
-          <path d="M 284 222 Q 330 232 380 248"
-            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.20"/>
+          <circle r="2.2" fill="#60f0a0" filter="url(#dglow)">
+            <animateMotion path="M 282 270 C 318 278 356 288 398 308" dur="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.8;.8;0" keyTimes="0;.12;.9;1" dur="2.4s" repeatCount="indefinite"/>
+          </circle>
           <!-- Left clavicle -->
-          <path d="M 216 222 Q 170 232 120 248"
-            fill="none" stroke="#2ba854" stroke-width="1.0" opacity="0.20"/>
-          <!-- Right pec arc -->
-          <path d="M 210 292 Q 240 314 254 318"
-            fill="none" stroke="#2ba854" stroke-width="0.8" opacity="0.16"/>
-          <!-- Left pec arc -->
-          <path d="M 290 292 Q 260 314 246 318"
-            fill="none" stroke="#2ba854" stroke-width="0.8" opacity="0.16"/>
-          <!-- Sternum center -->
-          <path d="M 250 254 L 250 370"
-            fill="none" stroke="#2ba854" stroke-width="0.6" opacity="0.12"/>
-
-          <!-- ── Energy veins ──────────────────────────────────────────── -->
-          <!-- Spine -->
-          <path class="vein v-spine"
-            d="M 250 220 C 250 400 250 530 250 654"
-            fill="none" stroke="#2ba854" stroke-width="1.5"
-            filter="url(#glow-soft)" opacity=".72"/>
-
-          <!-- Chest band upper -->
-          <path class="vein v-chest"
-            d="M 200 295 Q 250 276 300 295"
-            fill="none" stroke="#2ba854" stroke-width="1.1"
-            filter="url(#glow-soft)" opacity=".58"
-            style="animation-delay:-.8s"/>
-          <!-- Chest band lower -->
-          <path class="vein v-chest"
-            d="M 206 358 Q 250 342 294 358"
-            fill="none" stroke="#2ba854" stroke-width="0.9"
-            filter="url(#glow-soft)" opacity=".48"
-            style="animation-delay:-1.6s"/>
-
-          <!-- Right shoulder → arm (along arm center) -->
-          <path class="vein v-arm"
-            d="M 290 222 Q 358 256 397 330 C 408 420 410 530 412 654"
-            fill="none" stroke="#2ba854" stroke-width="1.2"
-            filter="url(#glow-soft)" opacity=".62"
-            style="animation-delay:-.5s"/>
-
-          <!-- Left shoulder → arm -->
-          <path class="vein v-arm"
-            d="M 210 222 Q 142 256 103 330 C 92 420 90 530 88 654"
-            fill="none" stroke="#2ba854" stroke-width="1.2"
-            filter="url(#glow-soft)" opacity=".62"
-            style="animation-delay:-1.4s"/>
-
-          <!-- ── Particles ────────────────────────────────────────────── -->
-          <circle r="3" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 250 220 C 250 400 250 530 250 654" dur="2.5s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.9;1" dur="2.5s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="2.2" fill="#80ffc0" filter="url(#dot-glow)">
-            <animateMotion path="M 250 220 C 250 400 250 530 250 654" dur="2.5s" begin="-1.25s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.8;.8;0" keyTimes="0;.1;.9;1" dur="2.5s" begin="-1.25s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="2.6" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 290 222 Q 358 256 397 330 C 408 420 410 530 412 654" dur="3.2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.2s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="2.6" fill="#b4ffe0" filter="url(#dot-glow)">
-            <animateMotion path="M 210 222 Q 142 256 103 330 C 92 420 90 530 88 654" dur="3.2s" begin="-1.6s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0;.9;.9;0" keyTimes="0;.08;.92;1" dur="3.2s" begin="-1.6s" repeatCount="indefinite"/>
+          <circle r="2.2" fill="#60f0a0" filter="url(#dglow)">
+            <animateMotion path="M 218 270 C 182 278 144 288 102 308" dur="2.4s" begin="-1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.8;.8;0" keyTimes="0;.12;.9;1" dur="2.4s" begin="-1.2s" repeatCount="indefinite"/>
           </circle>
 
-          <!-- Chest heartbeat -->
-          <circle cx="250" cy="330" r="4.5" fill="#64ffb0" filter="url(#dot-glow)">
-            <animate attributeName="r" values="4.5;8;4.5" dur="1.5s" repeatCount="indefinite"
-              calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
-            <animate attributeName="opacity" values=".6;1;.6" dur="1.5s" repeatCount="indefinite"/>
-          </circle>
+          <!-- ── Bust hairline rim ──────────────────────────────────────── -->
+          <use href="#bust" fill="none" stroke="#3dcc78" stroke-width="0.8" opacity=".20"/>
 
         </svg>
+        <!-- ──────────────────────────────────────────────────────────── -->
+
       </div>
 
       <div class="lv-copy">
