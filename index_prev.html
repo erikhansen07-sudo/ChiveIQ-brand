@@ -1197,31 +1197,24 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- VARIANT: LIVING SYSTEM — Canvas particle synapse figure     -->
-  <!-- ============================================================ -->
+  <!-- VARIANT: LIVING SYSTEM — Dense dot-cloud human figure -->
 
   <style>
     #variant-living {
-      background: #03080a;
+      background: #030a05;
       min-height: 100vh;
       position: relative;
       overflow: hidden;
-      display: flex;
-      align-items: center;
     }
     .lv-wrap {
       position: relative;
       width: 100%;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+      grid-template-columns: 55% 45%;
     }
     .lv-canvas-col {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       height: 100vh;
     }
     #syn-canvas {
@@ -1232,49 +1225,52 @@ nav {
     .lv-copy {
       position: relative;
       z-index: 10;
-      padding: 80px 52px 80px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 56px 80px 20px;
     }
     .lv-eyebrow {
       font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
+      font-size: 0.56rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.45);
-      margin-bottom: 28px;
+      color: rgba(43,168,84,0.42);
+      margin-bottom: 30px;
     }
     .lv-headline {
-      font-size: clamp(2.4rem, 3.8vw, 4.2rem);
+      font-size: clamp(2.6rem, 3.6vw, 4.4rem);
       font-weight: 800;
-      letter-spacing: -0.045em;
-      line-height: 1.02;
-      color: #f5f2e8;
-      margin-bottom: 28px;
+      letter-spacing: -0.048em;
+      line-height: 1.0;
+      color: #f2efdf;
+      margin-bottom: 32px;
     }
     .lv-headline em {
       font-style: normal;
       color: #2ba854;
     }
     .lv-body {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 300;
-      color: rgba(245,242,232,0.48);
-      line-height: 1.8;
-      max-width: 420px;
-      margin-bottom: 20px;
+      color: rgba(242,239,223,0.44);
+      line-height: 1.82;
+      max-width: 400px;
+      margin-bottom: 18px;
     }
     .lv-body strong {
-      color: rgba(245,242,232,0.72);
+      color: rgba(242,239,223,0.7);
       font-weight: 500;
     }
     .lv-relief {
       font-family: 'DM Mono', monospace;
-      font-size: 0.76rem;
-      color: rgba(43,168,84,0.62);
-      letter-spacing: 0.06em;
-      margin-bottom: 44px;
-      line-height: 1.7;
-      border-left: 1px solid rgba(43,168,84,0.22);
-      padding-left: 16px;
+      font-size: 0.75rem;
+      color: rgba(43,168,84,0.58);
+      letter-spacing: 0.04em;
+      margin-bottom: 48px;
+      line-height: 1.75;
+      border-left: 1px solid rgba(43,168,84,0.2);
+      padding-left: 18px;
     }
     .lv-cta-row {
       display: flex;
@@ -1285,51 +1281,43 @@ nav {
       background: #2ba854;
       color: #fdfcf8;
       border: none;
-      padding: 14px 30px;
+      padding: 14px 32px;
       font-family: 'Sora', sans-serif;
       font-size: 0.88rem;
       font-weight: 600;
       border-radius: 4px;
       cursor: pointer;
-      letter-spacing: -0.01em;
     }
     .lv-btn-ghost {
       background: transparent;
-      color: rgba(245,242,232,0.38);
-      border: 1px solid rgba(245,242,232,0.12);
+      color: rgba(242,239,223,0.36);
+      border: 1px solid rgba(242,239,223,0.12);
       padding: 14px 22px;
       font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       letter-spacing: 0.08em;
       border-radius: 4px;
       cursor: pointer;
     }
-    /* Floating data pills */
-    .lv-pills {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 50%;
-      pointer-events: none;
-      z-index: 5;
-    }
     .lv-pill {
       position: absolute;
-      background: rgba(8,24,14,0.82);
-      border: 1px solid rgba(43,168,84,0.22);
+      background: rgba(4,16,8,0.88);
+      border: 1px solid rgba(43,168,84,0.2);
       border-radius: 6px;
       padding: 10px 16px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      z-index: 8;
       animation: lv-float 5s ease-in-out infinite;
     }
-    .lv-pill:nth-child(2) { animation-delay: -1.8s; animation-duration: 6.2s; }
-    .lv-pill:nth-child(3) { animation-delay: -3.4s; animation-duration: 4.8s; }
+    .lv-pill:nth-child(2) { animation-delay: -1.9s; animation-duration: 6.3s; }
+    .lv-pill:nth-child(3) { animation-delay: -3.5s; animation-duration: 4.9s; }
     @keyframes lv-float {
-      0%,100% { transform: translateY(0px); }
-      50% { transform: translateY(-8px); }
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
     }
     .lv-pill-label {
       font-family: 'DM Mono', monospace;
-      font-size: 0.52rem;
+      font-size: 0.5rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(43,168,84,0.5);
@@ -1337,16 +1325,16 @@ nav {
     }
     .lv-pill-value {
       font-family: 'Sora', sans-serif;
-      font-size: 1.1rem;
+      font-size: 1.08rem;
       font-weight: 700;
-      color: #f5f2e8;
+      color: #f2efdf;
       letter-spacing: -0.03em;
     }
     .lv-pill-delta {
       font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
+      font-size: 0.55rem;
       color: #2ba854;
-      margin-top: 2px;
+      margin-top: 3px;
     }
   </style>
 
@@ -1356,24 +1344,21 @@ nav {
       <!-- LEFT: Canvas synapse figure -->
       <div class="lv-canvas-col">
         <canvas id="syn-canvas"></canvas>
-
-        <!-- Floating data pills anchored in canvas column -->
-        <div style="position:absolute;inset:0;pointer-events:none;z-index:5;">
-          <div class="lv-pill" style="top:14%;right:8%;">
-            <div class="lv-pill-label">Labor Cost</div>
-            <div class="lv-pill-value">26.4%</div>
-            <div class="lv-pill-delta">↓ 1.8% this week</div>
-          </div>
-          <div class="lv-pill" style="top:44%;right:4%;">
-            <div class="lv-pill-label">Live P&amp;L</div>
-            <div class="lv-pill-value">$4,218</div>
-            <div class="lv-pill-delta">↑ On track</div>
-          </div>
-          <div class="lv-pill" style="top:72%;right:10%;">
-            <div class="lv-pill-label">Inventory</div>
-            <div class="lv-pill-value">97%</div>
-            <div class="lv-pill-delta">✓ Fully stocked</div>
-          </div>
+        <!-- Floating data pills -->
+        <div class="lv-pill" style="top:13%;right:5%;">
+          <div class="lv-pill-label">Labor Cost</div>
+          <div class="lv-pill-value">26.4%</div>
+          <div class="lv-pill-delta">↓ 1.8% this week</div>
+        </div>
+        <div class="lv-pill" style="top:44%;right:2%;">
+          <div class="lv-pill-label">Live P&amp;L</div>
+          <div class="lv-pill-value">$4,218</div>
+          <div class="lv-pill-delta">↑ On track</div>
+        </div>
+        <div class="lv-pill" style="top:74%;right:6%;">
+          <div class="lv-pill-label">Inventory</div>
+          <div class="lv-pill-value">97%</div>
+          <div class="lv-pill-delta">✓ Fully stocked</div>
         </div>
       </div>
 
@@ -1381,13 +1366,8 @@ nav {
       <div class="lv-copy">
         <div class="lv-eyebrow">New Operator · Intelligent Infrastructure</div>
         <h2 class="lv-headline">Finally.<br>Someone's<br>got the<br><em>back office.</em></h2>
-        <p class="lv-body">
-          You've been running the restaurant.<br>
-          <strong>ChiveIQ runs everything else.</strong>
-        </p>
-        <p class="lv-body">
-          Labor. Inventory. P&amp;L. Scheduling. Comp. Not dashboards — decisions, already made, already logged, already optimized. Handed to you the moment you need them.
-        </p>
+        <p class="lv-body">You've been running the restaurant.<br><strong>ChiveIQ runs everything else.</strong></p>
+        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized. Handed to you the moment you need them.</p>
         <div class="lv-relief">
           The operator your locations actually need.<br>
           Available 24 hours. Never calls out.
@@ -1402,315 +1382,281 @@ nav {
   </section>
 
   <script>
-  (function() {
+  (function () {
+    'use strict';
     const canvas = document.getElementById('syn-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // ── Silhouette definition (waist-up, normalized 0-1 coords)
-    // We define the body outline as a series of boundary checks
-    // Head center: (0.5, 0.18), Head radius x: 0.13, y: 0.16
-    // Neck: narrow at (0.5, 0.34), width ~0.07
-    // Shoulders widen: (0.5, 0.42), width ~0.38 at shoulder tips
-    // Torso narrows to waist: (0.5, 0.82), width ~0.22
-    // Upper arms extend to sides (0.18, 0.58) and (0.82, 0.58)
+    const NDOTS = 4400;
+    const CONNECT_R = 38;        // px — neighbor radius for synapse propagation
+    const CONNECT_R_SQ = CONNECT_R * CONNECT_R;
+    const DRAW_CONNECT_R = 34;   // slightly smaller for line drawing
+    const DRAW_CONNECT_R_SQ = DRAW_CONNECT_R * DRAW_CONNECT_R;
 
-    let W, H, cx, cy, scale;
+    let W, H;
+    let dots = [];
+    let adjList = [];  // adjacency list (indices)
+    let bodyPaths = [];
+    let rings = [];
+    let lastFire = 0;
+    let initDone = false;
 
-    function resize() {
-      const col = canvas.parentElement;
-      W = col.clientWidth;
-      H = col.clientHeight;
-      canvas.width = W;
-      canvas.height = H;
-      // The figure is centered in the canvas
-      cx = W * 0.46;
-      cy = H * 0.48;
-      scale = Math.min(W, H) * 0.82;
+    // ─── Build Path2D body silhouette ────────────────────────────────────────
+    function buildPaths() {
+      const fw = W * 0.70;
+      const fh = H * 0.93;
+      const x0 = (W - fw) / 2;
+      const y0 = H * 0.035;
+      const X = n => x0 + n * fw;
+      const Y = n => y0 + n * fh;
+
+      bodyPaths = [];
+
+      // Head — slightly taller oval
+      const head = new Path2D();
+      head.ellipse(X(0.5), Y(0.108), fw * 0.120, fh * 0.108, 0, 0, Math.PI * 2);
+      bodyPaths.push(head);
+
+      // Neck
+      const neck = new Path2D();
+      neck.rect(X(0.443), Y(0.208), fw * 0.114, fh * 0.072);
+      bodyPaths.push(neck);
+
+      // Torso — trapezoid with shoulder width, narrowing to waist
+      const torso = new Path2D();
+      torso.moveTo(X(0.21),  Y(0.272));
+      torso.lineTo(X(0.79),  Y(0.272));
+      torso.bezierCurveTo(X(0.84), Y(0.290), X(0.86), Y(0.320), X(0.815), Y(0.360));
+      torso.lineTo(X(0.695), Y(0.875));
+      torso.lineTo(X(0.305), Y(0.875));
+      torso.lineTo(X(0.185), Y(0.360));
+      torso.bezierCurveTo(X(0.14), Y(0.320), X(0.16), Y(0.290), X(0.21), Y(0.272));
+      torso.closePath();
+      bodyPaths.push(torso);
+
+      // Left arm — tapers outward-downward
+      const leftArm = new Path2D();
+      leftArm.moveTo(X(0.215), Y(0.280));
+      leftArm.lineTo(X(0.088), Y(0.318));
+      leftArm.bezierCurveTo(X(0.038), Y(0.455), X(0.028), Y(0.630), X(0.052), Y(0.862));
+      leftArm.lineTo(X(0.170), Y(0.862));
+      leftArm.bezierCurveTo(X(0.155), Y(0.640), X(0.166), Y(0.472), X(0.215), Y(0.342));
+      leftArm.closePath();
+      bodyPaths.push(leftArm);
+
+      // Right arm — mirror
+      const rightArm = new Path2D();
+      rightArm.moveTo(X(0.785), Y(0.280));
+      rightArm.lineTo(X(0.912), Y(0.318));
+      rightArm.bezierCurveTo(X(0.962), Y(0.455), X(0.972), Y(0.630), X(0.948), Y(0.862));
+      rightArm.lineTo(X(0.830), Y(0.862));
+      rightArm.bezierCurveTo(X(0.845), Y(0.640), X(0.834), Y(0.472), X(0.785), Y(0.342));
+      rightArm.closePath();
+      bodyPaths.push(rightArm);
     }
 
-    // ── Body silhouette: returns true if point (nx, ny) in [0..1] is inside body
-    function inBody(nx, ny) {
-      // ── Head (oval)
-      const hx = (nx - 0.5) / 0.135;
-      const hy = (ny - 0.175) / 0.155;
-      if (hx*hx + hy*hy < 1) return true;
-
-      // ── Neck
-      if (ny > 0.305 && ny < 0.395) {
-        const neckW = 0.074 + (ny - 0.305) * 0.05;
-        if (Math.abs(nx - 0.5) < neckW) return true;
+    function inBody(x, y) {
+      for (let i = 0; i < bodyPaths.length; i++) {
+        if (ctx.isPointInPath(bodyPaths[i], x, y)) return true;
       }
-
-      // ── Torso (trapezoid: wide at shoulders, narrower at waist)
-      if (ny >= 0.38 && ny <= 0.92) {
-        // Shoulder top: half-width 0.21, Waist: half-width 0.14
-        const t = (ny - 0.38) / (0.92 - 0.38);
-        const halfW = 0.21 - t * 0.07;
-        if (Math.abs(nx - 0.5) < halfW) return true;
-      }
-
-      // ── Left upper arm (angled outward and down)
-      if (ny >= 0.42 && ny <= 0.75) {
-        const t = (ny - 0.42) / 0.33;
-        const armCx = 0.5 - 0.20 - t * 0.08;
-        if (Math.abs(nx - armCx) < 0.065 - t * 0.01) return true;
-      }
-
-      // ── Right upper arm
-      if (ny >= 0.42 && ny <= 0.75) {
-        const t = (ny - 0.42) / 0.33;
-        const armCx = 0.5 + 0.20 + t * 0.08;
-        if (Math.abs(nx - armCx) < 0.065 - t * 0.01) return true;
-      }
-
       return false;
     }
 
-    // ── Dot density: head is denser
-    function density(nx, ny) {
-      // Head region gets extra density
-      const hx = (nx - 0.5) / 0.135;
-      const hy = (ny - 0.175) / 0.155;
-      if (hx*hx + hy*hy < 1) return 2.4;
-      return 1.0;
+    // Edge proximity: dots near the boundary get a brightness boost
+    function edgeScore(x, y) {
+      const r = 5;
+      let outside = 0;
+      const pts = [[1,0],[-1,0],[0,1],[0,-1],[0.7,0.7],[-0.7,0.7],[0.7,-0.7],[-0.7,-0.7]];
+      for (const [dx, dy] of pts) {
+        if (!inBody(x + dx * r, y + dy * r)) outside++;
+      }
+      return outside / pts.length;
     }
 
-    // ── Generate dots distributed within silhouette
-    const NDOTS = 520;
-    let dots = [];
-
+    // ─── Seed dots ────────────────────────────────────────────────────────────
     function seedDots() {
       dots = [];
+      adjList = [];
+      const fw = W * 0.70;
+      const fh = H * 0.93;
+      const x0 = (W - fw) / 2;
+      const y0 = H * 0.035;
       let attempts = 0;
-      while (dots.length < NDOTS && attempts < 60000) {
+      const maxTries = NDOTS * 20;
+
+      while (dots.length < NDOTS && attempts < maxTries) {
         attempts++;
-        const nx = Math.random();
-        const ny = Math.random() * 0.95 + 0.02;
-        if (!inBody(nx, ny)) continue;
-        // density rejection
-        if (density(nx, ny) < 2.4 && Math.random() > density(nx, ny) / 2.4) {
-          // still add, just skip sometimes for head
-        }
+        const x = x0 + Math.random() * fw;
+        const y = y0 + Math.random() * fh;
+        if (!inBody(x, y)) continue;
+        const es = edgeScore(x, y);
         dots.push({
-          nx, ny,
-          // screen coords computed at draw time
-          x: 0, y: 0,
-          // drift
-          vx: (Math.random() - 0.5) * 0.00018,
-          vy: (Math.random() - 0.5) * 0.00018,
-          // base brightness
-          base: 0.28 + Math.random() * 0.28,
-          alpha: 0,
-          // synapse flash state
-          flash: 0,      // 0-1 flash intensity, decays over time
-          flashDecay: 0.012 + Math.random() * 0.014,
-          // size
-          r: 0.7 + Math.random() * 1.1,
+          x, y,
+          r: 0.72 + Math.random() * 0.62,
+          // Edge dots are brighter; interior dots vary naturally
+          base: 0.38 + Math.random() * 0.28 + es * 0.32,
+          flash: 0,
+          flashDecay: 0.011 + Math.random() * 0.010,
         });
       }
-      console.log('Seeded', dots.length, 'dots');
-    }
 
-    // ── Synapse firing: randomly picks a source dot, propagates to neighbors
-    function fireSynapse() {
-      if (dots.length === 0) return;
-      const src = dots[Math.floor(Math.random() * dots.length)];
-      src.flash = 1.0;
-
-      // Propagate: find nearby dots and schedule their flash
-      const REACH = 0.09; // normalized
-      const neighbors = dots.filter(d => {
-        const dx = d.nx - src.nx, dy = d.ny - src.ny;
-        return (dx*dx + dy*dy) < REACH*REACH && d !== src;
-      });
-      // Fire a wave: stagger by distance
-      neighbors.forEach(d => {
-        const dx = d.nx - src.nx, dy = d.ny - src.ny;
-        const dist = Math.sqrt(dx*dx + dy*dy);
-        const delay = (dist / REACH) * 320 + Math.random() * 80;
-        setTimeout(() => {
-          d.flash = Math.max(d.flash, 0.55 + Math.random() * 0.35);
-        }, delay);
-      });
-    }
-
-    // ── Rings (synapse ripple effect on canvas)
-    const rings = [];
-    function spawnRing(x, y) {
-      rings.push({ x, y, r: 4, maxR: 48 + Math.random() * 36, alpha: 0.55, decay: 0.012 + Math.random()*0.008 });
-    }
-
-    // ── Connection lines between nearby dots (faint neural web)
-    const CONNECT_DIST = 0.065; // normalized
-    const CONNECT_DIST_SQ = CONNECT_DIST * CONNECT_DIST;
-
-    let frame = 0;
-    let lastFire = 0;
-
-    function toScreen(nx, ny) {
-      // Map normalized coords to screen
-      // Figure occupies roughly scale * 0.5 wide, scale * 0.95 tall
-      const fw = scale * 0.52;
-      const fh = scale * 0.94;
-      return {
-        x: cx - fw/2 + nx * fw,
-        y: cy - fh * 0.5 + ny * fh
-      };
-    }
-
-    function draw(ts) {
-      requestAnimationFrame(draw);
-      ctx.clearRect(0, 0, W, H);
-
-      frame++;
-
-      // Background ambient gradient
-      const grad = ctx.createRadialGradient(cx, cy * 0.7, 0, cx, cy * 0.7, scale * 0.7);
-      grad.addColorStop(0, 'rgba(5,22,12,0.0)');
-      grad.addColorStop(1, 'rgba(2,6,4,0.0)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, W, H);
-
-      // ── Fire synapses periodically
-      if (ts - lastFire > 480 + Math.random() * 320) {
-        lastFire = ts;
-        fireSynapse();
-        // Spawn ring at source location
-        const src = dots[Math.floor(Math.random() * dots.length)];
-        if (src) {
-          const sp = toScreen(src.nx, src.ny);
-          spawnRing(sp.x, sp.y);
-        }
+      // Build adjacency list (spatial grid for speed)
+      const cellSize = CONNECT_R;
+      const cols = Math.ceil(W / cellSize) + 1;
+      const grid = {};
+      for (let i = 0; i < dots.length; i++) {
+        const gx = Math.floor(dots[i].x / cellSize);
+        const gy = Math.floor(dots[i].y / cellSize);
+        const key = gx * 10000 + gy;
+        if (!grid[key]) grid[key] = [];
+        grid[key].push(i);
       }
 
-      // ── Update and draw dots
+      adjList = dots.map(() => []);
       for (let i = 0; i < dots.length; i++) {
-        const d = dots[i];
-
-        // Drift with Brownian motion
-        d.vx += (Math.random() - 0.5) * 0.000022;
-        d.vy += (Math.random() - 0.5) * 0.000022;
-        d.vx *= 0.96;
-        d.vy *= 0.96;
-        let nnx = d.nx + d.vx;
-        let nny = d.ny + d.vy;
-        if (inBody(nnx, nny)) {
-          d.nx = nnx; d.ny = nny;
-        } else {
-          d.vx *= -0.5; d.vy *= -0.5;
-        }
-
-        // Decay flash
-        if (d.flash > 0) d.flash = Math.max(0, d.flash - d.flashDecay);
-
-        // Compute screen pos
-        const sp = toScreen(d.nx, d.ny);
-        d.x = sp.x; d.y = sp.y;
-
-        // Draw connection lines
-        if (i % 3 === frame % 3) { // spread line computation across frames
-          for (let j = i + 1; j < dots.length; j++) {
-            const d2 = dots[j];
-            const ddx = d.nx - d2.nx, ddy = d.ny - d2.ny;
-            if (ddx*ddx + ddy*ddy < CONNECT_DIST_SQ) {
-              const proximity = 1 - Math.sqrt(ddx*ddx + ddy*ddy) / CONNECT_DIST;
-              const flashBoost = (d.flash + d2.flash) * 0.5;
-              const lineAlpha = (proximity * 0.06 + flashBoost * 0.25) * (d.base + d2.base) * 0.5;
-              ctx.beginPath();
-              ctx.strokeStyle = `rgba(43,168,84,${lineAlpha.toFixed(3)})`;
-              ctx.lineWidth = 0.6 + flashBoost * 0.8;
-              ctx.moveTo(d.x, d.y);
-              ctx.lineTo(d2.x, d2.y);
-              ctx.stroke();
+        const gx = Math.floor(dots[i].x / cellSize);
+        const gy = Math.floor(dots[i].y / cellSize);
+        for (let dx = -1; dx <= 1; dx++) {
+          for (let dy = -1; dy <= 1; dy++) {
+            const key = (gx + dx) * 10000 + (gy + dy);
+            const cell = grid[key];
+            if (!cell) continue;
+            for (const j of cell) {
+              if (j <= i) continue;
+              const ddx = dots[i].x - dots[j].x;
+              const ddy = dots[i].y - dots[j].y;
+              if (ddx * ddx + ddy * ddy < CONNECT_R_SQ) {
+                adjList[i].push(j);
+                adjList[j].push(i);
+              }
             }
           }
         }
       }
+      initDone = true;
+    }
 
-      // Draw dots on top of lines
-      for (let i = 0; i < dots.length; i++) {
-        const d = dots[i];
-        const totalAlpha = d.base + d.flash * 0.72;
-        const r = d.r + d.flash * 2.2;
+    // ─── Synapse firing ───────────────────────────────────────────────────────
+    function fireSynapse() {
+      if (!dots.length) return;
+      const srcIdx = Math.floor(Math.random() * dots.length);
+      const src = dots[srcIdx];
+      src.flash = 1.0;
+      rings.push({ x: src.x, y: src.y, r: 4, maxR: 52 + Math.random() * 32, alpha: 0.55, decay: 0.013 });
 
-        // Glow halo when flashing
-        if (d.flash > 0.05) {
-          const glow = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, r * 5);
-          glow.addColorStop(0, `rgba(43,168,84,${(d.flash * 0.28).toFixed(3)})`);
-          glow.addColorStop(1, 'rgba(43,168,84,0)');
-          ctx.fillStyle = glow;
-          ctx.beginPath();
-          ctx.arc(d.x, d.y, r * 5, 0, Math.PI * 2);
-          ctx.fill();
+      // BFS-like wave propagation, 3 levels deep
+      function wave(idx, depth) {
+        if (depth > 3) return;
+        for (const j of adjList[idx]) {
+          const d = dots[j];
+          const dx = d.x - src.x, dy = d.y - src.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const delay = (dist / (CONNECT_R * 2.8)) * 380 + Math.random() * 60;
+          const intensity = 0.82 - depth * 0.18 + Math.random() * 0.14;
+          setTimeout(() => {
+            if (d.flash < intensity) {
+              d.flash = intensity;
+              if (depth < 2) wave(j, depth + 1);
+            }
+          }, delay);
         }
+      }
+      wave(srcIdx, 0);
+    }
 
-        // Core dot
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
-        // Color shifts toward white/bright when flashing
-        const g = Math.round(168 + d.flash * 87);
-        const b = Math.round(84 + d.flash * 120);
-        ctx.fillStyle = `rgba(43,${g},${b},${totalAlpha.toFixed(3)})`;
-        ctx.fill();
+    // ─── Draw ─────────────────────────────────────────────────────────────────
+    function draw(ts) {
+      requestAnimationFrame(draw);
+      if (!initDone) return;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Trigger synapse
+      if (ts - lastFire > 580 + Math.random() * 380) {
+        lastFire = ts;
+        fireSynapse();
       }
 
-      // ── Draw synapse rings
+      // Connection lines — only between flashing dots for performance
+      ctx.lineWidth = 0.55;
+      for (let i = 0; i < dots.length; i++) {
+        const d = dots[i];
+        if (d.flash < 0.12) continue;
+        for (const j of adjList[i]) {
+          if (j < i) continue; // avoid drawing each line twice
+          const d2 = dots[j];
+          const ddx = d.x - d2.x, ddy = d.y - d2.y;
+          if (ddx * ddx + ddy * ddy > DRAW_CONNECT_R_SQ) continue;
+          const flashMin = Math.min(d.flash, d2.flash);
+          if (flashMin < 0.08) continue;
+          ctx.beginPath();
+          ctx.strokeStyle = `rgba(43,195,115,${(flashMin * 0.38).toFixed(3)})`;
+          ctx.moveTo(d.x, d.y);
+          ctx.lineTo(d2.x, d2.y);
+          ctx.stroke();
+        }
+      }
+
+      // Dots
+      ctx.shadowBlur = 0;
+      for (const d of dots) {
+        if (d.flash > 0) d.flash = Math.max(0, d.flash - d.flashDecay);
+
+        const alpha = Math.min(0.99, d.base + d.flash * 0.52);
+        const r = d.r + d.flash * 1.6;
+
+        if (d.flash > 0.18) {
+          ctx.shadowBlur = 5 + d.flash * 9;
+          ctx.shadowColor = `rgba(60,220,130,${(d.flash * 0.55).toFixed(3)})`;
+        } else {
+          ctx.shadowBlur = 0;
+        }
+
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, r, 0, Math.PI * 2);
+        // Shift slightly warmer/brighter during flash
+        const g = Math.round(168 + d.flash * 55);
+        const b = Math.round(90 + d.flash * 80);
+        ctx.fillStyle = `rgba(43,${g},${b},${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+      ctx.shadowBlur = 0;
+
+      // Rings
       for (let i = rings.length - 1; i >= 0; i--) {
         const ring = rings[i];
-        ring.r += (ring.maxR - ring.r) * 0.04;
+        ring.r += (ring.maxR - ring.r) * 0.055;
         ring.alpha -= ring.decay;
         if (ring.alpha <= 0) { rings.splice(i, 1); continue; }
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(43,168,84,${ring.alpha.toFixed(3)})`;
-        ctx.lineWidth = 0.8;
+        ctx.strokeStyle = `rgba(60,210,120,${ring.alpha.toFixed(3)})`;
+        ctx.lineWidth = 0.75;
         ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
         ctx.stroke();
       }
     }
 
-    // ── Body silhouette glow (soft canvas shadow)
-    function drawBodyGlow() {
-      // Draw soft body shape underneath dots for depth
-      const fw = scale * 0.52;
-      const fh = scale * 0.94;
-      const x0 = cx - fw/2;
-      const y0 = cy - fh * 0.5;
-
-      ctx.save();
-      ctx.filter = 'blur(32px)';
-      ctx.globalAlpha = 0.07;
-      ctx.fillStyle = '#1e7145';
-
-      // Head
-      ctx.beginPath();
-      ctx.ellipse(cx, y0 + 0.175*fh, fw*0.135, fh*0.155, 0, 0, Math.PI*2);
-      ctx.fill();
-
-      // Torso
-      ctx.beginPath();
-      ctx.moveTo(x0 + 0.29*fw, y0 + 0.38*fh);
-      ctx.lineTo(x0 + 0.71*fw, y0 + 0.38*fh);
-      ctx.lineTo(x0 + 0.64*fw, y0 + 0.92*fh);
-      ctx.lineTo(x0 + 0.36*fw, y0 + 0.92*fh);
-      ctx.closePath();
-      ctx.fill();
-
-      ctx.restore();
+    // ─── Init / resize ────────────────────────────────────────────────────────
+    function resize() {
+      const col = canvas.parentElement;
+      W = col.clientWidth  || window.innerWidth * 0.55;
+      H = col.clientHeight || window.innerHeight;
+      canvas.width  = W;
+      canvas.height = H;
+      initDone = false;
+      buildPaths();
+      // Seed dots deferred so frame can start without blocking
+      setTimeout(seedDots, 0);
     }
+
+    window.addEventListener('resize', resize);
 
     function init() {
       resize();
-      seedDots();
       requestAnimationFrame(draw);
     }
 
-    window.addEventListener('resize', () => {
-      resize();
-      // Re-map dots to new coords (nx/ny are normalized so they're fine)
-    });
-
-    // Wait for fonts/layout
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
