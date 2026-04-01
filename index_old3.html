@@ -1200,165 +1200,75 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- SHARED SVG FILTERS FOR ALL VARIANTS -->
-  <!-- ============================================================ -->
-  <svg height="0" width="0" style="position:absolute;overflow:hidden;pointer-events:none">
-    <defs>
-      <!-- Body ambient glow (heavy blur, creates implied silhouette) -->
-      <filter id="fig-body" x="-60%" y="-15%" width="220%" height="130%">
-        <feGaussianBlur stdDeviation="18"/>
-      </filter>
-      <!-- Internal structure glow (light blur + merge) -->
-      <filter id="fig-lines" x="-40%" y="-20%" width="180%" height="140%">
-        <feGaussianBlur stdDeviation="2.5" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <!-- Particle glow -->
-      <filter id="fig-particle">
-        <feGaussianBlur stdDeviation="1.8"/>
-      </filter>
-      <!-- Branch glow -->
-      <filter id="branch-glow" x="-30%" y="-30%" width="160%" height="160%">
-        <feGaussianBlur stdDeviation="3.5" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-      <!-- Strong ambient for Mix -->
-      <filter id="mix-ambient" x="-80%" y="-40%" width="260%" height="180%">
-        <feGaussianBlur stdDeviation="28"/>
-      </filter>
-    </defs>
-  </svg>
-
-  <!-- ============================================================ -->
   <!-- VARIANT 1: THE AGENT -->
   <!-- ============================================================ -->
   <section id="variant-agent">
-    <div class="v1-wrap">
-      <div class="v1-grid-bg"></div>
+    <div class="agent-scene">
 
-      <!-- LEFT: Data figure -->
-      <div class="v1-figure-col">
+      <!-- ambient grid -->
+      <div class="agent-grid"></div>
 
-        <!-- floating data pills -->
-        <div class="v1-pill v1-pill-a">
-          <span class="v1-pill-dot"></span>
-          <span class="v1-pill-label">Labor cost</span>
-          <span class="v1-pill-val">28.4%</span>
-          <span class="v1-pill-delta v1-down">↓ 2.1%</span>
-        </div>
-        <div class="v1-pill v1-pill-b">
-          <span class="v1-pill-dot"></span>
-          <span class="v1-pill-label">Live P&amp;L</span>
-          <span class="v1-pill-val">$14,280</span>
-          <span class="v1-pill-delta v1-up">↑ on track</span>
-        </div>
-        <div class="v1-pill v1-pill-c">
-          <span class="v1-pill-dot v1-pill-dot-warn"></span>
-          <span class="v1-pill-label">Inventory</span>
-          <span class="v1-pill-val">3 low</span>
-          <span class="v1-pill-delta">→ reorder sent</span>
-        </div>
+      <!-- radial glow behind the figure -->
+      <div class="agent-glow"></div>
 
-        <!-- The figure -->
-        <svg class="v1-figure-svg" viewBox="0 0 400 780" xmlns="http://www.w3.org/2000/svg">
-          <!-- Body ambient glow (blurred shapes create human form) -->
-          <g filter="url(#fig-body)" opacity="0.9">
-            <circle cx="200" cy="85" r="56" fill="#0f3d24"/>
-            <ellipse cx="200" cy="156" rx="28" ry="22" fill="#0f3d24"/>
-            <ellipse cx="200" cy="268" rx="84" ry="118" fill="#0f3d24"/>
-            <path d="M132,170 Q100,262 94,378" stroke="#0f3d24" stroke-width="40" fill="none" stroke-linecap="round"/>
-            <path d="M268,170 Q300,262 306,378" stroke="#0f3d24" stroke-width="40" fill="none" stroke-linecap="round"/>
-            <path d="M170,358 Q156,515 152,685" stroke="#0f3d24" stroke-width="36" fill="none" stroke-linecap="round"/>
-            <path d="M230,358 Q244,515 248,685" stroke="#0f3d24" stroke-width="36" fill="none" stroke-linecap="round"/>
-          </g>
+      <!-- SVG silhouette -->
+      <svg class="agent-figure" viewBox="0 0 240 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- head -->
+        <ellipse cx="120" cy="72" rx="44" ry="50" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.9"/>
+        <!-- neck -->
+        <line x1="120" y1="122" x2="120" y2="148" stroke="#2ba854" stroke-width="1.2" opacity="0.7"/>
+        <!-- shoulders -->
+        <path d="M 60 148 Q 120 136 180 148" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.85"/>
+        <!-- torso -->
+        <path d="M 60 148 L 48 300 L 192 300 L 180 148 Z" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.75"/>
+        <!-- left arm -->
+        <path d="M 60 160 Q 24 240 32 320" fill="none" stroke="#2ba854" stroke-width="1.1" opacity="0.65"/>
+        <!-- right arm -->
+        <path d="M 180 160 Q 216 240 208 320" fill="none" stroke="#2ba854" stroke-width="1.1" opacity="0.65"/>
+        <!-- left leg -->
+        <path d="M 88 300 L 72 460" fill="none" stroke="#2ba854" stroke-width="1.1" opacity="0.65"/>
+        <!-- right leg -->
+        <path d="M 152 300 L 168 460" fill="none" stroke="#2ba854" stroke-width="1.1" opacity="0.65"/>
+        <!-- data nodes at joints -->
+        <circle cx="120" cy="72" r="3" fill="#2ba854" opacity="0.6"><animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="60" cy="148" r="2.5" fill="#2ba854" opacity="0.5"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.4s" repeatCount="indefinite"/></circle>
+        <circle cx="180" cy="148" r="2.5" fill="#2ba854" opacity="0.5"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="2.7s" repeatCount="indefinite"/></circle>
+        <circle cx="48" cy="300" r="2.5" fill="#2ba854" opacity="0.45"><animate attributeName="opacity" values="0.45;0.85;0.45" dur="3.2s" repeatCount="indefinite"/></circle>
+        <circle cx="192" cy="300" r="2.5" fill="#2ba854" opacity="0.45"><animate attributeName="opacity" values="0.45;0.85;0.45" dur="2.9s" repeatCount="indefinite"/></circle>
+        <!-- data stream lines inside torso -->
+        <line x1="90" y1="170" x2="90" y2="280" stroke="#2ba854" stroke-width="0.5" opacity="0.2"><animate attributeName="opacity" values="0.2;0.5;0.2" dur="2s" repeatCount="indefinite"/></line>
+        <line x1="120" y1="155" x2="120" y2="295" stroke="#2ba854" stroke-width="0.5" opacity="0.25"><animate attributeName="opacity" values="0.25;0.6;0.25" dur="1.7s" repeatCount="indefinite"/></line>
+        <line x1="150" y1="170" x2="150" y2="280" stroke="#2ba854" stroke-width="0.5" opacity="0.2"><animate attributeName="opacity" values="0.2;0.5;0.2" dur="2.3s" repeatCount="indefinite"/></line>
+      </svg>
 
-          <!-- Internal structure (anatomy / data lines) -->
-          <g filter="url(#fig-lines)">
-            <!-- Head ring -->
-            <circle cx="200" cy="85" r="53" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.8"/>
-            <!-- Eyes -->
-            <ellipse cx="183" cy="79" rx="7" ry="5" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.65"/>
-            <ellipse cx="217" cy="79" rx="7" ry="5" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.65"/>
-            <!-- Eye connect arc -->
-            <path d="M183,74 Q200,68 217,74" fill="none" stroke="#1e7145" stroke-width="0.5" opacity="0.4"/>
-            <!-- Spine -->
-            <path d="M200,140 Q197,208 200,280 Q203,340 200,375" fill="none" stroke="#2ba854" stroke-width="0.95" opacity="0.75"/>
-            <!-- Collarbone -->
-            <path d="M200,150 Q172,147 150,158" fill="none" stroke="#1e7145" stroke-width="0.8" opacity="0.65"/>
-            <path d="M200,150 Q228,147 250,158" fill="none" stroke="#1e7145" stroke-width="0.8" opacity="0.65"/>
-            <!-- Ribs L -->
-            <path d="M200,180 Q168,182 148,196 Q142,208 146,220" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.62"/>
-            <path d="M200,205 Q168,207 147,221 Q141,233 145,245" fill="none" stroke="#1e7145" stroke-width="0.62" opacity="0.56"/>
-            <path d="M200,230 Q169,231 149,244 Q144,255 148,266" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.5"/>
-            <path d="M200,252 Q171,253 152,264 Q147,274 151,284" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.44"/>
-            <!-- Ribs R -->
-            <path d="M200,180 Q232,182 252,196 Q258,208 254,220" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.62"/>
-            <path d="M200,205 Q232,207 253,221 Q259,233 255,245" fill="none" stroke="#1e7145" stroke-width="0.62" opacity="0.56"/>
-            <path d="M200,230 Q231,231 251,244 Q256,255 252,266" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.5"/>
-            <path d="M200,252 Q229,253 248,264 Q253,274 249,284" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.44"/>
-            <!-- Pelvis arc -->
-            <path d="M160,342 Q200,360 240,342" fill="none" stroke="#1e7145" stroke-width="0.75" opacity="0.55"/>
-            <!-- Left arm nerve -->
-            <path d="M150,164 Q117,258 104,362 Q99,378 102,394" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.55"/>
-            <!-- Right arm nerve -->
-            <path d="M250,164 Q283,258 296,362 Q301,378 298,394" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.55"/>
-            <!-- Left leg nerve -->
-            <path d="M180,382 Q164,502 157,596 Q153,648 155,682" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.5"/>
-            <!-- Right leg nerve -->
-            <path d="M220,382 Q236,502 243,596 Q247,648 245,682" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.5"/>
-            <!-- Hand branches L -->
-            <path d="M102,394 Q90,410 84,426" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-            <path d="M102,394 Q99,412 97,428" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-            <path d="M102,394 Q108,411 113,426" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-            <!-- Hand branches R -->
-            <path d="M298,394 Q310,410 316,426" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-            <path d="M298,394 Q301,412 303,428" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-            <path d="M298,394 Q292,411 287,426" fill="none" stroke="#1e7145" stroke-width="0.48" opacity="0.36"/>
-          </g>
-
-          <!-- Animated particles -->
-          <circle r="2.5" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="2.8s" repeatCount="indefinite" path="M200,140 Q197,208 200,280 Q203,340 200,375"/>
-            <animate attributeName="opacity" values="0;1;0" dur="2.8s" repeatCount="indefinite"/>
-          </circle>
-          <circle r="1.6" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="1.7s" repeatCount="indefinite" begin="0.4s" path="M200,205 Q168,207 147,221 Q141,233 145,245"/>
-            <animate attributeName="opacity" values="0;0.85;0" dur="1.7s" repeatCount="indefinite" begin="0.4s"/>
-          </circle>
-          <circle r="1.6" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="1.7s" repeatCount="indefinite" begin="1.1s" path="M200,205 Q232,207 253,221 Q259,233 255,245"/>
-            <animate attributeName="opacity" values="0;0.85;0" dur="1.7s" repeatCount="indefinite" begin="1.1s"/>
-          </circle>
-          <circle r="2" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="3.6s" repeatCount="indefinite" begin="0.2s" path="M150,164 Q117,258 104,362 Q99,378 102,394"/>
-            <animate attributeName="opacity" values="0;0.7;0" dur="3.6s" repeatCount="indefinite" begin="0.2s"/>
-          </circle>
-          <circle r="2" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="3.6s" repeatCount="indefinite" begin="1.9s" path="M250,164 Q283,258 296,362 Q301,378 298,394"/>
-            <animate attributeName="opacity" values="0;0.7;0" dur="3.6s" repeatCount="indefinite" begin="1.9s"/>
-          </circle>
-          <circle r="1.8" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="4.6s" repeatCount="indefinite" begin="0.8s" path="M180,382 Q164,502 157,596 Q153,648 155,682"/>
-            <animate attributeName="opacity" values="0;0.65;0" dur="4.6s" repeatCount="indefinite" begin="0.8s"/>
-          </circle>
-          <circle r="1.8" fill="#2ba854" filter="url(#fig-particle)">
-            <animateMotion dur="4.6s" repeatCount="indefinite" begin="2.4s" path="M220,382 Q236,502 243,596 Q247,648 245,682"/>
-            <animate attributeName="opacity" values="0;0.65;0" dur="4.6s" repeatCount="indefinite" begin="2.4s"/>
-          </circle>
-        </svg>
+      <!-- floating stat cards -->
+      <div class="agent-card agent-card-1">
+        <div class="agent-card-label">Labor Cost</div>
+        <div class="agent-card-value">28.4%</div>
+        <div class="agent-card-delta">↓ 2.1% vs last week</div>
+      </div>
+      <div class="agent-card agent-card-2">
+        <div class="agent-card-label">Live P&amp;L</div>
+        <div class="agent-card-value">$14,280</div>
+        <div class="agent-card-delta">↑ On track today</div>
+      </div>
+      <div class="agent-card agent-card-3">
+        <div class="agent-card-label">Inventory Alert</div>
+        <div class="agent-card-value">3 items low</div>
+        <div class="agent-card-delta">→ Reorder triggered</div>
       </div>
 
-      <!-- RIGHT: Copy -->
-      <div class="v1-copy-col">
-        <p class="v1-kicker">Variant 01 — The Agent</p>
-        <h2 class="v1-headline">Meet your<br>new <em>operator.</em></h2>
-        <p class="v1-sub">ChiveIQ isn't a dashboard. It's an intelligence that runs your restaurants — monitoring labor, inventory, P&amp;L, and ops in real time. Not a tool you check. An agent that acts.</p>
-        <div class="v1-cta-row">
-          <button class="v1-btn-primary">Request early access</button>
-          <button class="v1-btn-ghost">What it handles →</button>
+      <!-- headline -->
+      <div class="agent-copy">
+        <p class="agent-kicker">Variant 01 — The Agent</p>
+        <h2 class="agent-headline">Meet your<br>new <em>operator.</em></h2>
+        <p class="agent-sub">ChiveIQ runs your restaurants around the clock. Not a dashboard you check — an intelligence that acts. Labor, inventory, P&amp;L, ops — handled. You focus on the food.</p>
+        <div class="agent-cta-row">
+          <button class="agent-btn-primary">Request early access</button>
+          <button class="agent-btn-ghost">See what it handles →</button>
         </div>
-        <p class="v1-footnote">Built for 5–50 unit QSR operators.</p>
       </div>
+
     </div>
   </section>
 
@@ -1366,157 +1276,112 @@ nav {
   <!-- VARIANT 2: THE LIVING SYSTEM -->
   <!-- ============================================================ -->
   <section id="variant-living">
-    <div class="v2-wrap">
-      <div class="v2-bg-pulse"></div>
+    <div class="living-scene">
+      <div class="living-bg"></div>
 
-      <!-- Organism: figure + extending branches -->
-      <svg class="v2-organism-svg" viewBox="0 0 1200 860" xmlns="http://www.w3.org/2000/svg">
+      <!-- animated SVG organism -->
+      <svg class="living-organism" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <filter id="v2-body" x="-80%" y="-20%" width="260%" height="140%">
-            <feGaussianBlur stdDeviation="20"/>
-          </filter>
-          <filter id="v2-lines" x="-40%" y="-30%" width="180%" height="160%">
-            <feGaussianBlur stdDeviation="2.5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="v2-branch" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="v2-particle">
+          <radialGradient id="nodeGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2ba854" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#2ba854" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="blur-sm">
             <feGaussianBlur stdDeviation="2"/>
+          </filter>
+          <filter id="glow-filter">
+            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+            <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
         </defs>
 
-        <!-- Figure body glow (centered at 600,380) -->
-        <g filter="url(#v2-body)" opacity="0.85" transform="translate(440,0)">
-          <circle cx="160" cy="85" r="52" fill="#0f3d24"/>
-          <ellipse cx="160" cy="152" rx="26" ry="20" fill="#0f3d24"/>
-          <ellipse cx="160" cy="260" rx="78" ry="110" fill="#0f3d24"/>
-          <path d="M92,165 Q62,248 56,356" stroke="#0f3d24" stroke-width="36" fill="none" stroke-linecap="round"/>
-          <path d="M228,165 Q258,248 264,356" stroke="#0f3d24" stroke-width="36" fill="none" stroke-linecap="round"/>
-          <path d="M132,348 Q120,488 116,640" stroke="#0f3d24" stroke-width="32" fill="none" stroke-linecap="round"/>
-          <path d="M188,348 Q200,488 204,640" stroke="#0f3d24" stroke-width="32" fill="none" stroke-linecap="round"/>
+        <!-- outer ring -->
+        <circle cx="400" cy="400" r="300" fill="none" stroke="#1e7145" stroke-width="0.6" opacity="0.18">
+          <animateTransform attributeName="transform" type="rotate" from="0 400 400" to="360 400 400" dur="80s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="400" cy="400" r="280" fill="none" stroke="#2ba854" stroke-width="0.4" opacity="0.12" stroke-dasharray="4 12">
+          <animateTransform attributeName="transform" type="rotate" from="360 400 400" to="0 400 400" dur="60s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- branch stems — botanical structure -->
+        <g filter="url(#glow-filter)" opacity="0.7">
+          <path d="M400,400 Q340,320 280,240" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <path d="M400,400 Q460,320 520,240" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <path d="M400,400 Q310,400 220,380" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <path d="M400,400 Q490,400 580,380" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <path d="M400,400 Q350,480 300,560" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <path d="M400,400 Q450,480 500,560" fill="none" stroke="#1e7145" stroke-width="1.4"/>
+          <!-- secondary branches -->
+          <path d="M280,240 Q240,200 200,180" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M280,240 Q260,190 250,155" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M520,240 Q560,200 600,180" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M520,240 Q540,190 550,155" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M220,380 Q170,360 130,330" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M580,380 Q630,360 670,330" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M300,560 Q270,600 250,640" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
+          <path d="M500,560 Q530,600 550,640" fill="none" stroke="#2ba854" stroke-width="0.9" opacity="0.6"/>
         </g>
 
-        <!-- Figure internal structure -->
-        <g filter="url(#v2-lines)" transform="translate(440,0)">
-          <circle cx="160" cy="85" r="49" fill="none" stroke="#2ba854" stroke-width="0.85" opacity="0.75"/>
-          <ellipse cx="145" cy="80" rx="6" ry="4.5" fill="none" stroke="#2ba854" stroke-width="0.65" opacity="0.6"/>
-          <ellipse cx="175" cy="80" rx="6" ry="4.5" fill="none" stroke="#2ba854" stroke-width="0.65" opacity="0.6"/>
-          <path d="M160,136 Q158,200 160,265 Q162,315 160,352" fill="none" stroke="#2ba854" stroke-width="0.85" opacity="0.7"/>
-          <path d="M160,146 Q136,143 115,153" fill="none" stroke="#1e7145" stroke-width="0.75" opacity="0.62"/>
-          <path d="M160,146 Q184,143 205,153" fill="none" stroke="#1e7145" stroke-width="0.75" opacity="0.62"/>
-          <path d="M160,175 Q132,177 113,190 Q108,200 111,212" fill="none" stroke="#1e7145" stroke-width="0.6" opacity="0.58"/>
-          <path d="M160,175 Q188,177 207,190 Q212,200 209,212" fill="none" stroke="#1e7145" stroke-width="0.6" opacity="0.58"/>
-          <path d="M160,200 Q132,202 112,215 Q107,226 111,238" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.52"/>
-          <path d="M160,200 Q188,202 208,215 Q213,226 209,238" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.52"/>
-          <path d="M160,225 Q133,226 114,238 Q109,248 113,258" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.45"/>
-          <path d="M160,225 Q187,226 206,238 Q211,248 207,258" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.45"/>
-          <path d="M122,326 Q160,342 198,326" fill="none" stroke="#1e7145" stroke-width="0.7" opacity="0.52"/>
+        <!-- data pulse particles traveling along branches -->
+        <circle r="4" fill="#2ba854" opacity="0.9" filter="url(#blur-sm)">
+          <animateMotion dur="3s" repeatCount="indefinite" path="M400,400 Q340,320 280,240 Q240,200 200,180"/>
+          <animate attributeName="opacity" values="0;0.9;0" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle r="3.5" fill="#2ba854" opacity="0.8" filter="url(#blur-sm)">
+          <animateMotion dur="2.5s" repeatCount="indefinite" begin="0.8s" path="M400,400 Q460,320 520,240 Q560,200 600,180"/>
+          <animate attributeName="opacity" values="0;0.8;0" dur="2.5s" repeatCount="indefinite" begin="0.8s"/>
+        </circle>
+        <circle r="3" fill="#2ba854" opacity="0.7" filter="url(#blur-sm)">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.4s" path="M400,400 Q310,400 220,380 Q170,360 130,330"/>
+          <animate attributeName="opacity" values="0;0.7;0" dur="3.5s" repeatCount="indefinite" begin="1.4s"/>
+        </circle>
+        <circle r="3.5" fill="#2ba854" opacity="0.85" filter="url(#blur-sm)">
+          <animateMotion dur="2.8s" repeatCount="indefinite" begin="0.3s" path="M400,400 Q490,400 580,380 Q630,360 670,330"/>
+          <animate attributeName="opacity" values="0;0.85;0" dur="2.8s" repeatCount="indefinite" begin="0.3s"/>
+        </circle>
+        <circle r="3" fill="#2ba854" opacity="0.75" filter="url(#blur-sm)">
+          <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M400,400 Q350,480 300,560 Q270,600 250,640"/>
+          <animate attributeName="opacity" values="0;0.75;0" dur="4s" repeatCount="indefinite" begin="2s"/>
+        </circle>
+        <circle r="3.2" fill="#2ba854" opacity="0.8" filter="url(#blur-sm)">
+          <animateMotion dur="3.2s" repeatCount="indefinite" begin="1.1s" path="M400,400 Q450,480 500,560 Q530,600 550,640"/>
+          <animate attributeName="opacity" values="0;0.8;0" dur="3.2s" repeatCount="indefinite" begin="1.1s"/>
+        </circle>
+
+        <!-- center node -->
+        <circle cx="400" cy="400" r="28" fill="url(#nodeGlow)" opacity="0.6">
+          <animate attributeName="r" values="24;34;24" dur="4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.4;0.8;0.4" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="400" cy="400" r="12" fill="none" stroke="#2ba854" stroke-width="1.5">
+          <animate attributeName="r" values="10;14;10" dur="4s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="400" cy="400" r="5" fill="#2ba854"/>
+
+        <!-- leaf nodes at branch tips -->
+        <g filter="url(#glow-filter)">
+          <circle cx="200" cy="180" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="3.5s" repeatCount="indefinite"/></circle>
+          <circle cx="600" cy="180" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="3.1s" repeatCount="indefinite" begin="0.6s"/></circle>
+          <circle cx="130" cy="330" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="4s" repeatCount="indefinite" begin="1.2s"/></circle>
+          <circle cx="670" cy="330" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="2.9s" repeatCount="indefinite" begin="0.4s"/></circle>
+          <circle cx="250" cy="640" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="3.7s" repeatCount="indefinite" begin="1.8s"/></circle>
+          <circle cx="550" cy="640" r="6" fill="none" stroke="#2ba854" stroke-width="1.2"><animate attributeName="r" values="5;8;5" dur="3.3s" repeatCount="indefinite" begin="0.9s"/></circle>
         </g>
-
-        <!-- Extending branches from figure extremities -->
-        <g filter="url(#v2-branch)">
-          <!-- From left hand → left side -->
-          <path d="M496,356 Q420,340 340,318 Q260,298 180,280 Q120,265 60,252" fill="none" stroke="#1e7145" stroke-width="1.2" opacity="0.65"/>
-          <path d="M496,356 Q415,365 330,375 Q245,384 165,390 Q100,395 40,398" fill="none" stroke="#1e7145" stroke-width="1" opacity="0.55"/>
-          <!-- Secondary left branches -->
-          <path d="M60,252 Q30,240 8,226" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.45"/>
-          <path d="M40,398 Q14,395 2,392" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.4"/>
-          <path d="M180,280 Q155,258 132,240" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.42"/>
-          <path d="M165,390 Q138,388 112,385" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.38"/>
-
-          <!-- From right hand → right side -->
-          <path d="M704,356 Q780,340 860,318 Q940,298 1020,280 Q1080,265 1140,252" fill="none" stroke="#1e7145" stroke-width="1.2" opacity="0.65"/>
-          <path d="M704,356 Q785,365 870,375 Q955,384 1035,390 Q1100,395 1160,398" fill="none" stroke="#1e7145" stroke-width="1" opacity="0.55"/>
-          <!-- Secondary right branches -->
-          <path d="M1140,252 Q1170,240 1192,226" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.45"/>
-          <path d="M1160,398 Q1186,395 1198,392" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.4"/>
-          <path d="M1020,280 Q1045,258 1068,240" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.42"/>
-          <path d="M1035,390 Q1062,388 1088,385" fill="none" stroke="#2ba854" stroke-width="0.7" opacity="0.38"/>
-
-          <!-- From head → upward -->
-          <path d="M600,20 Q598,10 596,0" fill="none" stroke="#1e7145" stroke-width="0.9" opacity="0.4"/>
-
-          <!-- From feet → downward -->
-          <path d="M556,640 Q544,720 536,800" fill="none" stroke="#1e7145" stroke-width="1" opacity="0.5"/>
-          <path d="M644,640 Q656,720 664,800" fill="none" stroke="#1e7145" stroke-width="1" opacity="0.5"/>
-          <path d="M536,800 Q522,840 514,860" fill="none" stroke="#2ba854" stroke-width="0.65" opacity="0.35"/>
-          <path d="M664,800 Q678,840 686,860" fill="none" stroke="#2ba854" stroke-width="0.65" opacity="0.35"/>
-        </g>
-
-        <!-- Module label nodes at branch tips -->
-        <!-- POS (far left) -->
-        <circle cx="42" cy="252" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.7">
-          <animate attributeName="r" values="4;7;4" dur="3s" repeatCount="indefinite"/>
-        </circle>
-        <!-- Labor (mid-left upper) -->
-        <circle cx="38" cy="398" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.6">
-          <animate attributeName="r" values="4;7;4" dur="3.5s" repeatCount="indefinite" begin="0.5s"/>
-        </circle>
-        <!-- Inventory (far right) -->
-        <circle cx="1158" cy="252" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.7">
-          <animate attributeName="r" values="4;7;4" dur="2.8s" repeatCount="indefinite" begin="0.9s"/>
-        </circle>
-        <!-- Live P&L (mid-right upper) -->
-        <circle cx="1162" cy="398" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.6">
-          <animate attributeName="r" values="4;7;4" dur="3.2s" repeatCount="indefinite" begin="0.3s"/>
-        </circle>
-        <!-- Ops Hub (bottom left) -->
-        <circle cx="514" cy="858" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.55">
-          <animate attributeName="r" values="4;7;4" dur="4s" repeatCount="indefinite" begin="1.5s"/>
-        </circle>
-        <!-- Analytics (bottom right) -->
-        <circle cx="686" cy="858" r="5" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.55">
-          <animate attributeName="r" values="4;7;4" dur="3.7s" repeatCount="indefinite" begin="0.7s"/>
-        </circle>
-
-        <!-- Particles along branches -->
-        <circle r="3" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="4s" repeatCount="indefinite" path="M496,356 Q420,340 340,318 Q260,298 180,280 Q120,265 60,252"/>
-          <animate attributeName="opacity" values="0;0.8;0" dur="4s" repeatCount="indefinite"/>
-        </circle>
-        <circle r="3" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M704,356 Q780,340 860,318 Q940,298 1020,280 Q1080,265 1140,252"/>
-          <animate attributeName="opacity" values="0;0.8;0" dur="4s" repeatCount="indefinite" begin="2s"/>
-        </circle>
-        <circle r="2.5" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="3.5s" repeatCount="indefinite" begin="0.8s" path="M496,356 Q415,365 330,375 Q245,384 165,390 Q100,395 40,398"/>
-          <animate attributeName="opacity" values="0;0.7;0" dur="3.5s" repeatCount="indefinite" begin="0.8s"/>
-        </circle>
-        <circle r="2.5" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1.8s" path="M704,356 Q785,365 870,375 Q955,384 1035,390 Q1100,395 1160,398"/>
-          <animate attributeName="opacity" values="0;0.7;0" dur="3.5s" repeatCount="indefinite" begin="1.8s"/>
-        </circle>
-        <circle r="2.5" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="5s" repeatCount="indefinite" begin="1s" path="M556,640 Q544,720 536,800 Q522,840 514,860"/>
-          <animate attributeName="opacity" values="0;0.65;0" dur="5s" repeatCount="indefinite" begin="1s"/>
-        </circle>
-        <circle r="2.5" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="5s" repeatCount="indefinite" begin="2.5s" path="M644,640 Q656,720 664,800 Q678,840 686,860"/>
-          <animate attributeName="opacity" values="0;0.65;0" dur="5s" repeatCount="indefinite" begin="2.5s"/>
-        </circle>
-        <!-- Spine particle (figure internal) -->
-        <circle r="2.2" fill="#2ba854" filter="url(#v2-particle)">
-          <animateMotion dur="2.8s" repeatCount="indefinite" path="M600,136 Q597,200 600,265 Q603,315 600,352"/>
-          <animate attributeName="opacity" values="0;1;0" dur="2.8s" repeatCount="indefinite"/>
-        </circle>
       </svg>
 
-      <!-- Module label overlays -->
-      <div class="v2-label v2-label-pos">POS</div>
-      <div class="v2-label v2-label-labor">Labor</div>
-      <div class="v2-label v2-label-inv">Inventory</div>
-      <div class="v2-label v2-label-pl">Live P&amp;L</div>
-      <div class="v2-label v2-label-ops">Ops Hub</div>
-      <div class="v2-label v2-label-analytics">Analytics</div>
+      <!-- overlay labels on the organism nodes -->
+      <div class="living-node-label" style="top:18%;left:18%">POS</div>
+      <div class="living-node-label" style="top:18%;right:18%">Inventory</div>
+      <div class="living-node-label" style="top:38%;left:8%">Labor</div>
+      <div class="living-node-label" style="top:38%;right:8%">Live P&amp;L</div>
+      <div class="living-node-label" style="bottom:14%;left:22%">Ops Hub</div>
+      <div class="living-node-label" style="bottom:14%;right:22%">Analytics</div>
 
-      <!-- Copy overlay -->
-      <div class="v2-copy">
-        <p class="v2-kicker">Variant 02 — The Living System</p>
-        <h2 class="v2-headline">Your restaurants.<br><em>One organism.</em></h2>
-        <p class="v2-sub">Every operation — connected, breathing, processing. ChiveIQ is the nervous system your restaurant group has never had.</p>
+      <div class="living-copy">
+        <p class="living-kicker">Variant 02 — The Living System</p>
+        <h2 class="living-headline">Your restaurants.<br><em>One organism.</em></h2>
+        <p class="living-sub">Six modules. One nervous system. ChiveIQ connects every operational layer into a single coherent intelligence — always breathing, always processing, always acting.</p>
+        <button class="living-btn">Explore the system →</button>
       </div>
     </div>
   </section>
@@ -1525,630 +1390,578 @@ nav {
   <!-- VARIANT 3: THE MANIFESTO -->
   <!-- ============================================================ -->
   <section id="variant-manifesto">
-    <div class="v3-wrap">
-      <!-- Ghost figure behind text -->
-      <svg class="v3-ghost-figure" viewBox="0 0 400 780" xmlns="http://www.w3.org/2000/svg">
-        <filter id="v3-ghost" x="-60%" y="-15%" width="220%" height="130%">
-          <feGaussianBlur stdDeviation="22"/>
-        </filter>
-        <g filter="url(#v3-ghost)" opacity="0.22">
-          <circle cx="200" cy="85" r="56" fill="#2ba854"/>
-          <ellipse cx="200" cy="156" rx="28" ry="22" fill="#2ba854"/>
-          <ellipse cx="200" cy="268" rx="84" ry="118" fill="#2ba854"/>
-          <path d="M132,170 Q100,262 94,378" stroke="#2ba854" stroke-width="40" fill="none" stroke-linecap="round"/>
-          <path d="M268,170 Q300,262 306,378" stroke="#2ba854" stroke-width="40" fill="none" stroke-linecap="round"/>
-          <path d="M170,358 Q156,515 152,685" stroke="#2ba854" stroke-width="36" fill="none" stroke-linecap="round"/>
-          <path d="M230,358 Q244,515 248,685" stroke="#2ba854" stroke-width="36" fill="none" stroke-linecap="round"/>
-        </g>
-      </svg>
+    <div class="mani-scene">
 
-      <p class="v3-kicker-label">Variant 03 — The Manifesto</p>
+      <div class="mani-statement mani-s1">
+        <span class="mani-num">—</span>
+        <p class="mani-text">You don't need<br>another<br><em>tool.</em></p>
+      </div>
 
-      <div class="v3-statements">
-        <div class="v3-line v3-l0">
-          <span class="v3-num">—</span>
-          <span class="v3-word">You don't need another <em>tool.</em></span>
-        </div>
-        <div class="v3-divider"></div>
-        <div class="v3-line v3-l1">
-          <span class="v3-num">01</span>
-          <span class="v3-word">Fewer <em>systems.</em></span>
-        </div>
-        <div class="v3-divider"></div>
-        <div class="v3-line v3-l2">
-          <span class="v3-num">02</span>
-          <span class="v3-word">Sharper <em>ops.</em></span>
-        </div>
-        <div class="v3-divider"></div>
-        <div class="v3-line v3-l3">
-          <span class="v3-num">03</span>
-          <span class="v3-word">One opinionated <em>platform.</em></span>
-        </div>
-        <div class="v3-divider"></div>
-        <div class="v3-line v3-l4">
-          <span class="v3-num">04</span>
-          <span class="v3-word">No <em>sprawl.</em></span>
-        </div>
-        <div class="v3-divider"></div>
-        <div class="v3-cta-line">
-          <p class="v3-descriptor">ChiveIQ. The operating system restaurants actually need. Built for 5–50 unit QSR operators. One system replacing five to ten. No configuration theatre. No dashboard art projects.</p>
-          <button class="v3-btn">Request a demo</button>
+      <div class="mani-statement mani-s2">
+        <span class="mani-num">01</span>
+        <p class="mani-text">You need<br>fewer<br><em>systems.</em></p>
+      </div>
+
+      <div class="mani-statement mani-s3">
+        <span class="mani-num">02</span>
+        <p class="mani-text">Sharper<br><em>ops.</em></p>
+      </div>
+
+      <div class="mani-statement mani-s4">
+        <span class="mani-num">03</span>
+        <p class="mani-text">One<br>opinionated<br><em>platform.</em></p>
+      </div>
+
+      <div class="mani-statement mani-s5">
+        <span class="mani-num">04</span>
+        <p class="mani-text">No<br><em>sprawl.</em></p>
+        <p class="mani-sub-text">ChiveIQ — the operating system restaurants actually need. Built for 5–50 unit QSR operators. Replacing 5–10 tools with one coherent system. No configuration theatre. No dashboard art projects. Just operations that work.</p>
+        <div class="mani-cta-row">
+          <button class="mani-btn">Request a demo</button>
+          <span class="mani-tagline">ChiveIQ · 2026</span>
         </div>
       </div>
+
+      <p class="mani-kicker-label">Variant 03 — The Manifesto</p>
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- VARIANT 4: THE MIX -->
+  <!-- VARIANT 4: THE MIX (Agent + Living System) -->
   <!-- ============================================================ -->
   <section id="variant-mix">
-    <div class="v4-wrap">
-      <div class="v4-ambient"></div>
+    <div class="mix-scene">
+      <div class="mix-bg-glow"></div>
 
-      <!-- Full-bleed organism + figure SVG -->
-      <svg class="v4-scene-svg" viewBox="0 0 1400 900" xmlns="http://www.w3.org/2000/svg">
+      <!-- living organism background (faint) -->
+      <svg class="mix-organism-bg" viewBox="0 0 1200 900" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <filter id="v4-body" x="-70%" y="-20%" width="240%" height="140%">
-            <feGaussianBlur stdDeviation="22"/>
+          <filter id="mix-blur">
+            <feGaussianBlur stdDeviation="6"/>
           </filter>
-          <filter id="v4-lines" x="-40%" y="-25%" width="180%" height="150%">
-            <feGaussianBlur stdDeviation="2.8" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="v4-branch" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3.5" result="b"/>
-            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <filter id="v4-particle">
-            <feGaussianBlur stdDeviation="2"/>
-          </filter>
-          <radialGradient id="v4-core-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#2ba854" stop-opacity="0.25"/>
-            <stop offset="100%" stop-color="#2ba854" stop-opacity="0"/>
-          </radialGradient>
         </defs>
-
-        <!-- Deep core glow behind figure -->
-        <ellipse cx="400" cy="430" rx="220" ry="350" fill="url(#v4-core-glow)"/>
-
-        <!-- Figure body glow (offset left) -->
-        <g filter="url(#v4-body)" opacity="0.9" transform="translate(240,50)">
-          <circle cx="160" cy="85" r="58" fill="#0f3d24"/>
-          <ellipse cx="160" cy="158" rx="29" ry="23" fill="#0f3d24"/>
-          <ellipse cx="160" cy="272" rx="88" ry="122" fill="#0f3d24"/>
-          <path d="M88,172 Q54,268 48,388" stroke="#0f3d24" stroke-width="42" fill="none" stroke-linecap="round"/>
-          <path d="M232,172 Q266,268 272,388" stroke="#0f3d24" stroke-width="42" fill="none" stroke-linecap="round"/>
-          <path d="M128,370 Q114,528 110,702" stroke="#0f3d24" stroke-width="38" fill="none" stroke-linecap="round"/>
-          <path d="M192,370 Q206,528 210,702" stroke="#0f3d24" stroke-width="38" fill="none" stroke-linecap="round"/>
+        <g filter="url(#mix-blur)" opacity="0.35">
+          <path d="M600,450 Q480,350 360,260" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <path d="M600,450 Q720,350 840,260" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <path d="M600,450 Q460,450 320,420" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <path d="M600,450 Q740,450 880,420" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <path d="M600,450 Q540,560 480,660" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <path d="M600,450 Q660,560 720,660" fill="none" stroke="#1e7145" stroke-width="2"/>
+          <!-- extended branches -->
+          <path d="M360,260 Q290,200 220,170" fill="none" stroke="#2ba854" stroke-width="1.2"/>
+          <path d="M840,260 Q910,200 980,170" fill="none" stroke="#2ba854" stroke-width="1.2"/>
+          <path d="M320,420 Q230,400 150,370" fill="none" stroke="#2ba854" stroke-width="1.2"/>
+          <path d="M880,420 Q970,400 1050,370" fill="none" stroke="#2ba854" stroke-width="1.2"/>
+          <path d="M480,660 Q440,720 420,780" fill="none" stroke="#2ba854" stroke-width="1.2"/>
+          <path d="M720,660 Q760,720 780,780" fill="none" stroke="#2ba854" stroke-width="1.2"/>
         </g>
-
-        <!-- Figure internal structure -->
-        <g filter="url(#v4-lines)" transform="translate(240,50)">
-          <circle cx="160" cy="85" r="55" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.8"/>
-          <ellipse cx="143" cy="79" rx="7.5" ry="5.5" fill="none" stroke="#2ba854" stroke-width="0.75" opacity="0.68"/>
-          <ellipse cx="177" cy="79" rx="7.5" ry="5.5" fill="none" stroke="#2ba854" stroke-width="0.75" opacity="0.68"/>
-          <path d="M143,73 Q160,66 177,73" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.42"/>
-          <path d="M160,142 Q157,212 160,286 Q163,348 160,382" fill="none" stroke="#2ba854" stroke-width="1" opacity="0.75"/>
-          <path d="M160,152 Q132,149 110,160" fill="none" stroke="#1e7145" stroke-width="0.8" opacity="0.65"/>
-          <path d="M160,152 Q188,149 210,160" fill="none" stroke="#1e7145" stroke-width="0.8" opacity="0.65"/>
-          <!-- Ribs L -->
-          <path d="M160,182 Q128,184 108,198 Q102,210 106,222" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.62"/>
-          <path d="M160,208 Q127,210 106,224 Q100,236 104,248" fill="none" stroke="#1e7145" stroke-width="0.62" opacity="0.56"/>
-          <path d="M160,234 Q128,235 108,248 Q103,259 107,270" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.5"/>
-          <path d="M160,256 Q130,257 110,268 Q105,278 109,288" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.44"/>
-          <!-- Ribs R -->
-          <path d="M160,182 Q192,184 212,198 Q218,210 214,222" fill="none" stroke="#1e7145" stroke-width="0.65" opacity="0.62"/>
-          <path d="M160,208 Q193,210 214,224 Q220,236 216,248" fill="none" stroke="#1e7145" stroke-width="0.62" opacity="0.56"/>
-          <path d="M160,234 Q192,235 212,248 Q217,259 213,270" fill="none" stroke="#1e7145" stroke-width="0.58" opacity="0.5"/>
-          <path d="M160,256 Q190,257 210,268 Q215,278 211,288" fill="none" stroke="#1e7145" stroke-width="0.55" opacity="0.44"/>
-          <!-- Pelvis -->
-          <path d="M118,348 Q160,368 202,348" fill="none" stroke="#1e7145" stroke-width="0.78" opacity="0.55"/>
-          <!-- Arms -->
-          <path d="M108,166 Q74,264 60,372 Q55,390 58,408" fill="none" stroke="#1e7145" stroke-width="0.68" opacity="0.55"/>
-          <path d="M212,166 Q246,264 260,372 Q265,390 262,408" fill="none" stroke="#1e7145" stroke-width="0.68" opacity="0.55"/>
-          <!-- Legs -->
-          <path d="M138,390 Q122,518 115,618 Q110,672 112,706" fill="none" stroke="#1e7145" stroke-width="0.68" opacity="0.5"/>
-          <path d="M182,390 Q196,518 203,618 Q208,672 206,706" fill="none" stroke="#1e7145" stroke-width="0.68" opacity="0.5"/>
-        </g>
-
-        <!-- Branches extending right (into the copy area) -->
-        <g filter="url(#v4-branch)">
-          <!-- From right hand outward -->
-          <path d="M502,408 Q600,390 720,368 Q840,346 960,332 Q1060,320 1160,314" fill="none" stroke="#1e7145" stroke-width="1.2" opacity="0.55"/>
-          <path d="M502,408 Q598,420 714,432 Q830,444 944,452 Q1050,459 1160,462" fill="none" stroke="#1e7145" stroke-width="1" opacity="0.48"/>
-          <!-- Secondary branches right -->
-          <path d="M720,368 Q760,348 798,332" fill="none" stroke="#2ba854" stroke-width="0.65" opacity="0.38"/>
-          <path d="M960,332 Q1002,316 1038,304" fill="none" stroke="#2ba854" stroke-width="0.6" opacity="0.35"/>
-          <path d="M714,432 Q755,434 792,436" fill="none" stroke="#2ba854" stroke-width="0.6" opacity="0.34"/>
-          <path d="M944,452 Q985,456 1020,460" fill="none" stroke="#2ba854" stroke-width="0.6" opacity="0.32"/>
-          <!-- From head upward-right -->
-          <path d="M400,85 Q520,60 660,42 Q780,28 900,20" fill="none" stroke="#1e7145" stroke-width="0.8" opacity="0.38"/>
-          <!-- From left hand outward left (into edge) -->
-          <path d="M298,408 Q220,392 140,378 Q80,366 20,360" fill="none" stroke="#1e7145" stroke-width="0.9" opacity="0.35"/>
-          <!-- From feet downward -->
-          <path d="M352,752 Q330,810 318,860" fill="none" stroke="#1e7145" stroke-width="0.85" opacity="0.38"/>
-          <path d="M450,752 Q472,810 484,860" fill="none" stroke="#1e7145" stroke-width="0.85" opacity="0.38"/>
-        </g>
-
-        <!-- Particles -->
-        <circle r="2.8" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="2.9s" repeatCount="indefinite" path="M400,142 Q397,212 400,286 Q403,348 400,382"/>
-          <animate attributeName="opacity" values="0;1;0" dur="2.9s" repeatCount="indefinite"/>
+        <!-- pulse particles -->
+        <circle r="5" fill="#2ba854" opacity="0">
+          <animateMotion dur="4s" repeatCount="indefinite" path="M600,450 Q480,350 360,260 Q290,200 220,170"/>
+          <animate attributeName="opacity" values="0;0.6;0" dur="4s" repeatCount="indefinite"/>
         </circle>
-        <circle r="2.2" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="4.2s" repeatCount="indefinite" begin="0.3s" path="M502,408 Q600,390 720,368 Q840,346 960,332 Q1060,320 1160,314"/>
-          <animate attributeName="opacity" values="0;0.75;0" dur="4.2s" repeatCount="indefinite" begin="0.3s"/>
+        <circle r="4" fill="#2ba854" opacity="0">
+          <animateMotion dur="3.5s" repeatCount="indefinite" begin="1s" path="M600,450 Q720,350 840,260 Q910,200 980,170"/>
+          <animate attributeName="opacity" values="0;0.5;0" dur="3.5s" repeatCount="indefinite" begin="1s"/>
         </circle>
-        <circle r="2" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M502,408 Q598,420 714,432 Q830,444 944,452 Q1050,459 1160,462"/>
-          <animate attributeName="opacity" values="0;0.7;0" dur="4s" repeatCount="indefinite" begin="2s"/>
+        <circle r="4.5" fill="#2ba854" opacity="0">
+          <animateMotion dur="5s" repeatCount="indefinite" begin="2s" path="M600,450 Q460,450 320,420 Q230,400 150,370"/>
+          <animate attributeName="opacity" values="0;0.55;0" dur="5s" repeatCount="indefinite" begin="2s"/>
         </circle>
-        <circle r="2" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="3.8s" repeatCount="indefinite" begin="0.9s" path="M348,408 Q266,264 252,168"/>
-          <animate attributeName="opacity" values="0;0.65;0" dur="3.8s" repeatCount="indefinite" begin="0.9s"/>
-        </circle>
-        <circle r="1.8" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="1.75s" repeatCount="indefinite" begin="0.5s" path="M400,208 Q367,210 346,224 Q340,236 344,248"/>
-          <animate attributeName="opacity" values="0;0.85;0" dur="1.75s" repeatCount="indefinite" begin="0.5s"/>
-        </circle>
-        <circle r="1.8" fill="#2ba854" filter="url(#v4-particle)">
-          <animateMotion dur="1.75s" repeatCount="indefinite" begin="1.2s" path="M400,208 Q433,210 454,224 Q460,236 456,248"/>
-          <animate attributeName="opacity" values="0;0.85;0" dur="1.75s" repeatCount="indefinite" begin="1.2s"/>
+        <circle r="4" fill="#2ba854" opacity="0">
+          <animateMotion dur="4.5s" repeatCount="indefinite" begin="0.5s" path="M600,450 Q740,450 880,420 Q970,400 1050,370"/>
+          <animate attributeName="opacity" values="0;0.5;0" dur="4.5s" repeatCount="indefinite" begin="0.5s"/>
         </circle>
       </svg>
 
-      <!-- Copy panel (right side) -->
-      <div class="v4-copy">
-        <p class="v4-kicker">Variant 04 — The Mix</p>
-        <h2 class="v4-headline">The intelligence<br>your restaurants<br><em>have been waiting for.</em></h2>
-        <p class="v4-sub">An agent at the center of your operation — connected to every data stream, acting on every signal. Not a tool you configure. A presence that runs your business.</p>
-        <div class="v4-modules">
-          <span class="v4-mod">POS</span>
-          <span class="v4-mod">Inventory</span>
-          <span class="v4-mod">Labor</span>
-          <span class="v4-mod">Live P&amp;L</span>
-          <span class="v4-mod">Ops Hub</span>
-          <span class="v4-mod">Analytics</span>
-        </div>
-        <div class="v4-cta-row">
-          <button class="v4-btn-primary">Meet the agent</button>
-          <button class="v4-btn-ghost">Explore the system →</button>
+      <!-- centered agent silhouette -->
+      <svg class="mix-figure" viewBox="0 0 240 480" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- glow fill -->
+        <ellipse cx="120" cy="240" rx="90" ry="180" fill="#0f3d24" opacity="0.45"/>
+        <!-- head -->
+        <ellipse cx="120" cy="72" rx="44" ry="50" fill="none" stroke="#2ba854" stroke-width="1.4">
+          <animate attributeName="stroke-opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+        </ellipse>
+        <!-- neck -->
+        <line x1="120" y1="122" x2="120" y2="148" stroke="#2ba854" stroke-width="1.4" opacity="0.8"/>
+        <!-- shoulders -->
+        <path d="M 60 148 Q 120 136 180 148" fill="none" stroke="#2ba854" stroke-width="1.4" opacity="0.9"/>
+        <!-- torso -->
+        <path d="M 60 148 L 48 300 L 192 300 L 180 148 Z" fill="#0f3d24" fill-opacity="0.3" stroke="#2ba854" stroke-width="1.4" opacity="0.8"/>
+        <!-- internal data grid -->
+        <line x1="78" y1="170" x2="78" y2="288" stroke="#2ba854" stroke-width="0.5" opacity="0.3"/>
+        <line x1="100" y1="158" x2="100" y2="296" stroke="#2ba854" stroke-width="0.5" opacity="0.35"/>
+        <line x1="120" y1="154" x2="120" y2="298" stroke="#2ba854" stroke-width="0.6" opacity="0.4"/>
+        <line x1="140" y1="158" x2="140" y2="296" stroke="#2ba854" stroke-width="0.5" opacity="0.35"/>
+        <line x1="162" y1="170" x2="162" y2="288" stroke="#2ba854" stroke-width="0.5" opacity="0.3"/>
+        <!-- horizontal scan line -->
+        <line x1="56" y1="200" x2="184" y2="200" stroke="#2ba854" stroke-width="0.5" opacity="0">
+          <animate attributeName="y1" values="158;298;158" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="y2" values="158;298;158" dur="3s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite"/>
+        </line>
+        <!-- arms -->
+        <path d="M 60 160 Q 24 240 32 320" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.7"/>
+        <path d="M 180 160 Q 216 240 208 320" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.7"/>
+        <!-- legs -->
+        <path d="M 88 300 L 72 460" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.7"/>
+        <path d="M 152 300 L 168 460" fill="none" stroke="#2ba854" stroke-width="1.2" opacity="0.7"/>
+        <!-- pulsing joints -->
+        <circle cx="120" cy="72" r="4" fill="#2ba854"><animate attributeName="r" values="3;6;3" dur="3s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.7;1;0.7" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="60" cy="148" r="3" fill="#2ba854"><animate attributeName="r" values="2;4.5;2" dur="2.5s" repeatCount="indefinite"/></circle>
+        <circle cx="180" cy="148" r="3" fill="#2ba854"><animate attributeName="r" values="2;4.5;2" dur="2.8s" repeatCount="indefinite"/></circle>
+        <circle cx="48" cy="300" r="3" fill="#2ba854"><animate attributeName="r" values="2;4;2" dur="3.3s" repeatCount="indefinite"/></circle>
+        <circle cx="192" cy="300" r="3" fill="#2ba854"><animate attributeName="r" values="2;4;2" dur="2.6s" repeatCount="indefinite"/></circle>
+        <!-- eye glow -->
+        <ellipse cx="106" cy="65" rx="6" ry="6" fill="#2ba854" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite"/></ellipse>
+        <ellipse cx="134" cy="65" rx="6" ry="6" fill="#2ba854" opacity="0.5"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" begin="0.2s"/></ellipse>
+      </svg>
+
+      <!-- copy -->
+      <div class="mix-copy">
+        <p class="mix-kicker">Variant 04 — The Mix</p>
+        <h2 class="mix-headline">The intelligence<br>your restaurants<br><em>have been waiting for.</em></h2>
+        <p class="mix-sub">An agent at the center of everything — connected to every operational layer, processing every signal, optimizing every shift. ChiveIQ isn't software. It's your new operations partner.</p>
+        <div class="mix-cta-row">
+          <button class="mix-btn-primary">Meet the agent</button>
+          <button class="mix-btn-ghost">How it works →</button>
         </div>
       </div>
+
     </div>
   </section>
 
   <!-- ============================================================ -->
-  <!-- VARIANT STYLES (reworked) -->
+  <!-- VARIANT STYLES -->
   <!-- ============================================================ -->
   <style>
 
+    /* ---- SHARED ---- */
     #variant-agent, #variant-living, #variant-manifesto, #variant-mix {
+      min-height: 100vh;
       overflow: hidden;
     }
 
-    /* ===== V1: AGENT ===== */
-    #variant-agent { background: #060d08; min-height: 100vh; }
+    /* ================= VARIANT 1: AGENT ================= */
+    #variant-agent { background: #080e0a; }
 
-    .v1-wrap {
+    .agent-scene {
       position: relative;
+      min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
-      min-height: 100vh;
       max-width: 1200px;
       margin: 0 auto;
-      padding: 100px 52px 80px;
-      gap: 40px;
+      padding: 120px 52px 80px;
+      gap: 60px;
     }
 
-    .v1-grid-bg {
+    .agent-grid {
       position: absolute; inset: 0;
       background-image:
-        linear-gradient(rgba(43,168,84,0.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(43,168,84,0.035) 1px, transparent 1px);
-      background-size: 64px 64px;
+        linear-gradient(rgba(43,168,84,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(43,168,84,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .agent-glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 500px; height: 700px;
+      background: radial-gradient(ellipse at center, rgba(43,168,84,0.08) 0%, transparent 65%);
       pointer-events: none;
     }
 
-    .v1-figure-col {
+    .agent-figure {
       position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .v1-figure-svg {
-      width: 300px;
-      height: 585px;
+      width: 260px;
+      height: 520px;
       display: block;
-      animation: v1-breathe 5s ease-in-out infinite;
-      position: relative;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 24px rgba(43,168,84,0.35));
+      animation: agentFloat 6s ease-in-out infinite;
       z-index: 2;
     }
 
-    @keyframes v1-breathe {
-      0%, 100% { transform: translateY(0); opacity: 0.92; }
-      50% { transform: translateY(-10px); opacity: 1; }
+    @keyframes agentFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
     }
 
-    /* Data pills */
-    .v1-pill {
+    /* floating data cards */
+    .agent-card {
       position: absolute;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(6, 13, 8, 0.88);
-      border: 1px solid rgba(43, 168, 84, 0.18);
-      border-radius: 100px;
-      padding: 8px 14px;
-      backdrop-filter: blur(10px);
+      background: rgba(15,26,18,0.85);
+      border: 1px solid rgba(43,168,84,0.22);
+      border-radius: 4px;
+      padding: 14px 18px;
+      backdrop-filter: blur(12px);
       z-index: 3;
-      white-space: nowrap;
     }
+    .agent-card-1 { top: 20%; left: 2%; animation: cardFloat1 5s ease-in-out infinite; }
+    .agent-card-2 { top: 44%; right: 4%; animation: cardFloat2 6s ease-in-out infinite; }
+    .agent-card-3 { bottom: 20%; left: 8%; animation: cardFloat3 4.5s ease-in-out infinite; }
 
-    .v1-pill-a { top: 18%; left: -8%; animation: pf1 5s ease-in-out infinite; }
-    .v1-pill-b { top: 48%; right: -12%; animation: pf2 6s ease-in-out infinite; }
-    .v1-pill-c { bottom: 22%; left: -4%; animation: pf3 4.5s ease-in-out infinite; }
+    @keyframes cardFloat1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes cardFloat2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+    @keyframes cardFloat3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 
-    @keyframes pf1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-    @keyframes pf2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(7px)} }
-    @keyframes pf3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
-
-    .v1-pill-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: #2ba854;
-      animation: dot-pulse 2s ease-in-out infinite;
-      flex-shrink: 0;
-    }
-    .v1-pill-dot-warn { background: #c8a96e; }
-
-    @keyframes dot-pulse {
-      0%,100%{opacity:0.6;transform:scale(1)}
-      50%{opacity:1;transform:scale(1.4)}
-    }
-
-    .v1-pill-label {
+    .agent-card-label {
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
-      letter-spacing: 0.14em;
+      font-size: 0.54rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: rgba(253,252,248,0.35);
+      color: rgba(43,168,84,0.7);
+      margin-bottom: 6px;
     }
-    .v1-pill-val {
+    .agent-card-value {
       font-family: 'Sora', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       color: #fdfcf8;
       letter-spacing: -0.02em;
     }
-    .v1-pill-delta {
+    .agent-card-delta {
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
-      color: rgba(43,168,84,0.65);
+      font-size: 0.58rem;
+      color: rgba(43,168,84,0.55);
+      margin-top: 4px;
     }
-    .v1-down { color: rgba(43,168,84,0.65) !important; }
-    .v1-up { color: rgba(43,168,84,0.65) !important; }
 
-    .v1-copy-col { position: relative; z-index: 2; }
+    .agent-copy { position: relative; z-index: 2; }
 
-    .v1-kicker {
+    .agent-kicker {
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
+      font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.4);
-      margin-bottom: 32px;
+      color: rgba(43,168,84,0.55);
+      margin-bottom: 28px;
     }
 
-    .v1-headline {
-      font-size: clamp(2.8rem, 4.8vw, 5rem);
+    .agent-headline {
+      font-size: clamp(2.8rem, 5vw, 5.2rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 0.95;
       color: #fdfcf8;
       margin-bottom: 28px;
     }
-    .v1-headline em { font-style: normal; color: #2ba854; }
+    .agent-headline em { font-style: normal; color: #2ba854; }
 
-    .v1-sub {
-      font-size: 0.98rem;
+    .agent-sub {
+      font-size: 1rem;
       font-weight: 300;
-      color: rgba(253,252,248,0.45);
-      line-height: 1.78;
-      max-width: 400px;
+      color: rgba(253,252,248,0.5);
+      line-height: 1.75;
+      max-width: 420px;
       margin-bottom: 44px;
     }
 
-    .v1-cta-row { display: flex; gap: 12px; align-items: center; margin-bottom: 24px; }
+    .agent-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
-    .v1-btn-primary {
-      background: #2ba854; color: #fdfcf8;
-      border: none; padding: 13px 26px;
-      font-family: 'Sora', sans-serif; font-size: 0.86rem; font-weight: 600;
-      border-radius: 3px; cursor: pointer; letter-spacing: -0.01em;
+    .agent-btn-primary {
+      background: #2ba854;
+      color: #fdfcf8;
+      border: none;
+      padding: 14px 28px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 3px;
+      cursor: pointer;
+      letter-spacing: -0.01em;
     }
-    .v1-btn-ghost {
-      background: transparent; color: rgba(253,252,248,0.4);
-      border: 1px solid rgba(253,252,248,0.12); padding: 13px 20px;
-      font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em;
-      border-radius: 3px; cursor: pointer;
-    }
-
-    .v1-footnote {
+    .agent-btn-ghost {
+      background: transparent;
+      color: rgba(253,252,248,0.5);
+      border: 1px solid rgba(253,252,248,0.15);
+      padding: 14px 22px;
       font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
-      letter-spacing: 0.14em;
-      color: rgba(253,252,248,0.18);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      border-radius: 3px;
+      cursor: pointer;
     }
 
-    /* ===== V2: LIVING SYSTEM ===== */
-    #variant-living { background: #040a06; min-height: 100vh; position: relative; }
+    /* ================= VARIANT 2: LIVING ================= */
+    #variant-living { background: #060d08; }
 
-    .v2-wrap {
+    .living-scene {
       position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 100px 0 80px;
+      padding: 120px 52px 80px;
     }
 
-    .v2-bg-pulse {
+    .living-bg {
       position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 60% at 50% 48%, rgba(12,42,22,0.7) 0%, transparent 70%);
+      background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(15,61,36,0.4) 0%, transparent 70%);
     }
 
-    .v2-organism-svg {
+    .living-organism {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0; left: 0;
-      object-fit: cover;
+      width: min(90vw, 700px);
+      height: min(90vw, 700px);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0.9;
     }
 
-    .v2-label {
+    .living-node-label {
       position: absolute;
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
+      font-size: 0.58rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.5);
+      color: rgba(43,168,84,0.55);
       pointer-events: none;
     }
-    .v2-label-pos    { top: 27%; left: 1%; }
-    .v2-label-labor  { top: 45%; left: 0.5%; }
-    .v2-label-inv    { top: 27%; right: 1%; }
-    .v2-label-pl     { top: 45%; right: 0.5%; }
-    .v2-label-ops    { bottom: 6%; left: 38%; }
-    .v2-label-analytics { bottom: 6%; right: 38%; }
 
-    .v2-copy {
+    .living-copy {
       position: relative;
       z-index: 2;
       text-align: center;
-      max-width: 540px;
-      margin-top: auto;
+      max-width: 560px;
     }
 
-    .v2-kicker {
+    .living-kicker {
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
+      font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.35);
-      margin-bottom: 20px;
+      color: rgba(43,168,84,0.45);
+      margin-bottom: 24px;
     }
 
-    .v2-headline {
-      font-size: clamp(2.2rem, 4vw, 4.2rem);
+    .living-headline {
+      font-size: clamp(2.4rem, 4.5vw, 4.5rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1;
       color: #fdfcf8;
-      margin-bottom: 18px;
+      margin-bottom: 24px;
     }
-    .v2-headline em { font-style: normal; color: #2ba854; }
+    .living-headline em { font-style: normal; color: #2ba854; }
 
-    .v2-sub {
-      font-size: 0.95rem;
+    .living-sub {
+      font-size: 1rem;
       font-weight: 300;
-      color: rgba(253,252,248,0.38);
+      color: rgba(253,252,248,0.45);
       line-height: 1.75;
+      margin-bottom: 36px;
     }
 
-    /* ===== V3: MANIFESTO ===== */
-    #variant-manifesto { background: #070c08; min-height: 100vh; position: relative; }
+    .living-btn {
+      background: transparent;
+      color: #2ba854;
+      border: 1px solid rgba(43,168,84,0.35);
+      padding: 14px 28px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      border-radius: 3px;
+      cursor: pointer;
+    }
 
-    .v3-wrap {
+    /* ================= VARIANT 3: MANIFESTO ================= */
+    #variant-manifesto { background: #0a0f0b; }
+
+    .mani-scene {
       position: relative;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding: 110px 9vw 90px;
+      padding: 120px 8vw;
+      overflow: hidden;
     }
 
-    .v3-ghost-figure {
+    .mani-kicker-label {
       position: absolute;
-      right: 5%;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 320px;
-      height: 624px;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-
-    .v3-kicker-label {
-      position: absolute;
-      top: 34px; right: 52px;
+      top: 32px; right: 52px;
       font-family: 'DM Mono', monospace;
       font-size: 0.54rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.28);
+      color: rgba(43,168,84,0.3);
     }
 
-    .v3-statements { position: relative; z-index: 2; }
-
-    .v3-divider {
-      width: 100%;
-      height: 1px;
-      background: rgba(43,168,84,0.07);
-      margin: 0;
-    }
-
-    .v3-line {
+    .mani-statement {
       display: flex;
       align-items: baseline;
-      gap: 28px;
-      padding: 20px 0;
+      gap: 32px;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(43,168,84,0.08);
     }
+    .mani-statement:first-of-type { border-top: 1px solid rgba(43,168,84,0.08); }
 
-    .v3-num {
+    .mani-num {
       font-family: 'DM Mono', monospace;
-      font-size: 0.58rem;
+      font-size: 0.62rem;
       letter-spacing: 0.18em;
-      color: rgba(43,168,84,0.28);
-      min-width: 24px;
+      color: rgba(43,168,84,0.35);
+      min-width: 28px;
       flex-shrink: 0;
       align-self: flex-start;
-      padding-top: 10px;
+      padding-top: 8px;
     }
 
-    .v3-word {
-      font-size: clamp(2.2rem, 5.5vw, 6.5rem);
+    .mani-text {
+      font-size: clamp(2.6rem, 6vw, 7rem);
       font-weight: 800;
       letter-spacing: -0.04em;
-      line-height: 0.92;
+      line-height: 0.9;
+      color: rgba(253,252,248,0.15);
     }
-    .v3-word em { font-style: normal; color: #2ba854; }
+    .mani-s1 .mani-text { color: rgba(253,252,248,0.08); }
+    .mani-s2 .mani-text { color: rgba(253,252,248,0.55); }
+    .mani-s3 .mani-text { color: rgba(253,252,248,0.75); }
+    .mani-s4 .mani-text { color: rgba(253,252,248,0.9); }
+    .mani-s5 .mani-text { color: #fdfcf8; }
 
-    .v3-l0 .v3-word { color: rgba(253,252,248,0.07); }
-    .v3-l1 .v3-word { color: rgba(253,252,248,0.38); }
-    .v3-l2 .v3-word { color: rgba(253,252,248,0.62); }
-    .v3-l3 .v3-word { color: rgba(253,252,248,0.82); }
-    .v3-l4 .v3-word { color: #fdfcf8; }
+    .mani-text em { font-style: normal; color: #2ba854; }
 
-    .v3-cta-line {
+    .mani-sub-text {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(253,252,248,0.4);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-top: 20px;
+    }
+
+    .mani-cta-row {
       display: flex;
       align-items: center;
-      gap: 48px;
-      padding: 36px 0 0;
-      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 32px;
     }
 
-    .v3-descriptor {
+    .mani-btn {
+      background: #2ba854;
+      color: #fdfcf8;
+      border: none;
+      padding: 14px 28px;
+      font-family: 'Sora', sans-serif;
       font-size: 0.88rem;
-      font-weight: 300;
-      color: rgba(253,252,248,0.3);
-      line-height: 1.75;
-      max-width: 420px;
+      font-weight: 600;
+      border-radius: 3px;
+      cursor: pointer;
     }
 
-    .v3-btn {
-      background: #2ba854; color: #fdfcf8;
-      border: none; padding: 13px 26px;
-      font-family: 'Sora', sans-serif; font-size: 0.86rem; font-weight: 600;
-      border-radius: 3px; cursor: pointer; flex-shrink: 0;
+    .mani-tagline {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      color: rgba(253,252,248,0.2);
     }
 
-    /* ===== V4: THE MIX ===== */
-    #variant-mix { background: #030708; min-height: 100vh; position: relative; }
+    /* ================= VARIANT 4: THE MIX ================= */
+    #variant-mix { background: #050c07; }
 
-    .v4-wrap {
+    .mix-scene {
       position: relative;
       min-height: 100vh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 52px 80px;
+      gap: 80px;
     }
 
-    .v4-ambient {
+    .mix-bg-glow {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse 55% 70% at 30% 50%, rgba(10,36,18,0.75) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 40% at 75% 45%, rgba(43,168,84,0.03) 0%, transparent 55%);
+        radial-gradient(ellipse 80% 80% at 35% 50%, rgba(15,61,36,0.5) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 75% 50%, rgba(43,168,84,0.04) 0%, transparent 60%);
     }
 
-    .v4-scene-svg {
+    .mix-organism-bg {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
+      pointer-events: none;
     }
 
-    .v4-copy {
+    .mix-figure {
       position: relative;
+      width: 280px;
+      height: 560px;
+      display: block;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 40px rgba(43,168,84,0.4)) drop-shadow(0 0 80px rgba(43,168,84,0.15));
+      animation: mixFloat 7s ease-in-out infinite;
       z-index: 2;
-      grid-column: 2;
-      padding: 100px 52px 80px 32px;
     }
 
-    .v4-kicker {
+    @keyframes mixFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.01); }
+    }
+
+    .mix-copy { position: relative; z-index: 2; }
+
+    .mix-kicker {
       font-family: 'DM Mono', monospace;
-      font-size: 0.56rem;
+      font-size: 0.58rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(43,168,84,0.38);
-      margin-bottom: 32px;
+      color: rgba(43,168,84,0.45);
+      margin-bottom: 28px;
     }
 
-    .v4-headline {
-      font-size: clamp(2.2rem, 3.8vw, 4rem);
+    .mix-headline {
+      font-size: clamp(2.4rem, 4.2vw, 4.5rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1;
       color: #fdfcf8;
-      margin-bottom: 26px;
+      margin-bottom: 28px;
     }
-    .v4-headline em { font-style: normal; color: #2ba854; }
+    .mix-headline em { font-style: normal; color: #2ba854; }
 
-    .v4-sub {
-      font-size: 0.96rem;
+    .mix-sub {
+      font-size: 1rem;
       font-weight: 300;
-      color: rgba(253,252,248,0.42);
-      line-height: 1.78;
-      max-width: 400px;
-      margin-bottom: 36px;
+      color: rgba(253,252,248,0.45);
+      line-height: 1.75;
+      max-width: 420px;
+      margin-bottom: 44px;
     }
 
-    .v4-modules {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 40px;
-    }
+    .mix-cta-row { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
 
-    .v4-mod {
+    .mix-btn-primary {
+      background: #2ba854;
+      color: #fdfcf8;
+      border: none;
+      padding: 14px 28px;
+      font-family: 'Sora', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .mix-btn-ghost {
+      background: transparent;
+      color: rgba(253,252,248,0.45);
+      border: 1px solid rgba(253,252,248,0.12);
+      padding: 14px 22px;
       font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: rgba(43,168,84,0.65);
-      border: 1px solid rgba(43,168,84,0.18);
-      padding: 7px 13px;
-      border-radius: 2px;
-    }
-
-    .v4-cta-row { display: flex; gap: 12px; align-items: center; }
-
-    .v4-btn-primary {
-      background: #2ba854; color: #fdfcf8;
-      border: none; padding: 13px 26px;
-      font-family: 'Sora', sans-serif; font-size: 0.86rem; font-weight: 600;
-      border-radius: 3px; cursor: pointer;
-    }
-    .v4-btn-ghost {
-      background: transparent; color: rgba(253,252,248,0.38);
-      border: 1px solid rgba(253,252,248,0.1); padding: 13px 20px;
-      font-family: 'DM Mono', monospace; font-size: 0.68rem; letter-spacing: 0.08em;
-      border-radius: 3px; cursor: pointer;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      border-radius: 3px;
+      cursor: pointer;
     }
 
   </style>
-
 
   <footer>
     <div class="container">
