@@ -1197,11 +1197,11 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- VARIANT: LIVING SYSTEM — Metaball particle figure -->
+  <!-- VARIANT: LIVING SYSTEM — Outline path particle figure -->
 
   <style>
     #variant-living {
-      background: #020c06;
+      background: #020b05;
       min-height: 100vh;
       position: relative;
       overflow: hidden;
@@ -1251,13 +1251,13 @@ nav {
       border-radius:4px; cursor:pointer;
     }
     .lv-pill {
-      position:absolute; background:rgba(2,14,7,.92);
+      position:absolute; background:rgba(2,12,6,.92);
       border:1px solid rgba(43,168,84,.18); border-radius:6px;
       padding:10px 16px; backdrop-filter:blur(12px); z-index:8;
       animation:lv-float 5s ease-in-out infinite;
     }
-    .lv-pill:nth-child(2){animation-delay:-2s;animation-duration:6.4s;}
-    .lv-pill:nth-child(3){animation-delay:-3.6s;animation-duration:4.8s;}
+    .lv-pill:nth-child(2){animation-delay:-2.1s;animation-duration:6.4s;}
+    .lv-pill:nth-child(3){animation-delay:-3.7s;animation-duration:4.8s;}
     @keyframes lv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
     .lv-pill-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,168,84,.48);margin-bottom:4px;}
     .lv-pill-value{font-family:'Sora',sans-serif;font-size:1.08rem;font-weight:700;color:#f2efdf;letter-spacing:-.03em;}
@@ -1268,17 +1268,17 @@ nav {
     <div class="lv-wrap">
       <div class="lv-canvas-col">
         <canvas id="syn-canvas"></canvas>
-        <div class="lv-pill" style="top:12%;right:4%;">
+        <div class="lv-pill" style="top:11%;right:4%;">
           <div class="lv-pill-label">Labor Cost</div>
           <div class="lv-pill-value">26.4%</div>
           <div class="lv-pill-delta">↓ 1.8% this week</div>
         </div>
-        <div class="lv-pill" style="top:45%;right:2%;">
+        <div class="lv-pill" style="top:44%;right:2%;">
           <div class="lv-pill-label">Live P&amp;L</div>
           <div class="lv-pill-value">$4,218</div>
           <div class="lv-pill-delta">↑ On track</div>
         </div>
-        <div class="lv-pill" style="top:74%;right:5%;">
+        <div class="lv-pill" style="top:73%;right:5%;">
           <div class="lv-pill-label">Inventory</div>
           <div class="lv-pill-value">97%</div>
           <div class="lv-pill-delta">✓ Fully stocked</div>
@@ -1288,7 +1288,7 @@ nav {
         <div class="lv-eyebrow">New Operator · Intelligent Infrastructure</div>
         <h2 class="lv-headline">Finally.<br>Someone's<br>got the<br><em>back office.</em></h2>
         <p class="lv-body">You've been running the restaurant.<br><strong>ChiveIQ runs everything else.</strong></p>
-        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized. Handed to you when you need them.</p>
+        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized.</p>
         <div class="lv-relief">The operator your locations actually need.<br>Available 24 hours. Never calls out.</div>
         <div class="lv-cta-row">
           <button class="lv-btn-primary">See how it works</button>
@@ -1305,123 +1305,147 @@ nav {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // ── Metaball body definition ──────────────────────────────────────────
-    // All coords normalized 0-1 within the figure bounding box.
-    // Each blob: {cx, cy, sx (x-sigma), sy (y-sigma), w (weight)}
-    // Field value = sum of w * exp(-0.5*((dx/sx)²+(dy/sy)²))
-    // inBody if field > THRESHOLD
-
-    const THRESHOLD = 0.30;
-
-    const BLOBS = [
-      // ── Head (round, well-proportioned)
-      { cx:0.500, cy:0.098, sx:0.108, sy:0.102, w:1.00 },
-
-      // ── Neck (narrow bridge)
-      { cx:0.500, cy:0.228, sx:0.056, sy:0.055, w:0.90 },
-
-      // ── Clavicle / upper chest (wide)
-      { cx:0.500, cy:0.308, sx:0.205, sy:0.078, w:1.00 },
-
-      // ── Pec / mid chest
-      { cx:0.500, cy:0.415, sx:0.188, sy:0.092, w:1.00 },
-
-      // ── Solar plexus
-      { cx:0.500, cy:0.525, sx:0.172, sy:0.088, w:0.97 },
-
-      // ── Navel / lower torso
-      { cx:0.500, cy:0.635, sx:0.160, sy:0.082, w:0.93 },
-
-      // ── Waist (narrowest)
-      { cx:0.500, cy:0.742, sx:0.148, sy:0.074, w:0.88 },
-
-      // ── Hip hint at bottom
-      { cx:0.500, cy:0.855, sx:0.158, sy:0.060, w:0.82 },
-
-      // ── Left shoulder cap
-      { cx:0.310, cy:0.308, sx:0.088, sy:0.082, w:0.96 },
-      // ── Right shoulder cap
-      { cx:0.690, cy:0.308, sx:0.088, sy:0.082, w:0.96 },
-
-      // ── Left upper arm (angled slightly outward)
-      { cx:0.248, cy:0.442, sx:0.066, sy:0.112, w:0.91 },
-      // ── Right upper arm
-      { cx:0.752, cy:0.442, sx:0.066, sy:0.112, w:0.91 },
-
-      // ── Left forearm (continues outward)
-      { cx:0.208, cy:0.618, sx:0.056, sy:0.108, w:0.86 },
-      // ── Right forearm
-      { cx:0.792, cy:0.618, sx:0.056, sy:0.108, w:0.86 },
-
-      // ── Left wrist / hand
-      { cx:0.188, cy:0.782, sx:0.048, sy:0.072, w:0.79 },
-      // ── Right wrist / hand
-      { cx:0.812, cy:0.782, sx:0.048, sy:0.072, w:0.79 },
-    ];
-
-    function fieldAt(nx, ny) {
-      let v = 0;
-      for (let i = 0; i < BLOBS.length; i++) {
-        const b = BLOBS[i];
-        const dx = (nx - b.cx) / b.sx;
-        const dy = (ny - b.cy) / b.sy;
-        const d2 = dx*dx + dy*dy;
-        if (d2 < 9) v += b.w * Math.exp(-0.5 * d2);
-      }
-      return v;
-    }
-
-    // Rim weight: 1 at surface, 0 deep inside
-    // Field value just above THRESHOLD → surface (bright)
-    // Field value much higher → deep interior (dimmer)
-    function rimWeight(fv) {
-      const excess = (fv - THRESHOLD) / (THRESHOLD * 1.1);
-      return Math.exp(-excess * excess * 2.2);
-    }
-
-    // ── Canvas layout ─────────────────────────────────────────────────────
-    const NDOTS = 5200;
-    const CONN_R = 32, CONN_R_SQ = CONN_R * CONN_R;
+    const NDOTS     = 5000;
+    const CONN_R    = 34;
+    const CONN_R_SQ = CONN_R * CONN_R;
+    const EDGE_TEST_R = 7;   // px — used to detect rim dots
 
     let W, H;
-    let FW, FH, FX0, FY0;   // figure bounding box in screen px
-    let dots = [];
-    let adjList = [];
-    let rings = [], crowns = [];
-    let globalPulse = 0;
-    let lastFire = 0, lastPulse = 0;
+    let FW, FH, FX0, FY0;
+    let bodyPath = null;
+    let dots = [], adjList = [], rings = [], crowns = [];
+    let globalPulse = 0, lastFire = 0, lastPulse = 0;
     let seeded = false, adjReady = false;
 
-    function setFigureBox() {
-      FW = W * 0.78;
-      FH = H * 0.93;
+    // ── Figure layout ─────────────────────────────────────────────────────
+    function setBox() {
+      FW  = W * 0.82;
+      FH  = H * 0.92;
       FX0 = (W - FW) / 2;
-      FY0 = H * 0.035;
+      FY0 = H * 0.04;
     }
 
-    function toScreen(nx, ny) {
-      return { x: FX0 + nx * FW, y: FY0 + ny * FH };
+    // Convert normalised [0-1] figure coords → screen px
+    const sx = n => FX0 + n * FW;
+    const sy = n => FY0 + n * FH;
+
+    // ── Hand-crafted human outline ────────────────────────────────────────
+    // Single closed path: head → neck → right shoulder → right outer arm →
+    // right wrist → right inner arm → armpit concave → right torso down →
+    // waist → left torso up → left armpit → left inner arm → left wrist →
+    // left outer arm → left shoulder → neck → left head → crown
+    //
+    // Key: armpit concavities (X(0.730,0.440)→inward→X(0.658,0.270))
+    // create the visual arm/torso separation below the shoulder.
+
+    function buildPath() {
+      setBox();
+      const p = new Path2D();
+
+      // ── Head ──────────────────────────────────────────────────────────
+      p.moveTo(sx(0.500), sy(0.000));                       // crown
+
+      // right head arc
+      p.bezierCurveTo(sx(0.638), sy(-0.004), sx(0.668), sy(0.068),
+                      sx(0.663), sy(0.124));
+      p.bezierCurveTo(sx(0.658), sy(0.182), sx(0.624), sy(0.210),
+                      sx(0.556), sy(0.220));
+
+      // ── Right neck ────────────────────────────────────────────────────
+      p.lineTo(sx(0.554), sy(0.272));
+
+      // ── Right shoulder cap ────────────────────────────────────────────
+      p.bezierCurveTo(sx(0.636), sy(0.270), sx(0.748), sy(0.280),
+                      sx(0.852), sy(0.320));
+
+      // ── Right outer arm (hangs with very slight outward bow) ───────────
+      p.bezierCurveTo(sx(0.876), sy(0.430), sx(0.868), sy(0.700),
+                      sx(0.856), sy(0.884));
+
+      // ── Right wrist bottom ────────────────────────────────────────────
+      p.lineTo(sx(0.744), sy(0.884));
+
+      // ── Right inner arm going UP ──────────────────────────────────────
+      p.bezierCurveTo(sx(0.744), sy(0.700), sx(0.738), sy(0.490),
+                      sx(0.732), sy(0.444));
+
+      // ── Right armpit concave (curves sharply INWARD) ──────────────────
+      p.bezierCurveTo(sx(0.724), sy(0.388), sx(0.702), sy(0.308),
+                      sx(0.660), sy(0.272));
+
+      // ── Right torso side going DOWN ───────────────────────────────────
+      p.bezierCurveTo(sx(0.660), sy(0.510), sx(0.648), sy(0.710),
+                      sx(0.636), sy(0.884));
+
+      // ── Waist ─────────────────────────────────────────────────────────
+      p.lineTo(sx(0.364), sy(0.884));
+
+      // ── Left torso side going UP ──────────────────────────────────────
+      p.bezierCurveTo(sx(0.352), sy(0.710), sx(0.340), sy(0.510),
+                      sx(0.340), sy(0.272));
+
+      // ── Left armpit concave (curves sharply OUTWARD) ──────────────────
+      p.bezierCurveTo(sx(0.298), sy(0.308), sx(0.276), sy(0.388),
+                      sx(0.268), sy(0.444));
+
+      // ── Left inner arm going DOWN ─────────────────────────────────────
+      p.bezierCurveTo(sx(0.262), sy(0.490), sx(0.256), sy(0.700),
+                      sx(0.256), sy(0.884));
+
+      // ── Left wrist bottom ────────────────────────────────────────────
+      p.lineTo(sx(0.144), sy(0.884));
+
+      // ── Left outer arm going UP ───────────────────────────────────────
+      p.bezierCurveTo(sx(0.132), sy(0.700), sx(0.124), sy(0.430),
+                      sx(0.148), sy(0.320));
+
+      // ── Left shoulder cap ─────────────────────────────────────────────
+      p.bezierCurveTo(sx(0.252), sy(0.280), sx(0.364), sy(0.270),
+                      sx(0.446), sy(0.272));
+
+      // ── Left neck ────────────────────────────────────────────────────
+      p.lineTo(sx(0.444), sy(0.220));
+
+      // ── Left head arc ────────────────────────────────────────────────
+      p.bezierCurveTo(sx(0.376), sy(0.210), sx(0.342), sy(0.182),
+                      sx(0.337), sy(0.124));
+      p.bezierCurveTo(sx(0.332), sy(0.068), sx(0.362), sy(-0.004),
+                      sx(0.500), sy(0.000));  // back to crown
+
+      p.closePath();
+      bodyPath = p;
     }
 
-    // ── Seed dots in normalized space (fast, one-time) ────────────────────
+    function inBody(x, y) {
+      return ctx.isPointInPath(bodyPath, x, y);
+    }
+
+    // Rim score: fraction of 8 neighbours (at EDGE_TEST_R) that are OUTSIDE
+    function rimScore(x, y) {
+      const dirs = [[1,0],[-1,0],[0,1],[0,-1],[0.707,0.707],[-0.707,0.707],[0.707,-0.707],[-0.707,-0.707]];
+      let out = 0;
+      for (const [dx, dy] of dirs) {
+        if (!inBody(x + dx * EDGE_TEST_R, y + dy * EDGE_TEST_R)) out++;
+      }
+      return out / dirs.length;  // 0 = deep interior, 1 = on edge
+    }
+
+    // ── Dot seeding ───────────────────────────────────────────────────────
     function seedDots() {
       dots = [];
+      const maxTries = NDOTS * 22;
       let tries = 0;
-      while (dots.length < NDOTS && tries < NDOTS * 22) {
+      while (dots.length < NDOTS && tries < maxTries) {
         tries++;
-        const nx = Math.random();
-        const ny = Math.random() * 0.97;
-        const fv = fieldAt(nx, ny);
-        if (fv < THRESHOLD) continue;
-        const rw = rimWeight(fv);
+        const x = FX0 + Math.random() * FW;
+        const y = FY0 + Math.random() * FH;
+        if (!inBody(x, y)) continue;
+        const rs = rimScore(x, y);
         dots.push({
-          nx, ny,
-          x: 0, y: 0,           // screen coords, set in updateScreenCoords
-          rw,
-          // Dot radius: rim dots slightly larger for visual pop
-          r: 0.70 + rw * 0.65 + Math.random() * 0.30,
-          // Base alpha: rim bright, interior medium
-          base: 0.32 + rw * 0.54 + Math.random() * 0.08,
+          x, y,
+          rw: rs,
+          r:  0.68 + rs * 0.72 + Math.random() * 0.28,
+          base: 0.30 + rs * 0.58 + Math.random() * 0.08,
           flash: 0,
           flashDecay: 0.010 + Math.random() * 0.009,
         });
@@ -1429,15 +1453,7 @@ nav {
       seeded = true;
     }
 
-    function updateScreenCoords() {
-      setFigureBox();
-      for (const d of dots) {
-        const s = toScreen(d.nx, d.ny);
-        d.x = s.x; d.y = s.y;
-      }
-    }
-
-    function buildAdjacency() {
+    function buildAdj() {
       adjReady = false;
       adjList = dots.map(() => []);
       const cell = CONN_R;
@@ -1449,14 +1465,14 @@ nav {
         grid[k].push(i);
       }
       for (let i = 0; i < dots.length; i++) {
-        const gx = Math.floor(dots[i].x / cell), gy = Math.floor(dots[i].y / cell);
-        for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+        const gx = Math.floor(dots[i].x/cell), gy = Math.floor(dots[i].y/cell);
+        for (let dx=-1; dx<=1; dx++) for (let dy=-1; dy<=1; dy++) {
           const nb = grid[(gx+dx)*100000+(gy+dy)];
           if (!nb) continue;
           for (const j of nb) {
             if (j <= i) continue;
-            const ddx = dots[i].x - dots[j].x, ddy = dots[i].y - dots[j].y;
-            if (ddx*ddx + ddy*ddy < CONN_R_SQ) { adjList[i].push(j); adjList[j].push(i); }
+            const ddx = dots[i].x-dots[j].x, ddy = dots[i].y-dots[j].y;
+            if (ddx*ddx+ddy*ddy < CONN_R_SQ) { adjList[i].push(j); adjList[j].push(i); }
           }
         }
       }
@@ -1466,39 +1482,36 @@ nav {
     // ── Synapse ───────────────────────────────────────────────────────────
     function fireSynapse() {
       if (!adjReady || !dots.length) return;
-      const srcIdx = Math.floor(Math.random() * dots.length);
-      const src = dots[srcIdx];
-      src.flash = 1.0;
-      rings.push({ x:src.x, y:src.y, r:5, maxR:80+Math.random()*45, alpha:0.65, decay:0.010 });
-
+      const si = Math.floor(Math.random() * dots.length);
+      dots[si].flash = 1.0;
+      rings.push({ x:dots[si].x, y:dots[si].y, r:5, maxR:85+Math.random()*40, alpha:0.65, decay:0.010 });
       function wave(idx, depth) {
         if (depth > 4) return;
         for (const j of adjList[idx]) {
           const d = dots[j];
-          const dx=d.x-src.x, dy=d.y-src.y;
-          const dist=Math.sqrt(dx*dx+dy*dy);
-          const delay = (dist/(CONN_R*2.4))*500 + Math.random()*80;
-          const intensity = Math.max(0, 0.90 - depth*0.18 + Math.random()*0.12);
-          setTimeout(() => {
-            if (d.flash < intensity) { d.flash = intensity; if (depth < 3) wave(j, depth+1); }
-          }, delay);
+          const dx=d.x-dots[si].x, dy=d.y-dots[si].y;
+          const dist = Math.sqrt(dx*dx+dy*dy);
+          const delay = (dist/(CONN_R*2.2))*480 + Math.random()*80;
+          const inten = Math.max(0, 0.92-depth*0.18+Math.random()*0.12);
+          setTimeout(()=>{ if(d.flash<inten){d.flash=inten; if(depth<3)wave(j,depth+1);} }, delay);
         }
       }
-      wave(srcIdx, 0);
+      wave(si, 0);
     }
 
-    // ── Crown particles (drift upward from head) ──────────────────────────
-    function makeCrown(forced) {
-      const headCY = FY0 + 0.098 * FH;
-      const headRX = FW * 0.108;
+    // ── Crown particles ───────────────────────────────────────────────────
+    function makeCrown() {
+      const headCX = FX0 + FW*0.500;
+      const headTopY = FY0 - FH*0.01;
+      const headRX = FW * 0.105;
       return {
-        x: FX0 + FW*0.5 + (Math.random()-0.5)*headRX*1.6,
-        y: headCY - FH*0.10 - Math.random()*FH*0.04,
-        vy: -(0.22 + Math.random()*0.30),
-        vx: (Math.random()-0.5)*0.15,
-        life: forced ? 0.6 + Math.random()*0.4 : Math.random(),
-        decay: 0.0018 + Math.random()*0.0022,
-        r: 0.9 + Math.random()*0.9,
+        x: headCX + (Math.random()-0.5)*headRX*1.4,
+        y: headTopY - Math.random()*FH*0.04,
+        vy: -(0.20 + Math.random()*0.28),
+        vx: (Math.random()-0.5)*0.12,
+        life: Math.random(),
+        decay: 0.0016 + Math.random()*0.0022,
+        r: 0.8 + Math.random()*0.9,
       };
     }
 
@@ -1508,127 +1521,112 @@ nav {
       if (!seeded) return;
 
       ctx.clearRect(0, 0, W, H);
-
-      // Decay global pulse
       if (globalPulse > 0) globalPulse = Math.max(0, globalPulse - 0.006);
 
       // Events
-      if (ts - lastFire  > 700 + Math.random()*500) { lastFire=ts; fireSynapse(); }
-      if (ts - lastPulse > 6500 + Math.random()*3000) { lastPulse=ts; globalPulse=1.0; }
+      if (ts - lastFire  > 720 + Math.random()*480) { lastFire=ts;  fireSynapse(); }
+      if (ts - lastPulse > 7000+ Math.random()*3000) { lastPulse=ts; globalPulse=1.0; }
 
-      // ── 1. Aureole — divine backlight behind figure ──────────────────
-      setFigureBox();
-      const cx = FX0 + FW*0.5, cy = FY0 + FH*0.45;
-      const gAlpha = 0.18 + globalPulse * 0.16;
-      const aura = ctx.createRadialGradient(cx, cy, 0, cx, cy, FW*0.62);
-      aura.addColorStop(0,   `rgba(22,95,48,${gAlpha.toFixed(3)})`);
-      aura.addColorStop(0.5, `rgba(10,48,22,${(gAlpha*0.45).toFixed(3)})`);
-      aura.addColorStop(1,    'rgba(2,12,6,0)');
-      ctx.fillStyle = aura; ctx.fillRect(0, 0, W, H);
+      // ── 1. Aureole (divine backlight) ────────────────────────────────
+      const figCX = FX0+FW*0.500, figCY = FY0+FH*0.440;
+      const ga = 0.17 + globalPulse*0.16;
+      const aura = ctx.createRadialGradient(figCX, figCY, 0, figCX, figCY, FW*0.65);
+      aura.addColorStop(0,   `rgba(20,90,44,${ga.toFixed(3)})`);
+      aura.addColorStop(0.5, `rgba(8,44,20,${(ga*0.42).toFixed(3)})`);
+      aura.addColorStop(1,   'rgba(2,11,5,0)');
+      ctx.fillStyle = aura; ctx.fillRect(0,0,W,H);
 
-      // ── 2. Dots (two passes: glow halos then cores) ───────────────────
-      // Pass A: glow halos for rim + flashing dots (drawn large & transparent)
+      // ── 2. Dots — two passes: glow then core ─────────────────────────
+      // Pass A: large soft halos (rim + flashing dots only)
       for (const d of dots) {
-        const eff = d.rw * 0.6 + d.flash * 0.55 + globalPulse * 0.25;
-        if (eff < 0.12) continue;
-        const hr = d.r * (2.8 + d.flash * 3.5 + d.rw * 1.5);
-        const ha = Math.min(0.18, eff * 0.18);
+        const eff = d.rw*0.55 + d.flash*0.52 + globalPulse*0.22;
+        if (eff < 0.10) continue;
+        const hr = d.r * (3.2 + d.flash*3.8 + d.rw*1.8);
+        const ha = Math.min(0.20, eff*0.19);
+        const hg = Math.round(175 + d.flash*65);
+        const hb = Math.round(110 + d.rw*65 - d.flash*40);
         ctx.beginPath();
         ctx.arc(d.x, d.y, hr, 0, Math.PI*2);
-        // Rim halos: cool teal. Flash halos: warm bright green.
-        const hg = Math.round(180 + d.flash * 60);
-        const hb = Math.round(120 + d.rw * 60 - d.flash * 40);
-        ctx.fillStyle = `rgba(60,${hg},${hb},${ha.toFixed(3)})`;
+        ctx.fillStyle = `rgba(50,${hg},${hb},${ha.toFixed(3)})`;
         ctx.fill();
       }
 
       // Pass B: core dots
       for (const d of dots) {
         if (d.flash > 0) d.flash = Math.max(0, d.flash - d.flashDecay);
-        const alpha = Math.min(0.99, d.base + d.flash*0.50 + globalPulse*0.22);
-        const r = d.r + d.flash * 1.6 + globalPulse * 0.6;
-
-        // Color: deep green interior → bright teal rim → warm gold on flash
-        const flashBoost = d.flash + globalPulse * 0.3;
-        const cr = Math.round(38  + d.rw * 82  + flashBoost * 90);
-        const cg = Math.round(140 + d.rw * 100 + flashBoost * 60);
-        const cb = Math.round(72  + d.rw * 90  - flashBoost * 30);
-
+        const alpha = Math.min(0.99, d.base + d.flash*0.50 + globalPulse*0.24);
+        const r = d.r + d.flash*1.7 + globalPulse*0.65;
+        const fb = d.flash + globalPulse*0.28;
+        const cr = Math.min(255, Math.round(36  + d.rw*84  + fb*92));
+        const cg = Math.min(255, Math.round(138 + d.rw*102 + fb*58));
+        const cb = Math.min(255, Math.round(68  + d.rw*92  - fb*28));
         ctx.beginPath();
         ctx.arc(d.x, d.y, r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(${Math.min(255,cr)},${Math.min(255,cg)},${Math.min(255,cb)},${alpha.toFixed(3)})`;
+        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha.toFixed(3)})`;
         ctx.fill();
       }
 
       // ── 3. Rings ──────────────────────────────────────────────────────
-      for (let i = rings.length-1; i >= 0; i--) {
-        const ring = rings[i];
-        ring.r += (ring.maxR - ring.r) * 0.048;
+      for (let i=rings.length-1; i>=0; i--) {
+        const ring=rings[i];
+        ring.r += (ring.maxR-ring.r)*0.048;
         ring.alpha -= ring.decay;
-        if (ring.alpha <= 0) { rings.splice(i,1); continue; }
+        if (ring.alpha<=0){rings.splice(i,1);continue;}
         ctx.beginPath();
-        ctx.strokeStyle = `rgba(80,220,140,${ring.alpha.toFixed(3)})`;
-        ctx.lineWidth = 0.8;
-        ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI*2);
+        ctx.strokeStyle=`rgba(80,220,140,${ring.alpha.toFixed(3)})`;
+        ctx.lineWidth=0.8;
+        ctx.arc(ring.x,ring.y,ring.r,0,Math.PI*2);
         ctx.stroke();
       }
 
       // ── 4. Crown particles ────────────────────────────────────────────
       for (const c of crowns) {
-        c.x += c.vx; c.y += c.vy; c.life -= c.decay;
-        if (c.life <= 0) { Object.assign(c, makeCrown(true)); continue; }
-        const a = Math.min(0.55, c.life * 0.75);
+        c.x+=c.vx; c.y+=c.vy; c.life-=c.decay;
+        if (c.life<=0){Object.assign(c,makeCrown());c.life=0.5+Math.random()*0.5;continue;}
+        const a=Math.min(0.52,c.life*0.72);
         ctx.beginPath();
-        ctx.arc(c.x, c.y, c.r * Math.min(1, c.life*2), 0, Math.PI*2);
-        ctx.fillStyle = `rgba(100,240,165,${a.toFixed(3)})`;
+        ctx.arc(c.x,c.y,c.r*Math.min(1,c.life*2.5),0,Math.PI*2);
+        ctx.fillStyle=`rgba(100,240,162,${a.toFixed(3)})`;
         ctx.fill();
       }
     }
 
     // ── Init / resize ─────────────────────────────────────────────────────
-    function init() {
+    function setup() {
       const col = canvas.parentElement;
-      W = col.clientWidth  || window.innerWidth * 0.56;
+      W = col.clientWidth  || window.innerWidth*0.56;
       H = col.clientHeight || window.innerHeight;
-      canvas.width = W; canvas.height = H;
-      setFigureBox();
+      canvas.width=W; canvas.height=H;
+      buildPath();
 
       if (!seeded) {
-        // Seed dots once (normalized space — resize-independent)
         setTimeout(() => {
           seedDots();
-          updateScreenCoords();
-          // Seed crown particles
-          crowns = [];
-          for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
-          setTimeout(buildAdjacency, 10);
+          crowns = Array.from({length:20}, makeCrown);
+          setTimeout(buildAdj, 10);
         }, 0);
       } else {
-        updateScreenCoords();
-        crowns = [];
-        for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
-        setTimeout(buildAdjacency, 10);
+        crowns = Array.from({length:20}, makeCrown);
+        setTimeout(buildAdj, 10);
       }
 
       requestAnimationFrame(draw);
     }
 
-    let resizeTimer;
+    let rsz;
     window.addEventListener('resize', () => {
-      const col = canvas.parentElement;
-      W = col.clientWidth; H = col.clientHeight;
-      canvas.width = W; canvas.height = H;
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        updateScreenCoords();
-        crowns = [];
-        for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
-        buildAdjacency();
-      }, 150);
+      const col=canvas.parentElement;
+      W=col.clientWidth; H=col.clientHeight;
+      canvas.width=W; canvas.height=H;
+      clearTimeout(rsz);
+      rsz = setTimeout(() => {
+        seeded=false; buildPath();
+        setTimeout(()=>{seedDots();crowns=Array.from({length:20},makeCrown);setTimeout(buildAdj,10);},0);
+      }, 200);
     });
 
-    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-    else setTimeout(init, 60);
+    if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', setup);
+    else setTimeout(setup, 60);
   })();
   </script>
 

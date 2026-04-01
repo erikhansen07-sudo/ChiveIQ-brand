@@ -1197,438 +1197,369 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- VARIANT: LIVING SYSTEM — Outline path particle figure -->
-
+  <!-- VARIANT: LIVING SYSTEM — Silhouette + energy flows -->
   <style>
     #variant-living {
-      background: #020b05;
+      background: #010904;
       min-height: 100vh;
-      position: relative;
       overflow: hidden;
     }
     .lv-wrap {
       width: 100%;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 56% 44%;
+      grid-template-columns: 54% 46%;
     }
-    .lv-canvas-col { position: relative; height: 100vh; }
-    #syn-canvas { display:block; width:100%; height:100%; }
+    .lv-fig-col {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .lv-svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
     .lv-copy {
-      position: relative; z-index: 10;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 80px 56px 80px 20px;
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 56px 80px 16px;
     }
     .lv-eyebrow {
-      font-family:'DM Mono',monospace; font-size:.56rem; letter-spacing:.22em;
-      text-transform:uppercase; color:rgba(43,168,84,.4); margin-bottom:30px;
+      font-family: 'DM Mono', monospace;
+      font-size: .56rem; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(43,168,84,.42); margin-bottom: 30px;
     }
     .lv-headline {
-      font-size:clamp(2.6rem,3.6vw,4.4rem); font-weight:800;
-      letter-spacing:-.048em; line-height:1.0; color:#f2efdf; margin-bottom:32px;
+      font-size: clamp(2.6rem, 3.6vw, 4.4rem);
+      font-weight: 800; letter-spacing: -.048em;
+      line-height: 1.0; color: #f2efdf; margin-bottom: 32px;
     }
-    .lv-headline em { font-style:normal; color:#2ba854; }
+    .lv-headline em { font-style: normal; color: #2ba854; }
     .lv-body {
-      font-size:.98rem; font-weight:300; color:rgba(242,239,223,.44);
-      line-height:1.82; max-width:400px; margin-bottom:18px;
+      font-size: .98rem; font-weight: 300;
+      color: rgba(242,239,223,.44); line-height: 1.82;
+      max-width: 400px; margin-bottom: 18px;
     }
-    .lv-body strong { color:rgba(242,239,223,.7); font-weight:500; }
+    .lv-body strong { color: rgba(242,239,223,.72); font-weight: 500; }
     .lv-relief {
-      font-family:'DM Mono',monospace; font-size:.75rem; color:rgba(43,168,84,.55);
-      letter-spacing:.04em; margin-bottom:48px; line-height:1.75;
-      border-left:1px solid rgba(43,168,84,.18); padding-left:18px;
+      font-family: 'DM Mono', monospace; font-size: .74rem;
+      color: rgba(43,168,84,.55); letter-spacing: .04em;
+      margin-bottom: 48px; line-height: 1.75;
+      border-left: 1px solid rgba(43,168,84,.18); padding-left: 18px;
     }
-    .lv-cta-row { display:flex; gap:14px; align-items:center; }
+    .lv-cta-row { display: flex; gap: 14px; align-items: center; }
     .lv-btn-primary {
-      background:#2ba854; color:#fdfcf8; border:none; padding:14px 32px;
-      font-family:'Sora',sans-serif; font-size:.88rem; font-weight:600;
-      border-radius:4px; cursor:pointer;
+      background: #2ba854; color: #fdfcf8; border: none;
+      padding: 14px 32px; font-family: 'Sora', sans-serif;
+      font-size: .88rem; font-weight: 600; border-radius: 4px; cursor: pointer;
     }
     .lv-btn-ghost {
-      background:transparent; color:rgba(242,239,223,.35);
-      border:1px solid rgba(242,239,223,.12); padding:14px 22px;
-      font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.08em;
-      border-radius:4px; cursor:pointer;
+      background: transparent; color: rgba(242,239,223,.36);
+      border: 1px solid rgba(242,239,223,.12); padding: 14px 22px;
+      font-family: 'DM Mono', monospace; font-size: .66rem;
+      letter-spacing: .08em; border-radius: 4px; cursor: pointer;
     }
+
+    /* ── Vein animation ───────────────────────────────────── */
+    @keyframes vein-march {
+      to { stroke-dashoffset: -56; }
+    }
+    @keyframes body-breathe {
+      0%,100% { opacity: .40; }
+      50%      { opacity: .62; }
+    }
+    @keyframes glow-pulse {
+      0%,100% { opacity: .28; }
+      50%      { opacity: .48; }
+    }
+    @keyframes halo-pulse {
+      0%,100% { opacity: .14; r: 48; }
+      50%      { opacity: .32; r: 56; }
+    }
+
+    .vein { animation: vein-march linear infinite; }
+    .v-spine   { stroke-dasharray: 18 10; animation-duration: 1.8s; }
+    .v-chest   { stroke-dasharray: 14 12; animation-duration: 2.2s; animation-delay: -.6s; }
+    .v-rarm    { stroke-dasharray: 16 11; animation-duration: 2.6s; animation-delay: -.4s; }
+    .v-larm    { stroke-dasharray: 16 11; animation-duration: 2.6s; animation-delay: -1.3s; }
+    .v-rsh     { stroke-dasharray: 12 14; animation-duration: 1.9s; animation-delay: -.9s; }
+    .v-lsh     { stroke-dasharray: 12 14; animation-duration: 1.9s; animation-delay: -.2s; }
+    .v-head    { stroke-dasharray: 20 12; animation-duration: 3.2s; animation-delay: -.8s; }
+
     .lv-pill {
-      position:absolute; background:rgba(2,12,6,.92);
-      border:1px solid rgba(43,168,84,.18); border-radius:6px;
-      padding:10px 16px; backdrop-filter:blur(12px); z-index:8;
-      animation:lv-float 5s ease-in-out infinite;
+      position: absolute;
+      background: rgba(1,12,5,.92);
+      border: 1px solid rgba(43,168,84,.18);
+      border-radius: 6px; padding: 10px 16px;
+      backdrop-filter: blur(12px); z-index: 8;
+      animation: lv-float 5s ease-in-out infinite;
     }
-    .lv-pill:nth-child(2){animation-delay:-2.1s;animation-duration:6.4s;}
-    .lv-pill:nth-child(3){animation-delay:-3.7s;animation-duration:4.8s;}
-    @keyframes lv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-    .lv-pill-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,168,84,.48);margin-bottom:4px;}
-    .lv-pill-value{font-family:'Sora',sans-serif;font-size:1.08rem;font-weight:700;color:#f2efdf;letter-spacing:-.03em;}
-    .lv-pill-delta{font-family:'DM Mono',monospace;font-size:.55rem;color:#2ba854;margin-top:3px;}
+    .lv-pill:nth-child(2){ animation-delay: -2s; animation-duration: 6.4s; }
+    .lv-pill:nth-child(3){ animation-delay: -3.7s; animation-duration: 4.8s; }
+    @keyframes lv-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-7px); }
+    }
+    .lv-pill-label {
+      font-family: 'DM Mono', monospace; font-size: .5rem;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(43,168,84,.48); margin-bottom: 4px;
+    }
+    .lv-pill-value {
+      font-family: 'Sora', sans-serif; font-size: 1.08rem;
+      font-weight: 700; color: #f2efdf; letter-spacing: -.03em;
+    }
+    .lv-pill-delta {
+      font-family: 'DM Mono', monospace; font-size: .55rem;
+      color: #2ba854; margin-top: 3px;
+    }
   </style>
 
   <section id="variant-living">
     <div class="lv-wrap">
-      <div class="lv-canvas-col">
-        <canvas id="syn-canvas"></canvas>
-        <div class="lv-pill" style="top:11%;right:4%;">
+
+      <!-- LEFT: SVG figure -->
+      <div class="lv-fig-col">
+
+        <!-- Floating data pills -->
+        <div class="lv-pill" style="top:12%;right:4%;">
           <div class="lv-pill-label">Labor Cost</div>
           <div class="lv-pill-value">26.4%</div>
           <div class="lv-pill-delta">↓ 1.8% this week</div>
         </div>
-        <div class="lv-pill" style="top:44%;right:2%;">
+        <div class="lv-pill" style="top:45%;right:2%;">
           <div class="lv-pill-label">Live P&amp;L</div>
           <div class="lv-pill-value">$4,218</div>
           <div class="lv-pill-delta">↑ On track</div>
         </div>
-        <div class="lv-pill" style="top:73%;right:5%;">
+        <div class="lv-pill" style="top:74%;right:5%;">
           <div class="lv-pill-label">Inventory</div>
           <div class="lv-pill-value">97%</div>
           <div class="lv-pill-delta">✓ Fully stocked</div>
         </div>
+
+        <!--
+          SVG: viewBox 0 0 500 700
+          All coords are hand-tuned for a natural waist-up human silhouette.
+          The body path is a single closed shape — head, neck, shoulders,
+          arms (with concave armpits), torso, waist.
+        -->
+        <svg class="lv-svg" viewBox="0 0 500 700" preserveAspectRatio="xMidYMid meet">
+          <defs>
+
+            <!-- Vein glow filter -->
+            <filter id="vein-glow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b"/>
+              <feMerge>
+                <feMergeNode in="b"/>
+                <feMergeNode in="b"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <!-- Particle glow -->
+            <filter id="dot-glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="b"/>
+              <feMerge>
+                <feMergeNode in="b"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+
+            <!-- Body edge glow (blurred silhouette layer) -->
+            <filter id="edge-glow" x="-25%" y="-10%" width="150%" height="120%">
+              <feGaussianBlur stdDeviation="14"/>
+            </filter>
+
+            <!-- Deep ambient glow behind figure -->
+            <radialGradient id="aura-grad" cx="50%" cy="46%" r="52%">
+              <stop offset="0%"   stop-color="#1a6e3c" stop-opacity=".38"/>
+              <stop offset="55%"  stop-color="#0a3820" stop-opacity=".14"/>
+              <stop offset="100%" stop-color="#010904" stop-opacity="0"/>
+            </radialGradient>
+
+            <!-- Chest heart glow -->
+            <radialGradient id="heart-grad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%"   stop-color="#64ffb0" stop-opacity=".9"/>
+              <stop offset="100%" stop-color="#2ba854" stop-opacity="0"/>
+            </radialGradient>
+
+            <!--
+              BODY PATH (reusable via <use>)
+              Single closed outline:
+              Crown → right head arc → right neck → right shoulder cap →
+              right outer arm → wrist → right inner arm → armpit concave →
+              right torso side → waist → left torso side → left armpit →
+              left inner arm → left wrist → left outer arm →
+              left shoulder cap → left neck → left head arc → crown
+            -->
+            <path id="body-shape"
+              d="M 250 20
+                 C 318 18 344 52 342 92
+                 C 340 130 316 158 286 170
+                 L 272 204
+                 C 308 200 362 208 422 232
+                 C 438 344 432 494 424 628
+                 L 350 628
+                 C 350 494 344 344 330 272
+                 C 322 232 310 210 296 206
+                 C 298 388 296 516 288 628
+                 L 212 628
+                 C 204 516 202 388 204 206
+                 C 190 210 178 232 170 272
+                 C 156 344 150 494 150 628
+                 L 76 628
+                 C 68 494 62 344 78 232
+                 C 138 208 192 200 228 204
+                 L 214 170
+                 C 184 158 160 130 158 92
+                 C 156 52 182 18 250 20 Z"/>
+
+          </defs>
+
+          <!-- ── 1. Deep ambient aureole ─────────────────────────────── -->
+          <ellipse cx="250" cy="360" rx="240" ry="310"
+                   fill="url(#aura-grad)"
+                   style="animation: glow-pulse 4s ease-in-out infinite;"/>
+
+          <!-- ── 2. Blurred body edge glow ──────────────────────────── -->
+          <use href="#body-shape" fill="#1e6b3c" filter="url(#edge-glow)"
+               style="animation: body-breathe 4s ease-in-out infinite;"/>
+
+          <!-- ── 3. Solid silhouette fill ───────────────────────────── -->
+          <use href="#body-shape" fill="#030f07"/>
+
+          <!-- ── 4. Silhouette inner rim (very subtle green stroke) ─── -->
+          <use href="#body-shape" fill="none"
+               stroke="#2ba854" stroke-width="0.8" opacity="0.18"/>
+
+          <!-- ══ ENERGY VEINS ═══════════════════════════════════════════
+               Each path runs through the interior of the body.
+               stroke-dasharray + animated dashoffset = flowing light.
+               ══════════════════════════════════════════════════════════ -->
+
+          <!-- Spine -->
+          <path class="vein v-spine"
+            d="M 250 208 C 250 380 250 520 250 628"
+            fill="none" stroke="#2ba854" stroke-width="1.4"
+            filter="url(#vein-glow)" opacity=".7"/>
+
+          <!-- Chest cross (horizontal, curved) -->
+          <path class="vein v-chest"
+            d="M 210 295 Q 250 278 290 295"
+            fill="none" stroke="#2ba854" stroke-width="1.2"
+            filter="url(#vein-glow)" opacity=".6"/>
+
+          <!-- Lower chest cross -->
+          <path class="vein v-chest"
+            d="M 216 360 Q 250 345 284 360"
+            fill="none" stroke="#2ba854" stroke-width="1.0"
+            filter="url(#vein-glow)" opacity=".5"
+            style="animation-delay: -1.4s;"/>
+
+          <!-- Right shoulder → arm vein -->
+          <path class="vein v-rsh"
+            d="M 274 208 Q 300 228 316 268 L 338 450 L 346 628"
+            fill="none" stroke="#2ba854" stroke-width="1.2"
+            filter="url(#vein-glow)" opacity=".62"/>
+
+          <!-- Left shoulder → arm vein -->
+          <path class="vein v-lsh"
+            d="M 226 208 Q 200 228 184 268 L 162 450 L 154 628"
+            fill="none" stroke="#2ba854" stroke-width="1.2"
+            filter="url(#vein-glow)" opacity=".62"/>
+
+          <!-- Head ring (inside the head oval) -->
+          <ellipse class="vein v-head" cx="250" cy="95"
+            rx="54" ry="50"
+            fill="none" stroke="#2ba854" stroke-width="1.0"
+            filter="url(#vein-glow)" opacity=".55"/>
+
+          <!-- ══ PARTICLES ═══════════════════════════════════════════════
+               Bright dots that travel along the vein paths.
+               ══════════════════════════════════════════════════════════ -->
+
+          <!-- Spine particle 1 -->
+          <circle r="2.8" fill="#a0ffcc" filter="url(#dot-glow)">
+            <animateMotion path="M 250 208 C 250 380 250 520 250 628"
+              dur="2.4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.9;.9;0"
+              keyTimes="0;.12;.88;1" dur="2.4s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Spine particle 2 (offset) -->
+          <circle r="2.2" fill="#64ffb0" filter="url(#dot-glow)">
+            <animateMotion path="M 250 208 C 250 380 250 520 250 628"
+              dur="2.4s" begin="-1.2s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.7;.7;0"
+              keyTimes="0;.12;.88;1" dur="2.4s" begin="-1.2s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Right arm particle -->
+          <circle r="2.5" fill="#a0ffcc" filter="url(#dot-glow)">
+            <animateMotion
+              path="M 274 208 Q 300 228 316 268 L 338 450 L 346 628"
+              dur="3.0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.85;.85;0"
+              keyTimes="0;.1;.9;1" dur="3.0s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Left arm particle -->
+          <circle r="2.5" fill="#a0ffcc" filter="url(#dot-glow)">
+            <animateMotion
+              path="M 226 208 Q 200 228 184 268 L 162 450 L 154 628"
+              dur="3.0s" begin="-1.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.85;.85;0"
+              keyTimes="0;.1;.9;1" dur="3.0s" begin="-1.5s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- Head ring particle -->
+          <circle r="2.2" fill="#c8ffe0" filter="url(#dot-glow)">
+            <animateMotion
+              path="M 304 95 A 54 50 0 1 1 303.99 94.9"
+              dur="4.0s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;.8;.8;0"
+              keyTimes="0;.08;.92;1" dur="4.0s" repeatCount="indefinite"/>
+          </circle>
+
+          <!-- ── 5. Chest core (heart) ────────────────────────────── -->
+          <circle cx="250" cy="320" r="4" fill="url(#heart-grad)"
+                  filter="url(#dot-glow)">
+            <animate attributeName="r" values="4;7;4" dur="1.4s"
+                     repeatCount="indefinite" calcMode="spline"
+                     keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+            <animate attributeName="opacity" values=".7;1;.7" dur="1.4s"
+                     repeatCount="indefinite"/>
+          </circle>
+
+        </svg>
       </div>
+
+      <!-- RIGHT: Copy -->
       <div class="lv-copy">
         <div class="lv-eyebrow">New Operator · Intelligent Infrastructure</div>
         <h2 class="lv-headline">Finally.<br>Someone's<br>got the<br><em>back office.</em></h2>
         <p class="lv-body">You've been running the restaurant.<br><strong>ChiveIQ runs everything else.</strong></p>
-        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized.</p>
-        <div class="lv-relief">The operator your locations actually need.<br>Available 24 hours. Never calls out.</div>
+        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions already made, already optimized. Handed to you when you need them.</p>
+        <div class="lv-relief">
+          The operator your locations actually need.<br>
+          Available 24 hours. Never calls out.
+        </div>
         <div class="lv-cta-row">
           <button class="lv-btn-primary">See how it works</button>
           <button class="lv-btn-ghost">Book a demo →</button>
         </div>
       </div>
+
     </div>
   </section>
-
-  <script>
-  (function () {
-    'use strict';
-    const canvas = document.getElementById('syn-canvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-
-    const NDOTS     = 5000;
-    const CONN_R    = 34;
-    const CONN_R_SQ = CONN_R * CONN_R;
-    const EDGE_TEST_R = 7;   // px — used to detect rim dots
-
-    let W, H;
-    let FW, FH, FX0, FY0;
-    let bodyPath = null;
-    let dots = [], adjList = [], rings = [], crowns = [];
-    let globalPulse = 0, lastFire = 0, lastPulse = 0;
-    let seeded = false, adjReady = false;
-
-    // ── Figure layout ─────────────────────────────────────────────────────
-    function setBox() {
-      FW  = W * 0.82;
-      FH  = H * 0.92;
-      FX0 = (W - FW) / 2;
-      FY0 = H * 0.04;
-    }
-
-    // Convert normalised [0-1] figure coords → screen px
-    const sx = n => FX0 + n * FW;
-    const sy = n => FY0 + n * FH;
-
-    // ── Hand-crafted human outline ────────────────────────────────────────
-    // Single closed path: head → neck → right shoulder → right outer arm →
-    // right wrist → right inner arm → armpit concave → right torso down →
-    // waist → left torso up → left armpit → left inner arm → left wrist →
-    // left outer arm → left shoulder → neck → left head → crown
-    //
-    // Key: armpit concavities (X(0.730,0.440)→inward→X(0.658,0.270))
-    // create the visual arm/torso separation below the shoulder.
-
-    function buildPath() {
-      setBox();
-      const p = new Path2D();
-
-      // ── Head ──────────────────────────────────────────────────────────
-      p.moveTo(sx(0.500), sy(0.000));                       // crown
-
-      // right head arc
-      p.bezierCurveTo(sx(0.638), sy(-0.004), sx(0.668), sy(0.068),
-                      sx(0.663), sy(0.124));
-      p.bezierCurveTo(sx(0.658), sy(0.182), sx(0.624), sy(0.210),
-                      sx(0.556), sy(0.220));
-
-      // ── Right neck ────────────────────────────────────────────────────
-      p.lineTo(sx(0.554), sy(0.272));
-
-      // ── Right shoulder cap ────────────────────────────────────────────
-      p.bezierCurveTo(sx(0.636), sy(0.270), sx(0.748), sy(0.280),
-                      sx(0.852), sy(0.320));
-
-      // ── Right outer arm (hangs with very slight outward bow) ───────────
-      p.bezierCurveTo(sx(0.876), sy(0.430), sx(0.868), sy(0.700),
-                      sx(0.856), sy(0.884));
-
-      // ── Right wrist bottom ────────────────────────────────────────────
-      p.lineTo(sx(0.744), sy(0.884));
-
-      // ── Right inner arm going UP ──────────────────────────────────────
-      p.bezierCurveTo(sx(0.744), sy(0.700), sx(0.738), sy(0.490),
-                      sx(0.732), sy(0.444));
-
-      // ── Right armpit concave (curves sharply INWARD) ──────────────────
-      p.bezierCurveTo(sx(0.724), sy(0.388), sx(0.702), sy(0.308),
-                      sx(0.660), sy(0.272));
-
-      // ── Right torso side going DOWN ───────────────────────────────────
-      p.bezierCurveTo(sx(0.660), sy(0.510), sx(0.648), sy(0.710),
-                      sx(0.636), sy(0.884));
-
-      // ── Waist ─────────────────────────────────────────────────────────
-      p.lineTo(sx(0.364), sy(0.884));
-
-      // ── Left torso side going UP ──────────────────────────────────────
-      p.bezierCurveTo(sx(0.352), sy(0.710), sx(0.340), sy(0.510),
-                      sx(0.340), sy(0.272));
-
-      // ── Left armpit concave (curves sharply OUTWARD) ──────────────────
-      p.bezierCurveTo(sx(0.298), sy(0.308), sx(0.276), sy(0.388),
-                      sx(0.268), sy(0.444));
-
-      // ── Left inner arm going DOWN ─────────────────────────────────────
-      p.bezierCurveTo(sx(0.262), sy(0.490), sx(0.256), sy(0.700),
-                      sx(0.256), sy(0.884));
-
-      // ── Left wrist bottom ────────────────────────────────────────────
-      p.lineTo(sx(0.144), sy(0.884));
-
-      // ── Left outer arm going UP ───────────────────────────────────────
-      p.bezierCurveTo(sx(0.132), sy(0.700), sx(0.124), sy(0.430),
-                      sx(0.148), sy(0.320));
-
-      // ── Left shoulder cap ─────────────────────────────────────────────
-      p.bezierCurveTo(sx(0.252), sy(0.280), sx(0.364), sy(0.270),
-                      sx(0.446), sy(0.272));
-
-      // ── Left neck ────────────────────────────────────────────────────
-      p.lineTo(sx(0.444), sy(0.220));
-
-      // ── Left head arc ────────────────────────────────────────────────
-      p.bezierCurveTo(sx(0.376), sy(0.210), sx(0.342), sy(0.182),
-                      sx(0.337), sy(0.124));
-      p.bezierCurveTo(sx(0.332), sy(0.068), sx(0.362), sy(-0.004),
-                      sx(0.500), sy(0.000));  // back to crown
-
-      p.closePath();
-      bodyPath = p;
-    }
-
-    function inBody(x, y) {
-      return ctx.isPointInPath(bodyPath, x, y);
-    }
-
-    // Rim score: fraction of 8 neighbours (at EDGE_TEST_R) that are OUTSIDE
-    function rimScore(x, y) {
-      const dirs = [[1,0],[-1,0],[0,1],[0,-1],[0.707,0.707],[-0.707,0.707],[0.707,-0.707],[-0.707,-0.707]];
-      let out = 0;
-      for (const [dx, dy] of dirs) {
-        if (!inBody(x + dx * EDGE_TEST_R, y + dy * EDGE_TEST_R)) out++;
-      }
-      return out / dirs.length;  // 0 = deep interior, 1 = on edge
-    }
-
-    // ── Dot seeding ───────────────────────────────────────────────────────
-    function seedDots() {
-      dots = [];
-      const maxTries = NDOTS * 22;
-      let tries = 0;
-      while (dots.length < NDOTS && tries < maxTries) {
-        tries++;
-        const x = FX0 + Math.random() * FW;
-        const y = FY0 + Math.random() * FH;
-        if (!inBody(x, y)) continue;
-        const rs = rimScore(x, y);
-        dots.push({
-          x, y,
-          rw: rs,
-          r:  0.68 + rs * 0.72 + Math.random() * 0.28,
-          base: 0.30 + rs * 0.58 + Math.random() * 0.08,
-          flash: 0,
-          flashDecay: 0.010 + Math.random() * 0.009,
-        });
-      }
-      seeded = true;
-    }
-
-    function buildAdj() {
-      adjReady = false;
-      adjList = dots.map(() => []);
-      const cell = CONN_R;
-      const grid = {};
-      for (let i = 0; i < dots.length; i++) {
-        const gx = Math.floor(dots[i].x / cell), gy = Math.floor(dots[i].y / cell);
-        const k = gx * 100000 + gy;
-        if (!grid[k]) grid[k] = [];
-        grid[k].push(i);
-      }
-      for (let i = 0; i < dots.length; i++) {
-        const gx = Math.floor(dots[i].x/cell), gy = Math.floor(dots[i].y/cell);
-        for (let dx=-1; dx<=1; dx++) for (let dy=-1; dy<=1; dy++) {
-          const nb = grid[(gx+dx)*100000+(gy+dy)];
-          if (!nb) continue;
-          for (const j of nb) {
-            if (j <= i) continue;
-            const ddx = dots[i].x-dots[j].x, ddy = dots[i].y-dots[j].y;
-            if (ddx*ddx+ddy*ddy < CONN_R_SQ) { adjList[i].push(j); adjList[j].push(i); }
-          }
-        }
-      }
-      adjReady = true;
-    }
-
-    // ── Synapse ───────────────────────────────────────────────────────────
-    function fireSynapse() {
-      if (!adjReady || !dots.length) return;
-      const si = Math.floor(Math.random() * dots.length);
-      dots[si].flash = 1.0;
-      rings.push({ x:dots[si].x, y:dots[si].y, r:5, maxR:85+Math.random()*40, alpha:0.65, decay:0.010 });
-      function wave(idx, depth) {
-        if (depth > 4) return;
-        for (const j of adjList[idx]) {
-          const d = dots[j];
-          const dx=d.x-dots[si].x, dy=d.y-dots[si].y;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          const delay = (dist/(CONN_R*2.2))*480 + Math.random()*80;
-          const inten = Math.max(0, 0.92-depth*0.18+Math.random()*0.12);
-          setTimeout(()=>{ if(d.flash<inten){d.flash=inten; if(depth<3)wave(j,depth+1);} }, delay);
-        }
-      }
-      wave(si, 0);
-    }
-
-    // ── Crown particles ───────────────────────────────────────────────────
-    function makeCrown() {
-      const headCX = FX0 + FW*0.500;
-      const headTopY = FY0 - FH*0.01;
-      const headRX = FW * 0.105;
-      return {
-        x: headCX + (Math.random()-0.5)*headRX*1.4,
-        y: headTopY - Math.random()*FH*0.04,
-        vy: -(0.20 + Math.random()*0.28),
-        vx: (Math.random()-0.5)*0.12,
-        life: Math.random(),
-        decay: 0.0016 + Math.random()*0.0022,
-        r: 0.8 + Math.random()*0.9,
-      };
-    }
-
-    // ── Draw ─────────────────────────────────────────────────────────────
-    function draw(ts) {
-      requestAnimationFrame(draw);
-      if (!seeded) return;
-
-      ctx.clearRect(0, 0, W, H);
-      if (globalPulse > 0) globalPulse = Math.max(0, globalPulse - 0.006);
-
-      // Events
-      if (ts - lastFire  > 720 + Math.random()*480) { lastFire=ts;  fireSynapse(); }
-      if (ts - lastPulse > 7000+ Math.random()*3000) { lastPulse=ts; globalPulse=1.0; }
-
-      // ── 1. Aureole (divine backlight) ────────────────────────────────
-      const figCX = FX0+FW*0.500, figCY = FY0+FH*0.440;
-      const ga = 0.17 + globalPulse*0.16;
-      const aura = ctx.createRadialGradient(figCX, figCY, 0, figCX, figCY, FW*0.65);
-      aura.addColorStop(0,   `rgba(20,90,44,${ga.toFixed(3)})`);
-      aura.addColorStop(0.5, `rgba(8,44,20,${(ga*0.42).toFixed(3)})`);
-      aura.addColorStop(1,   'rgba(2,11,5,0)');
-      ctx.fillStyle = aura; ctx.fillRect(0,0,W,H);
-
-      // ── 2. Dots — two passes: glow then core ─────────────────────────
-      // Pass A: large soft halos (rim + flashing dots only)
-      for (const d of dots) {
-        const eff = d.rw*0.55 + d.flash*0.52 + globalPulse*0.22;
-        if (eff < 0.10) continue;
-        const hr = d.r * (3.2 + d.flash*3.8 + d.rw*1.8);
-        const ha = Math.min(0.20, eff*0.19);
-        const hg = Math.round(175 + d.flash*65);
-        const hb = Math.round(110 + d.rw*65 - d.flash*40);
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, hr, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(50,${hg},${hb},${ha.toFixed(3)})`;
-        ctx.fill();
-      }
-
-      // Pass B: core dots
-      for (const d of dots) {
-        if (d.flash > 0) d.flash = Math.max(0, d.flash - d.flashDecay);
-        const alpha = Math.min(0.99, d.base + d.flash*0.50 + globalPulse*0.24);
-        const r = d.r + d.flash*1.7 + globalPulse*0.65;
-        const fb = d.flash + globalPulse*0.28;
-        const cr = Math.min(255, Math.round(36  + d.rw*84  + fb*92));
-        const cg = Math.min(255, Math.round(138 + d.rw*102 + fb*58));
-        const cb = Math.min(255, Math.round(68  + d.rw*92  - fb*28));
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(${cr},${cg},${cb},${alpha.toFixed(3)})`;
-        ctx.fill();
-      }
-
-      // ── 3. Rings ──────────────────────────────────────────────────────
-      for (let i=rings.length-1; i>=0; i--) {
-        const ring=rings[i];
-        ring.r += (ring.maxR-ring.r)*0.048;
-        ring.alpha -= ring.decay;
-        if (ring.alpha<=0){rings.splice(i,1);continue;}
-        ctx.beginPath();
-        ctx.strokeStyle=`rgba(80,220,140,${ring.alpha.toFixed(3)})`;
-        ctx.lineWidth=0.8;
-        ctx.arc(ring.x,ring.y,ring.r,0,Math.PI*2);
-        ctx.stroke();
-      }
-
-      // ── 4. Crown particles ────────────────────────────────────────────
-      for (const c of crowns) {
-        c.x+=c.vx; c.y+=c.vy; c.life-=c.decay;
-        if (c.life<=0){Object.assign(c,makeCrown());c.life=0.5+Math.random()*0.5;continue;}
-        const a=Math.min(0.52,c.life*0.72);
-        ctx.beginPath();
-        ctx.arc(c.x,c.y,c.r*Math.min(1,c.life*2.5),0,Math.PI*2);
-        ctx.fillStyle=`rgba(100,240,162,${a.toFixed(3)})`;
-        ctx.fill();
-      }
-    }
-
-    // ── Init / resize ─────────────────────────────────────────────────────
-    function setup() {
-      const col = canvas.parentElement;
-      W = col.clientWidth  || window.innerWidth*0.56;
-      H = col.clientHeight || window.innerHeight;
-      canvas.width=W; canvas.height=H;
-      buildPath();
-
-      if (!seeded) {
-        setTimeout(() => {
-          seedDots();
-          crowns = Array.from({length:20}, makeCrown);
-          setTimeout(buildAdj, 10);
-        }, 0);
-      } else {
-        crowns = Array.from({length:20}, makeCrown);
-        setTimeout(buildAdj, 10);
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    let rsz;
-    window.addEventListener('resize', () => {
-      const col=canvas.parentElement;
-      W=col.clientWidth; H=col.clientHeight;
-      canvas.width=W; canvas.height=H;
-      clearTimeout(rsz);
-      rsz = setTimeout(() => {
-        seeded=false; buildPath();
-        setTimeout(()=>{seedDots();crowns=Array.from({length:20},makeCrown);setTimeout(buildAdj,10);},0);
-      }, 200);
-    });
-
-    if (document.readyState==='loading') document.addEventListener('DOMContentLoaded', setup);
-    else setTimeout(setup, 60);
-  })();
-  </script>
 
 
   <footer>
