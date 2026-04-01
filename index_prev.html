@@ -1295,41 +1295,35 @@ nav {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // ── Brand colours ──────────────────────────────────────────────────
-    const G_BRIGHT  = '#2ba854';
-    const G_MID     = '#1e7145';
-    const G_DIM     = 'rgba(43,168,84,';
-    const BG        = '#010a04';
+    const GREEN   = '#2ba854';
+    const GREEN_B = '#5dff9e';
+    const GREEN_D = '#0f3d22';
 
-    // ── Node definitions ───────────────────────────────────────────────
-    // Each node: label, angle from center (deg), radius, size tier (1=core,2=primary,3=secondary)
+    // ── Node layout — spread wide across the full canvas ───────────────
     const PRIMARY = [
-      { label: 'Labor',       angle:  15, r: 0.30, tier: 2 },
-      { label: 'Inventory',   angle:  68, r: 0.32, tier: 2 },
-      { label: 'P&L',         angle: 122, r: 0.28, tier: 2 },
-      { label: 'Scheduling',  angle: 175, r: 0.31, tier: 2 },
-      { label: 'Vendors',     angle: 228, r: 0.29, tier: 2 },
-      { label: 'Forecasting', angle: 282, r: 0.33, tier: 2 },
-      { label: 'Menu',        angle: 335, r: 0.27, tier: 2 },
+      { label: 'Labor',       angle:  12, r: 0.68 },
+      { label: 'Inventory',   angle:  65, r: 0.72 },
+      { label: 'P&L',         angle: 118, r: 0.66 },
+      { label: 'Scheduling',  angle: 172, r: 0.70 },
+      { label: 'Vendors',     angle: 224, r: 0.68 },
+      { label: 'Forecasting', angle: 278, r: 0.74 },
+      { label: 'Menu',        angle: 332, r: 0.64 },
     ];
-
-    // Secondary nodes branching off primaries
     const SECONDARY = [
-      { from: 0, label: 'Overtime',  dA:  38, dr: 0.16 },
-      { from: 0, label: 'Schedules', dA: -30, dr: 0.15 },
-      { from: 1, label: 'Par Levels',dA:  28, dr: 0.14 },
-      { from: 1, label: 'Waste',     dA: -24, dr: 0.13 },
-      { from: 2, label: 'Daily',     dA:  32, dr: 0.15 },
-      { from: 3, label: 'Coverage',  dA:  26, dr: 0.14 },
-      { from: 3, label: 'Callouts',  dA: -28, dr: 0.13 },
-      { from: 4, label: 'Orders',    dA:  30, dr: 0.15 },
-      { from: 5, label: 'Sales Mix', dA:  28, dr: 0.14 },
-      { from: 6, label: 'Food Cost', dA: -30, dr: 0.13 },
+      { from:0, label:'Overtime',   dA: 42, dr:0.28 },
+      { from:0, label:'Shifts',     dA:-34, dr:0.26 },
+      { from:1, label:'Par Levels', dA: 30, dr:0.27 },
+      { from:1, label:'Waste',      dA:-26, dr:0.25 },
+      { from:2, label:'Daily P&L',  dA: 34, dr:0.26 },
+      { from:3, label:'Coverage',   dA: 28, dr:0.25 },
+      { from:3, label:'Callouts',   dA:-32, dr:0.24 },
+      { from:4, label:'Orders',     dA: 32, dr:0.26 },
+      { from:5, label:'Sales Mix',  dA: 30, dr:0.27 },
+      { from:6, label:'Food Cost',  dA:-34, dr:0.25 },
     ];
 
-    // ── Particle pool ──────────────────────────────────────────────────
-    const PARTICLES = [];
-    const N_PARTICLES = 48;
+    const N_PARTICLES = 72;
+    const TRAIL_LEN   = 18;  // comet tail history steps
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -1338,78 +1332,74 @@ nav {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function toRad(deg) { return deg * Math.PI / 180; }
+    function toRad(d) { return d * Math.PI / 180; }
 
     function computePositions() {
-      const W = canvas.offsetWidth;
-      const H = canvas.offsetHeight;
-      const cx = W * 0.48;
-      const cy = H * 0.50;
-      const maxR = Math.min(W, H) * 0.42;
+      const W = canvas.offsetWidth, H = canvas.offsetHeight;
+      // Center slightly left to use full canvas
+      const cx = W * 0.46, cy = H * 0.50;
+      // Use the LARGER dimension so nodes bleed to all edges
+      const maxR = Math.max(W, H) * 0.40;
 
-      // Core node
-      const core = { x: cx, y: cy, r: 18, tier: 1, label: 'ChiveIQ' };
+      const core = { x:cx, y:cy, r:22 };
 
-      // Primary nodes
       const primaries = PRIMARY.map(p => {
         const a = toRad(p.angle);
-        return {
-          x: cx + Math.cos(a) * maxR * p.r,
-          y: cy + Math.sin(a) * maxR * p.r,
-          r: 8, tier: 2, label: p.label,
-          angle: p.angle
-        };
+        return { x: cx + Math.cos(a)*maxR*p.r, y: cy + Math.sin(a)*maxR*p.r,
+                 r:13, label:p.label, angle:p.angle };
       });
 
-      // Secondary nodes
       const secondaries = SECONDARY.map(s => {
         const par = primaries[s.from];
         const a = toRad(par.angle + s.dA);
-        return {
-          x: par.x + Math.cos(a) * maxR * s.dr,
-          y: par.y + Math.sin(a) * maxR * s.dr,
-          r: 4.5, tier: 3, label: s.label,
-          parentIdx: s.from
-        };
+        return { x: par.x + Math.cos(a)*maxR*s.dr, y: par.y + Math.sin(a)*maxR*s.dr,
+                 r:7, label:s.label, parentIdx:s.from };
       });
 
       return { core, primaries, secondaries, cx, cy, maxR, W, H };
     }
 
-    // ── Particle initialiser ────────────────────────────────────────────
+    // ── Particles with comet trails ─────────────────────────────────────
     function makeParticle(pos) {
-      // Travel: core → primary, primary → core, or primary → secondary
       const { core, primaries, secondaries } = pos;
-      const type = Math.random() < 0.55 ? 'radial' : 'branch';
+      const type = Math.random() < 0.6 ? 'radial' : 'branch';
       let from, to;
       if (type === 'radial') {
         const pi = Math.floor(Math.random() * primaries.length);
         from = Math.random() < 0.5 ? core : primaries[pi];
-        to   = from === core       ? primaries[pi] : core;
+        to   = from === core ? primaries[pi] : core;
       } else {
         const si = Math.floor(Math.random() * secondaries.length);
-        const s = secondaries[si];
+        const s  = secondaries[si];
         from = Math.random() < 0.5 ? primaries[s.parentIdx] : s;
-        to   = from === s           ? primaries[s.parentIdx] : s;
+        to   = from === s ? primaries[s.parentIdx] : s;
       }
-      return {
-        from, to,
-        t: Math.random(),
-        speed: 0.0028 + Math.random() * 0.0024,
-        r: 1.8 + Math.random() * 2.0,
-        alpha: 0
-      };
+      return { from, to, t: Math.random(), speed: 0.0018 + Math.random()*0.0018,
+               r: 2.5 + Math.random()*2.5, trail: [] };
     }
 
-    // ── Draw helpers ────────────────────────────────────────────────────
-    function glowCircle(x, y, r, color, blur, alpha) {
-      ctx.save();
-      ctx.shadowBlur  = blur;
-      ctx.shadowColor = color;
-      ctx.globalAlpha = alpha;
+    // ── Helpers ─────────────────────────────────────────────────────────
+    function lerp(a, b, t) { return a + (b-a)*t; }
+
+    function softBlob(x, y, r, color, alpha) {
+      // Large diffuse halo — the key to ethereal look
+      const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+      grad.addColorStop(0,   color.replace(')', `,${alpha})`).replace('rgb','rgba'));
+      grad.addColorStop(0.35, color.replace(')', `,${alpha*0.55})`).replace('rgb','rgba'));
+      grad.addColorStop(1,   color.replace(')', ',0)').replace('rgb','rgba'));
       ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = color;
+      ctx.arc(x, y, r, 0, Math.PI*2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    function glowDot(x, y, r, alpha) {
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.shadowBlur  = r * 5;
+      ctx.shadowColor = GREEN_B;
+      ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI*2);
+      ctx.fillStyle = '#eafff4';
       ctx.fill();
       ctx.restore();
     }
@@ -1417,144 +1407,163 @@ nav {
     function drawEdge(x1, y1, x2, y2, alpha, width) {
       ctx.save();
       ctx.globalAlpha = alpha;
-      ctx.strokeStyle = G_BRIGHT;
+      // Use gradient along edge for depth
+      const grad = ctx.createLinearGradient(x1, y1, x2, y2);
+      grad.addColorStop(0,   'rgba(43,168,84,0.9)');
+      grad.addColorStop(0.5, 'rgba(93,255,158,0.6)');
+      grad.addColorStop(1,   'rgba(43,168,84,0.9)');
+      ctx.strokeStyle = grad;
       ctx.lineWidth   = width;
-      ctx.shadowBlur  = 6;
-      ctx.shadowColor = G_BRIGHT;
-      ctx.beginPath();
-      ctx.moveTo(x1, y1);
-      ctx.lineTo(x2, y2);
+      ctx.shadowBlur  = 12;
+      ctx.shadowColor = GREEN;
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
       ctx.stroke();
       ctx.restore();
     }
 
-    function drawLabel(x, y, text, tier) {
-      const size  = tier === 2 ? 10 : 8.5;
-      const alpha = tier === 2 ? 0.72 : 0.48;
+    function drawLabel(x, y, text, size, alpha) {
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.font        = `${size}px 'DM Mono', monospace`;
-      ctx.fillStyle   = '#c8f5d4';
+      ctx.fillStyle   = '#d4fde4';
       ctx.textAlign   = 'center';
-      ctx.shadowBlur  = 4;
-      ctx.shadowColor = G_BRIGHT;
+      ctx.shadowBlur  = 8;
+      ctx.shadowColor = GREEN;
       ctx.fillText(text, x, y);
       ctx.restore();
     }
 
-    // ── Main animation loop ─────────────────────────────────────────────
-    let t = 0;
-    let pos = null;
-    let particles = [];
+    // ── Nebula clouds (background atmosphere) ──────────────────────────
+    const NEBULAE = Array.from({length: 6}, (_, i) => ({
+      phase: i * 1.05, speed: 0.003 + i*0.0008,
+      ox: (Math.random()-0.5)*0.3, oy: (Math.random()-0.5)*0.3,
+      scale: 0.6 + Math.random()*0.8
+    }));
+
+    function drawNebulae(W, H, cx, cy, t) {
+      NEBULAE.forEach(n => {
+        const nx = cx + Math.cos(n.phase + t*n.speed) * W*0.18 + n.ox*W;
+        const ny = cy + Math.sin(n.phase + t*n.speed*0.7) * H*0.20 + n.oy*H;
+        const r  = Math.min(W,H) * 0.28 * n.scale;
+        const a  = 0.022 + 0.010 * Math.sin(t*0.4 + n.phase);
+        const g  = ctx.createRadialGradient(nx, ny, 0, nx, ny, r);
+        g.addColorStop(0,   `rgba(20,80,42,${a*2.2})`);
+        g.addColorStop(0.4, `rgba(10,45,22,${a*1.1})`);
+        g.addColorStop(1,   'rgba(1,10,4,0)');
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI*2); ctx.fill();
+      });
+    }
+
+    // ── State ────────────────────────────────────────────────────────────
+    let t = 0, pos = null, particles = [];
 
     function init() {
       resize();
       pos = computePositions();
-      particles = Array.from({ length: N_PARTICLES }, () => makeParticle(pos));
+      particles = Array.from({length: N_PARTICLES}, () => makeParticle(pos));
     }
 
-    function lerp(a, b, t) { return a + (b - a) * t; }
-
     function draw() {
-      const W = canvas.offsetWidth;
-      const H = canvas.offsetHeight;
-
-      // Clear
+      const W = canvas.offsetWidth, H = canvas.offsetHeight;
       ctx.clearRect(0, 0, W, H);
 
-      // Background radial wash
-      const bg = ctx.createRadialGradient(pos.cx, pos.cy, 0, pos.cx, pos.cy, pos.maxR * 1.4);
-      bg.addColorStop(0,   'rgba(18,56,30,0.55)');
-      bg.addColorStop(0.6, 'rgba(4,18,8,0.28)');
-      bg.addColorStop(1,   'rgba(1,10,4,0)');
-      ctx.fillStyle = bg;
+      // ── Nebula background ──────────────────────────────────────────
+      drawNebulae(W, H, pos.cx, pos.cy, t);
+
+      // ── Deep core glow wash ────────────────────────────────────────
+      const pulse = 0.75 + 0.25 * Math.sin(t * 0.55);
+      const coreR = Math.min(W,H) * 0.38 * pulse;
+      const wash  = ctx.createRadialGradient(pos.cx, pos.cy, 0, pos.cx, pos.cy, coreR);
+      wash.addColorStop(0,   `rgba(30,90,55,${0.28*pulse})`);
+      wash.addColorStop(0.5, `rgba(8,30,16,${0.12*pulse})`);
+      wash.addColorStop(1,    'rgba(1,10,4,0)');
+      ctx.fillStyle = wash;
       ctx.fillRect(0, 0, W, H);
 
-      // Breathing pulse for core glow
-      const pulse = 0.7 + 0.3 * Math.sin(t * 0.8);
-
-      // ── Edges: core → primaries ──────────────────────────────────────
+      // ── Edges core → primaries ────────────────────────────────────
       pos.primaries.forEach((p, i) => {
-        const edgeAlpha = 0.10 + 0.06 * Math.sin(t * 0.6 + i * 0.9);
-        drawEdge(pos.cx, pos.cy, p.x, p.y, edgeAlpha, 0.7);
+        const a = 0.08 + 0.05 * Math.sin(t*0.5 + i*0.85);
+        drawEdge(pos.cx, pos.cy, p.x, p.y, a, 0.9);
       });
 
-      // ── Edges: primaries → secondaries ──────────────────────────────
+      // ── Edges primaries → secondaries ─────────────────────────────
       pos.secondaries.forEach((s, i) => {
         const par = pos.primaries[s.parentIdx];
-        drawEdge(par.x, par.y, s.x, s.y, 0.08 + 0.04 * Math.sin(t * 0.5 + i), 0.5);
+        const a   = 0.06 + 0.03 * Math.sin(t*0.45 + i);
+        drawEdge(par.x, par.y, s.x, s.y, a, 0.6);
       });
 
-      // ── Secondary nodes ──────────────────────────────────────────────
+      // ── Secondary nodes — diffuse blobs ───────────────────────────
       pos.secondaries.forEach((s, i) => {
-        const a = 0.30 + 0.12 * Math.sin(t * 0.7 + i * 1.1);
-        glowCircle(s.x, s.y, s.r, G_BRIGHT, 10, a);
-        drawLabel(s.x, s.y - s.r - 5, s.label, 3);
+        const a = 0.28 + 0.14 * Math.sin(t*0.6 + i*1.1);
+        softBlob(s.x, s.y, s.r * 8,  'rgb(43,168,84)', a * 0.5);
+        glowDot(s.x, s.y, s.r, a);
+        drawLabel(s.x, s.y - s.r - 9, s.label, 9, a * 0.8);
       });
 
-      // ── Primary nodes ────────────────────────────────────────────────
+      // ── Primary nodes — large luminous spheres ────────────────────
       pos.primaries.forEach((p, i) => {
-        const a = 0.55 + 0.20 * Math.sin(t * 0.65 + i * 0.8);
-        glowCircle(p.x, p.y, p.r + 2, G_BRIGHT, 28, a * 0.5);
-        glowCircle(p.x, p.y, p.r,     '#eafff3', 14, a);
-        drawLabel(p.x, p.y - p.r - 8, p.label, 2);
+        const a = 0.55 + 0.22 * Math.sin(t*0.52 + i*0.78);
+        // outer diffuse halo — this makes them feel large and ethereal
+        softBlob(p.x, p.y, p.r * 9,  'rgb(43,168,84)',  a * 0.22);
+        softBlob(p.x, p.y, p.r * 5,  'rgb(93,255,158)', a * 0.35);
+        softBlob(p.x, p.y, p.r * 2.2,'rgb(220,255,235)', a * 0.70);
+        glowDot(p.x, p.y, p.r * 0.7, a);
+        drawLabel(p.x, p.y - p.r - 14, p.label, 11, a * 0.90);
       });
 
-      // ── Core node ────────────────────────────────────────────────────
-      // Outer aura rings
-      [60, 44, 30].forEach((r, i) => {
+      // ── Core — large pulsing sun ──────────────────────────────────
+      const cr = pos.core.r;
+      // Multi-layer soft halos
+      softBlob(pos.cx, pos.cy, cr * 18, 'rgb(43,168,84)',   0.18 * pulse);
+      softBlob(pos.cx, pos.cy, cr * 10, 'rgb(43,168,84)',   0.28 * pulse);
+      softBlob(pos.cx, pos.cy, cr * 5,  'rgb(93,255,158)',  0.45 * pulse);
+      softBlob(pos.cx, pos.cy, cr * 2,  'rgb(220,255,235)', 0.70 * pulse);
+      glowDot(pos.cx, pos.cy, cr * 0.55, 0.95);
+      // Concentric rings
+      [4.0, 2.8, 1.9].forEach((rf, i) => {
         ctx.save();
-        ctx.globalAlpha = (0.06 + 0.04 * pulse) * (1 - i * 0.25);
-        ctx.beginPath();
-        ctx.arc(pos.cx, pos.cy, r * pulse, 0, Math.PI * 2);
-        ctx.strokeStyle = G_BRIGHT;
-        ctx.lineWidth   = 1;
-        ctx.shadowBlur  = 18;
-        ctx.shadowColor = G_BRIGHT;
-        ctx.stroke();
-        ctx.restore();
+        ctx.globalAlpha = (0.08 + 0.05*pulse) * (1 - i*0.28);
+        ctx.beginPath(); ctx.arc(pos.cx, pos.cy, cr*rf*pulse, 0, Math.PI*2);
+        ctx.strokeStyle = GREEN_B; ctx.lineWidth = 0.8;
+        ctx.shadowBlur  = 22; ctx.shadowColor = GREEN;
+        ctx.stroke(); ctx.restore();
       });
-      glowCircle(pos.cx, pos.cy, 22 * pulse, G_BRIGHT,  60, 0.35 * pulse);
-      glowCircle(pos.cx, pos.cy, 16,          '#dffff0', 20, 0.80 * pulse);
-      glowCircle(pos.cx, pos.cy, 7,           '#ffffff',  8, 0.95);
+      drawLabel(pos.cx, pos.cy + cr + 22, 'OPERATOR', 9, 0.45);
 
-      // Core label
-      ctx.save();
-      ctx.font        = "bold 9px 'DM Mono', monospace";
-      ctx.fillStyle   = 'rgba(220,255,235,0.55)';
-      ctx.textAlign   = 'center';
-      ctx.globalAlpha = 0.55;
-      ctx.fillText('OPERATOR', pos.cx, pos.cy + 28);
-      ctx.restore();
-
-      // ── Particles ────────────────────────────────────────────────────
-      particles.forEach((p, i) => {
+      // ── Comet particles ───────────────────────────────────────────
+      particles.forEach((p, idx) => {
         p.t += p.speed;
-        if (p.t >= 1) {
-          particles[i] = makeParticle(pos);
-          return;
-        }
-        const ease = p.t < 0.1 ? p.t / 0.1 : p.t > 0.9 ? (1 - p.t) / 0.1 : 1;
+        if (p.t >= 1) { particles[idx] = makeParticle(pos); return; }
         const x = lerp(p.from.x, p.to.x, p.t);
         const y = lerp(p.from.y, p.to.y, p.t);
-        glowCircle(x, y, p.r, '#90ffcc', 14, ease * 0.85);
+        // Store trail
+        p.trail.push({x, y});
+        if (p.trail.length > TRAIL_LEN) p.trail.shift();
+        // Draw comet tail
+        p.trail.forEach((pt, ti) => {
+          const tf  = ti / TRAIL_LEN;
+          const ea  = p.t < 0.08 ? p.t/0.08 : p.t > 0.92 ? (1-p.t)/0.08 : 1;
+          const ta  = tf * tf * 0.7 * ea;
+          const tr  = p.r * tf * 0.85;
+          if (tr > 0.3) glowDot(pt.x, pt.y, tr, ta);
+        });
+        // Head
+        const ea = p.t < 0.08 ? p.t/0.08 : p.t > 0.92 ? (1-p.t)/0.08 : 1;
+        glowDot(x, y, p.r, ea * 0.92);
       });
 
-      t += 0.016;
+      t += 0.012;
       requestAnimationFrame(draw);
     }
 
-    // Resize handler
-    window.addEventListener('resize', () => {
-      resize();
-      pos = computePositions();
-    });
+    window.addEventListener('resize', () => { resize(); pos = computePositions(); });
 
-    // Boot — defer until layout is complete
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function() { init(); draw(); });
+      document.addEventListener('DOMContentLoaded', () => { init(); draw(); });
     } else {
-      requestAnimationFrame(function() { init(); draw(); });
+      requestAnimationFrame(() => { init(); draw(); });
     }
   })();
   </script>
