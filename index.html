@@ -1197,11 +1197,11 @@ nav {
   </style>
 
   <!-- ============================================================ -->
-  <!-- VARIANT: LIVING SYSTEM — Godlike rim-lit particle figure -->
+  <!-- VARIANT: LIVING SYSTEM — Metaball particle figure -->
 
   <style>
     #variant-living {
-      background: #010805;
+      background: #020c06;
       min-height: 100vh;
       position: relative;
       overflow: hidden;
@@ -1210,28 +1210,22 @@ nav {
       width: 100%;
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 55% 45%;
+      grid-template-columns: 56% 44%;
     }
-    .lv-canvas-col {
-      position: relative;
-      height: 100vh;
-    }
+    .lv-canvas-col { position: relative; height: 100vh; }
     #syn-canvas { display:block; width:100%; height:100%; }
     .lv-copy {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      position: relative; z-index: 10;
+      display: flex; flex-direction: column; justify-content: center;
       padding: 80px 56px 80px 20px;
     }
     .lv-eyebrow {
       font-family:'DM Mono',monospace; font-size:.56rem; letter-spacing:.22em;
-      text-transform:uppercase; color:rgba(43,168,84,.42); margin-bottom:30px;
+      text-transform:uppercase; color:rgba(43,168,84,.4); margin-bottom:30px;
     }
     .lv-headline {
-      font-size:clamp(2.6rem,3.6vw,4.4rem); font-weight:800; letter-spacing:-.048em;
-      line-height:1.0; color:#f2efdf; margin-bottom:32px;
+      font-size:clamp(2.6rem,3.6vw,4.4rem); font-weight:800;
+      letter-spacing:-.048em; line-height:1.0; color:#f2efdf; margin-bottom:32px;
     }
     .lv-headline em { font-style:normal; color:#2ba854; }
     .lv-body {
@@ -1240,9 +1234,9 @@ nav {
     }
     .lv-body strong { color:rgba(242,239,223,.7); font-weight:500; }
     .lv-relief {
-      font-family:'DM Mono',monospace; font-size:.75rem; color:rgba(43,168,84,.58);
+      font-family:'DM Mono',monospace; font-size:.75rem; color:rgba(43,168,84,.55);
       letter-spacing:.04em; margin-bottom:48px; line-height:1.75;
-      border-left:1px solid rgba(43,168,84,.2); padding-left:18px;
+      border-left:1px solid rgba(43,168,84,.18); padding-left:18px;
     }
     .lv-cta-row { display:flex; gap:14px; align-items:center; }
     .lv-btn-primary {
@@ -1251,21 +1245,21 @@ nav {
       border-radius:4px; cursor:pointer;
     }
     .lv-btn-ghost {
-      background:transparent; color:rgba(242,239,223,.36);
+      background:transparent; color:rgba(242,239,223,.35);
       border:1px solid rgba(242,239,223,.12); padding:14px 22px;
       font-family:'DM Mono',monospace; font-size:.66rem; letter-spacing:.08em;
       border-radius:4px; cursor:pointer;
     }
     .lv-pill {
-      position:absolute; background:rgba(2,12,6,.9);
-      border:1px solid rgba(43,168,84,.2); border-radius:6px;
-      padding:10px 16px; backdrop-filter:blur(10px); z-index:8;
+      position:absolute; background:rgba(2,14,7,.92);
+      border:1px solid rgba(43,168,84,.18); border-radius:6px;
+      padding:10px 16px; backdrop-filter:blur(12px); z-index:8;
       animation:lv-float 5s ease-in-out infinite;
     }
-    .lv-pill:nth-child(2){animation-delay:-1.9s;animation-duration:6.3s;}
-    .lv-pill:nth-child(3){animation-delay:-3.5s;animation-duration:4.9s;}
+    .lv-pill:nth-child(2){animation-delay:-2s;animation-duration:6.4s;}
+    .lv-pill:nth-child(3){animation-delay:-3.6s;animation-duration:4.8s;}
     @keyframes lv-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-    .lv-pill-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,168,84,.5);margin-bottom:4px;}
+    .lv-pill-label{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(43,168,84,.48);margin-bottom:4px;}
     .lv-pill-value{font-family:'Sora',sans-serif;font-size:1.08rem;font-weight:700;color:#f2efdf;letter-spacing:-.03em;}
     .lv-pill-delta{font-family:'DM Mono',monospace;font-size:.55rem;color:#2ba854;margin-top:3px;}
   </style>
@@ -1274,17 +1268,17 @@ nav {
     <div class="lv-wrap">
       <div class="lv-canvas-col">
         <canvas id="syn-canvas"></canvas>
-        <div class="lv-pill" style="top:13%;right:5%;">
+        <div class="lv-pill" style="top:12%;right:4%;">
           <div class="lv-pill-label">Labor Cost</div>
           <div class="lv-pill-value">26.4%</div>
           <div class="lv-pill-delta">↓ 1.8% this week</div>
         </div>
-        <div class="lv-pill" style="top:46%;right:2%;">
+        <div class="lv-pill" style="top:45%;right:2%;">
           <div class="lv-pill-label">Live P&amp;L</div>
           <div class="lv-pill-value">$4,218</div>
           <div class="lv-pill-delta">↑ On track</div>
         </div>
-        <div class="lv-pill" style="top:75%;right:6%;">
+        <div class="lv-pill" style="top:74%;right:5%;">
           <div class="lv-pill-label">Inventory</div>
           <div class="lv-pill-value">97%</div>
           <div class="lv-pill-delta">✓ Fully stocked</div>
@@ -1294,7 +1288,7 @@ nav {
         <div class="lv-eyebrow">New Operator · Intelligent Infrastructure</div>
         <h2 class="lv-headline">Finally.<br>Someone's<br>got the<br><em>back office.</em></h2>
         <p class="lv-body">You've been running the restaurant.<br><strong>ChiveIQ runs everything else.</strong></p>
-        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized. Handed to you the moment you need them.</p>
+        <p class="lv-body">Labor. Inventory. P&amp;L. Scheduling. Not dashboards — decisions, already made, already optimized. Handed to you when you need them.</p>
         <div class="lv-relief">The operator your locations actually need.<br>Available 24 hours. Never calls out.</div>
         <div class="lv-cta-row">
           <button class="lv-btn-primary">See how it works</button>
@@ -1311,126 +1305,141 @@ nav {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // ── Config ─────────────────────────────────────────────────────────────
-    const NDOTS      = 4200;
-    const CONN_R     = 36;        // neighbor radius for synapse propagation
-    const CONN_R_SQ  = CONN_R * CONN_R;
-    const RIM_THRESH = 20;        // px from edge → "rim" zone
+    // ── Metaball body definition ──────────────────────────────────────────
+    // All coords normalized 0-1 within the figure bounding box.
+    // Each blob: {cx, cy, sx (x-sigma), sy (y-sigma), w (weight)}
+    // Field value = sum of w * exp(-0.5*((dx/sx)²+(dy/sy)²))
+    // inBody if field > THRESHOLD
 
-    let W, H, dots = [], adjList = [], bodyPaths = [], rings = [];
-    let crowns = [];              // crown particles floating up from head
-    let globalPulse = 0;         // 0-1, decays — whole-body brightness surge
-    let lastFire = 0, lastPulse = 0, initDone = false;
+    const THRESHOLD = 0.30;
 
-    // ── Path2D silhouette (same anatomical shape) ──────────────────────────
-    function buildPaths() {
-      const fw = W * 0.70, fh = H * 0.93;
-      const x0 = (W - fw) / 2, y0 = H * 0.035;
-      const X = n => x0 + n * fw, Y = n => y0 + n * fh;
-      bodyPaths = [];
+    const BLOBS = [
+      // ── Head (round, well-proportioned)
+      { cx:0.500, cy:0.098, sx:0.108, sy:0.102, w:1.00 },
 
-      const head = new Path2D();
-      head.ellipse(X(0.5), Y(0.108), fw*0.120, fh*0.108, 0, 0, Math.PI*2);
-      bodyPaths.push(head);
+      // ── Neck (narrow bridge)
+      { cx:0.500, cy:0.228, sx:0.056, sy:0.055, w:0.90 },
 
-      const neck = new Path2D();
-      neck.rect(X(0.443), Y(0.208), fw*0.114, fh*0.072);
-      bodyPaths.push(neck);
+      // ── Clavicle / upper chest (wide)
+      { cx:0.500, cy:0.308, sx:0.205, sy:0.078, w:1.00 },
 
-      const torso = new Path2D();
-      torso.moveTo(X(0.21), Y(0.272));
-      torso.lineTo(X(0.79), Y(0.272));
-      torso.bezierCurveTo(X(0.84),Y(0.290),X(0.86),Y(0.320),X(0.815),Y(0.360));
-      torso.lineTo(X(0.695),Y(0.875));
-      torso.lineTo(X(0.305),Y(0.875));
-      torso.lineTo(X(0.185),Y(0.360));
-      torso.bezierCurveTo(X(0.14),Y(0.320),X(0.16),Y(0.290),X(0.21),Y(0.272));
-      torso.closePath();
-      bodyPaths.push(torso);
+      // ── Pec / mid chest
+      { cx:0.500, cy:0.415, sx:0.188, sy:0.092, w:1.00 },
 
-      const leftArm = new Path2D();
-      leftArm.moveTo(X(0.215),Y(0.280));
-      leftArm.lineTo(X(0.088),Y(0.318));
-      leftArm.bezierCurveTo(X(0.038),Y(0.455),X(0.028),Y(0.630),X(0.052),Y(0.862));
-      leftArm.lineTo(X(0.170),Y(0.862));
-      leftArm.bezierCurveTo(X(0.155),Y(0.640),X(0.166),Y(0.472),X(0.215),Y(0.342));
-      leftArm.closePath();
-      bodyPaths.push(leftArm);
+      // ── Solar plexus
+      { cx:0.500, cy:0.525, sx:0.172, sy:0.088, w:0.97 },
 
-      const rightArm = new Path2D();
-      rightArm.moveTo(X(0.785),Y(0.280));
-      rightArm.lineTo(X(0.912),Y(0.318));
-      rightArm.bezierCurveTo(X(0.962),Y(0.455),X(0.972),Y(0.630),X(0.948),Y(0.862));
-      rightArm.lineTo(X(0.830),Y(0.862));
-      rightArm.bezierCurveTo(X(0.845),Y(0.640),X(0.834),Y(0.472),X(0.785),Y(0.342));
-      rightArm.closePath();
-      bodyPaths.push(rightArm);
+      // ── Navel / lower torso
+      { cx:0.500, cy:0.635, sx:0.160, sy:0.082, w:0.93 },
 
-      return { fw, fh, x0, y0, X, Y };
-    }
+      // ── Waist (narrowest)
+      { cx:0.500, cy:0.742, sx:0.148, sy:0.074, w:0.88 },
 
-    function inBody(x, y) {
-      for (let i = 0; i < bodyPaths.length; i++)
-        if (ctx.isPointInPath(bodyPaths[i], x, y)) return true;
-      return false;
-    }
+      // ── Hip hint at bottom
+      { cx:0.500, cy:0.855, sx:0.158, sy:0.060, w:0.82 },
 
-    // ── Rim weight: 1.0 = on surface, 0.0 = deep interior ─────────────────
-    // Uses binary search outward in 12 directions to find distance to edge
-    function rimWeight(x, y) {
-      let minDist = RIM_THRESH + 1;
-      const N = 12;
-      for (let a = 0; a < N; a++) {
-        const angle = (a / N) * Math.PI * 2;
-        const cos = Math.cos(angle), sin = Math.sin(angle);
-        let lo = 0, hi = RIM_THRESH;
-        // If even RIM_THRESH is still inside, this direction is deep — skip
-        if (inBody(x + cos*hi, y + sin*hi)) continue;
-        // Binary search for boundary
-        for (let iter = 0; iter < 6; iter++) {
-          const mid = (lo + hi) / 2;
-          if (inBody(x + cos*mid, y + sin*mid)) lo = mid; else hi = mid;
-        }
-        if (lo < minDist) minDist = lo;
+      // ── Left shoulder cap
+      { cx:0.310, cy:0.308, sx:0.088, sy:0.082, w:0.96 },
+      // ── Right shoulder cap
+      { cx:0.690, cy:0.308, sx:0.088, sy:0.082, w:0.96 },
+
+      // ── Left upper arm (angled slightly outward)
+      { cx:0.248, cy:0.442, sx:0.066, sy:0.112, w:0.91 },
+      // ── Right upper arm
+      { cx:0.752, cy:0.442, sx:0.066, sy:0.112, w:0.91 },
+
+      // ── Left forearm (continues outward)
+      { cx:0.208, cy:0.618, sx:0.056, sy:0.108, w:0.86 },
+      // ── Right forearm
+      { cx:0.792, cy:0.618, sx:0.056, sy:0.108, w:0.86 },
+
+      // ── Left wrist / hand
+      { cx:0.188, cy:0.782, sx:0.048, sy:0.072, w:0.79 },
+      // ── Right wrist / hand
+      { cx:0.812, cy:0.782, sx:0.048, sy:0.072, w:0.79 },
+    ];
+
+    function fieldAt(nx, ny) {
+      let v = 0;
+      for (let i = 0; i < BLOBS.length; i++) {
+        const b = BLOBS[i];
+        const dx = (nx - b.cx) / b.sx;
+        const dy = (ny - b.cy) / b.sy;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < 9) v += b.w * Math.exp(-0.5 * d2);
       }
-      if (minDist > RIM_THRESH) return 0; // deep interior
-      return 1 - minDist / RIM_THRESH;    // 1 = on surface
+      return v;
     }
 
-    // ── Dot color from rim weight ──────────────────────────────────────────
-    // Rim (rw~1): near-white teal  → Interior (rw~0): deep green
-    function dotColor(rw, flash, pulse) {
-      const f = Math.min(1, flash + pulse * 0.4);
-      // R channel: 43 → 180 at rim, +60 on flash
-      const r = Math.round(43  + rw * 137 + f * 60);
-      // G channel: 130 → 255 at rim, +30 on flash
-      const g = Math.round(130 + rw * 125 + f * 30);
-      // B channel: 70 → 200 at rim, +80 on flash (goes warm/golden on flash)
-      const b = Math.round(70  + rw * 130 - f * 30);
-      // Alpha: rim is bright, interior slightly dimmer, boosted by flash+pulse
-      const a = Math.min(0.99, 0.34 + rw * 0.58 + f * 0.32);
-      return { r: Math.min(255,r), g: Math.min(255,g), b: Math.min(255,b), a };
+    // Rim weight: 1 at surface, 0 deep inside
+    // Field value just above THRESHOLD → surface (bright)
+    // Field value much higher → deep interior (dimmer)
+    function rimWeight(fv) {
+      const excess = (fv - THRESHOLD) / (THRESHOLD * 1.1);
+      return Math.exp(-excess * excess * 2.2);
     }
 
-    // ── Seed dots ─────────────────────────────────────────────────────────
+    // ── Canvas layout ─────────────────────────────────────────────────────
+    const NDOTS = 5200;
+    const CONN_R = 32, CONN_R_SQ = CONN_R * CONN_R;
+
+    let W, H;
+    let FW, FH, FX0, FY0;   // figure bounding box in screen px
+    let dots = [];
+    let adjList = [];
+    let rings = [], crowns = [];
+    let globalPulse = 0;
+    let lastFire = 0, lastPulse = 0;
+    let seeded = false, adjReady = false;
+
+    function setFigureBox() {
+      FW = W * 0.78;
+      FH = H * 0.93;
+      FX0 = (W - FW) / 2;
+      FY0 = H * 0.035;
+    }
+
+    function toScreen(nx, ny) {
+      return { x: FX0 + nx * FW, y: FY0 + ny * FH };
+    }
+
+    // ── Seed dots in normalized space (fast, one-time) ────────────────────
     function seedDots() {
-      dots = []; adjList = [];
-      const { fw, fh, x0, y0 } = buildPaths();
+      dots = [];
       let tries = 0;
-      while (dots.length < NDOTS && tries < NDOTS * 20) {
+      while (dots.length < NDOTS && tries < NDOTS * 22) {
         tries++;
-        const x = x0 + Math.random() * fw;
-        const y = y0 + Math.random() * fh;
-        if (!inBody(x, y)) continue;
-        const rw = rimWeight(x, y);
-        dots.push({ x, y, rw,
-          r: 0.68 + rw * 0.72 + Math.random() * 0.35,  // rim dots larger
+        const nx = Math.random();
+        const ny = Math.random() * 0.97;
+        const fv = fieldAt(nx, ny);
+        if (fv < THRESHOLD) continue;
+        const rw = rimWeight(fv);
+        dots.push({
+          nx, ny,
+          x: 0, y: 0,           // screen coords, set in updateScreenCoords
+          rw,
+          // Dot radius: rim dots slightly larger for visual pop
+          r: 0.70 + rw * 0.65 + Math.random() * 0.30,
+          // Base alpha: rim bright, interior medium
+          base: 0.32 + rw * 0.54 + Math.random() * 0.08,
           flash: 0,
           flashDecay: 0.010 + Math.random() * 0.009,
         });
       }
+      seeded = true;
+    }
 
-      // Spatial-grid adjacency
+    function updateScreenCoords() {
+      setFigureBox();
+      for (const d of dots) {
+        const s = toScreen(d.nx, d.ny);
+        d.x = s.x; d.y = s.y;
+      }
+    }
+
+    function buildAdjacency() {
+      adjReady = false;
+      adjList = dots.map(() => []);
       const cell = CONN_R;
       const grid = {};
       for (let i = 0; i < dots.length; i++) {
@@ -1439,187 +1448,187 @@ nav {
         if (!grid[k]) grid[k] = [];
         grid[k].push(i);
       }
-      adjList = dots.map(() => []);
       for (let i = 0; i < dots.length; i++) {
-        const gx = Math.floor(dots[i].x/cell), gy = Math.floor(dots[i].y/cell);
-        for (let dx=-1; dx<=1; dx++) for (let dy=-1; dy<=1; dy++) {
+        const gx = Math.floor(dots[i].x / cell), gy = Math.floor(dots[i].y / cell);
+        for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
           const nb = grid[(gx+dx)*100000+(gy+dy)];
           if (!nb) continue;
           for (const j of nb) {
             if (j <= i) continue;
-            const ddx=dots[i].x-dots[j].x, ddy=dots[i].y-dots[j].y;
-            if (ddx*ddx+ddy*ddy < CONN_R_SQ) { adjList[i].push(j); adjList[j].push(i); }
+            const ddx = dots[i].x - dots[j].x, ddy = dots[i].y - dots[j].y;
+            if (ddx*ddx + ddy*ddy < CONN_R_SQ) { adjList[i].push(j); adjList[j].push(i); }
           }
         }
       }
-
-      // Seed crown particles above head
-      crowns = [];
-      const headCX = W/2, headTopY = H*0.035;
-      for (let i=0; i<18; i++) {
-        crowns.push(spawnCrown(headCX, headTopY));
-      }
-
-      initDone = true;
+      adjReady = true;
     }
 
-    function spawnCrown(hcx, hty) {
-      return {
-        x: hcx + (Math.random()-0.5)*80,
-        y: hty - Math.random()*60,
-        vy: -(0.18 + Math.random()*0.28),
-        vx: (Math.random()-0.5)*0.18,
-        life: Math.random(),       // 0-1, when hits 0 → respawn
-        decay: 0.0015 + Math.random()*0.002,
-        r: 0.8 + Math.random()*1.0,
-        baseX: hcx, baseY: hty,
-      };
-    }
-
-    // ── Synapse fire ───────────────────────────────────────────────────────
+    // ── Synapse ───────────────────────────────────────────────────────────
     function fireSynapse() {
-      if (!dots.length) return;
+      if (!adjReady || !dots.length) return;
       const srcIdx = Math.floor(Math.random() * dots.length);
       const src = dots[srcIdx];
       src.flash = 1.0;
-      rings.push({ x:src.x, y:src.y, r:5, maxR:70+Math.random()*40, alpha:0.7, decay:0.012 });
+      rings.push({ x:src.x, y:src.y, r:5, maxR:80+Math.random()*45, alpha:0.65, decay:0.010 });
 
       function wave(idx, depth) {
-        if (depth > 3) return;
+        if (depth > 4) return;
         for (const j of adjList[idx]) {
           const d = dots[j];
           const dx=d.x-src.x, dy=d.y-src.y;
           const dist=Math.sqrt(dx*dx+dy*dy);
-          const delay = (dist/(CONN_R*2.6))*360 + Math.random()*55;
-          const intensity = Math.max(0, 0.88-depth*0.2+Math.random()*0.14);
-          setTimeout(()=>{ if(d.flash<intensity){d.flash=intensity; if(depth<2)wave(j,depth+1);} }, delay);
+          const delay = (dist/(CONN_R*2.4))*500 + Math.random()*80;
+          const intensity = Math.max(0, 0.90 - depth*0.18 + Math.random()*0.12);
+          setTimeout(() => {
+            if (d.flash < intensity) { d.flash = intensity; if (depth < 3) wave(j, depth+1); }
+          }, delay);
         }
       }
       wave(srcIdx, 0);
     }
 
-    // ── Global divine pulse ────────────────────────────────────────────────
-    function triggerPulse() {
-      globalPulse = 1.0;
+    // ── Crown particles (drift upward from head) ──────────────────────────
+    function makeCrown(forced) {
+      const headCY = FY0 + 0.098 * FH;
+      const headRX = FW * 0.108;
+      return {
+        x: FX0 + FW*0.5 + (Math.random()-0.5)*headRX*1.6,
+        y: headCY - FH*0.10 - Math.random()*FH*0.04,
+        vy: -(0.22 + Math.random()*0.30),
+        vx: (Math.random()-0.5)*0.15,
+        life: forced ? 0.6 + Math.random()*0.4 : Math.random(),
+        decay: 0.0018 + Math.random()*0.0022,
+        r: 0.9 + Math.random()*0.9,
+      };
     }
 
-    // ── Draw ──────────────────────────────────────────────────────────────
+    // ── Draw ─────────────────────────────────────────────────────────────
     function draw(ts) {
       requestAnimationFrame(draw);
-      if (!initDone) return;
+      if (!seeded) return;
 
       ctx.clearRect(0, 0, W, H);
 
       // Decay global pulse
-      if (globalPulse > 0) globalPulse = Math.max(0, globalPulse - 0.008);
+      if (globalPulse > 0) globalPulse = Math.max(0, globalPulse - 0.006);
 
-      // Trigger events
-      if (ts - lastFire > 620 + Math.random()*400) { lastFire=ts; fireSynapse(); }
-      if (ts - lastPulse > 5800 + Math.random()*2400) { lastPulse=ts; triggerPulse(); }
+      // Events
+      if (ts - lastFire  > 700 + Math.random()*500) { lastFire=ts; fireSynapse(); }
+      if (ts - lastPulse > 6500 + Math.random()*3000) { lastPulse=ts; globalPulse=1.0; }
 
-      // ── 1. Aureole: large divine glow behind figure ──────────────────
-      const auroraAlpha = 0.22 + globalPulse * 0.18;
-      const cx = W/2, cy = H*0.50;
-      const aura = ctx.createRadialGradient(cx, cy*0.82, 0, cx, cy*0.82, W*0.48);
-      aura.addColorStop(0,   `rgba(30,110,60,${auroraAlpha.toFixed(3)})`);
-      aura.addColorStop(0.45,`rgba(15,55,28,${(auroraAlpha*0.5).toFixed(3)})`);
-      aura.addColorStop(1,   'rgba(1,8,5,0)');
-      ctx.fillStyle = aura;
-      ctx.fillRect(0, 0, W, H);
+      // ── 1. Aureole — divine backlight behind figure ──────────────────
+      setFigureBox();
+      const cx = FX0 + FW*0.5, cy = FY0 + FH*0.45;
+      const gAlpha = 0.18 + globalPulse * 0.16;
+      const aura = ctx.createRadialGradient(cx, cy, 0, cx, cy, FW*0.62);
+      aura.addColorStop(0,   `rgba(22,95,48,${gAlpha.toFixed(3)})`);
+      aura.addColorStop(0.5, `rgba(10,48,22,${(gAlpha*0.45).toFixed(3)})`);
+      aura.addColorStop(1,    'rgba(2,12,6,0)');
+      ctx.fillStyle = aura; ctx.fillRect(0, 0, W, H);
 
-      // ── 2. Connection lines (only during flash/pulse) ────────────────
-      for (let i=0; i<dots.length; i++) {
-        const d=dots[i];
-        const eff=d.flash+globalPulse*0.3;
-        if (eff<0.1) continue;
-        for (const j of adjList[i]) {
-          if (j<i) continue;
-          const d2=dots[j];
-          const ddx=d.x-d2.x, ddy=d.y-d2.y;
-          if (ddx*ddx+ddy*ddy > CONN_R_SQ) continue;
-          const fm=Math.min(d.flash,d2.flash)+globalPulse*0.2;
-          if (fm<0.06) continue;
-          const rimAvg=(d.rw+d2.rw)*0.5;
-          ctx.beginPath();
-          ctx.strokeStyle=`rgba(${120+Math.round(rimAvg*100)},220,150,${(fm*0.35).toFixed(3)})`;
-          ctx.lineWidth=0.5+fm*0.7;
-          ctx.moveTo(d.x,d.y); ctx.lineTo(d2.x,d2.y); ctx.stroke();
-        }
-      }
-
-      // ── 3. Dots ───────────────────────────────────────────────────────
+      // ── 2. Dots (two passes: glow halos then cores) ───────────────────
+      // Pass A: glow halos for rim + flashing dots (drawn large & transparent)
       for (const d of dots) {
-        if (d.flash>0) d.flash=Math.max(0,d.flash-d.flashDecay);
-        const {r:cr,g:cg,b:cb,a:ca}=dotColor(d.rw,d.flash,globalPulse);
-        const dotR=d.r+d.flash*1.8+globalPulse*0.8;
-
-        // Rim dots get a small persistent glow; flash adds more
-        const glowStrength = d.rw*3 + d.flash*10 + globalPulse*4;
-        if (glowStrength>1) {
-          ctx.shadowBlur=glowStrength;
-          ctx.shadowColor=`rgba(${cr},${cg},${cb},0.7)`;
-        } else { ctx.shadowBlur=0; }
-
+        const eff = d.rw * 0.6 + d.flash * 0.55 + globalPulse * 0.25;
+        if (eff < 0.12) continue;
+        const hr = d.r * (2.8 + d.flash * 3.5 + d.rw * 1.5);
+        const ha = Math.min(0.18, eff * 0.18);
         ctx.beginPath();
-        ctx.arc(d.x,d.y,dotR,0,Math.PI*2);
-        ctx.fillStyle=`rgba(${cr},${cg},${cb},${ca.toFixed(3)})`;
+        ctx.arc(d.x, d.y, hr, 0, Math.PI*2);
+        // Rim halos: cool teal. Flash halos: warm bright green.
+        const hg = Math.round(180 + d.flash * 60);
+        const hb = Math.round(120 + d.rw * 60 - d.flash * 40);
+        ctx.fillStyle = `rgba(60,${hg},${hb},${ha.toFixed(3)})`;
         ctx.fill();
       }
-      ctx.shadowBlur=0;
 
-      // ── 4. Rings ──────────────────────────────────────────────────────
-      for (let i=rings.length-1; i>=0; i--) {
-        const ring=rings[i];
-        ring.r+=(ring.maxR-ring.r)*0.055;
-        ring.alpha-=ring.decay;
-        if (ring.alpha<=0){rings.splice(i,1);continue;}
+      // Pass B: core dots
+      for (const d of dots) {
+        if (d.flash > 0) d.flash = Math.max(0, d.flash - d.flashDecay);
+        const alpha = Math.min(0.99, d.base + d.flash*0.50 + globalPulse*0.22);
+        const r = d.r + d.flash * 1.6 + globalPulse * 0.6;
+
+        // Color: deep green interior → bright teal rim → warm gold on flash
+        const flashBoost = d.flash + globalPulse * 0.3;
+        const cr = Math.round(38  + d.rw * 82  + flashBoost * 90);
+        const cg = Math.round(140 + d.rw * 100 + flashBoost * 60);
+        const cb = Math.round(72  + d.rw * 90  - flashBoost * 30);
+
         ctx.beginPath();
-        ctx.strokeStyle=`rgba(120,240,170,${ring.alpha.toFixed(3)})`;
-        ctx.lineWidth=0.85;
-        ctx.arc(ring.x,ring.y,ring.r,0,Math.PI*2);
+        ctx.arc(d.x, d.y, r, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${Math.min(255,cr)},${Math.min(255,cg)},${Math.min(255,cb)},${alpha.toFixed(3)})`;
+        ctx.fill();
+      }
+
+      // ── 3. Rings ──────────────────────────────────────────────────────
+      for (let i = rings.length-1; i >= 0; i--) {
+        const ring = rings[i];
+        ring.r += (ring.maxR - ring.r) * 0.048;
+        ring.alpha -= ring.decay;
+        if (ring.alpha <= 0) { rings.splice(i,1); continue; }
+        ctx.beginPath();
+        ctx.strokeStyle = `rgba(80,220,140,${ring.alpha.toFixed(3)})`;
+        ctx.lineWidth = 0.8;
+        ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI*2);
         ctx.stroke();
       }
 
-      // ── 5. Crown particles (divine emanation above head) ─────────────
-      const fw=W*0.70, fh=H*0.93;
-      const x0=(W-fw)/2, y0=H*0.035;
-      const headCX=W/2, headTopY=y0+0.004*fh;
-
+      // ── 4. Crown particles ────────────────────────────────────────────
       for (const c of crowns) {
-        c.x+=c.vx; c.y+=c.vy;
-        c.life-=c.decay;
-        if (c.life<=0) {
-          // respawn near head top
-          const fresh=spawnCrown(headCX,headTopY);
-          Object.assign(c,fresh);
-          c.life=0.4+Math.random()*0.6;
-          continue;
-        }
-        const alpha=Math.min(0.55,c.life*0.8);
-        ctx.shadowBlur=4; ctx.shadowColor='rgba(100,255,160,0.4)';
+        c.x += c.vx; c.y += c.vy; c.life -= c.decay;
+        if (c.life <= 0) { Object.assign(c, makeCrown(true)); continue; }
+        const a = Math.min(0.55, c.life * 0.75);
         ctx.beginPath();
-        ctx.arc(c.x,c.y,c.r*c.life,0,Math.PI*2);
-        ctx.fillStyle=`rgba(140,255,190,${alpha.toFixed(3)})`;
+        ctx.arc(c.x, c.y, c.r * Math.min(1, c.life*2), 0, Math.PI*2);
+        ctx.fillStyle = `rgba(100,240,165,${a.toFixed(3)})`;
         ctx.fill();
-        ctx.shadowBlur=0;
       }
     }
 
-    // ── Resize / Init ─────────────────────────────────────────────────────
-    function resize() {
-      const col=canvas.parentElement;
-      W=col.clientWidth||window.innerWidth*0.55;
-      H=col.clientHeight||window.innerHeight;
-      canvas.width=W; canvas.height=H;
-      initDone=false;
-      setTimeout(seedDots,0);
+    // ── Init / resize ─────────────────────────────────────────────────────
+    function init() {
+      const col = canvas.parentElement;
+      W = col.clientWidth  || window.innerWidth * 0.56;
+      H = col.clientHeight || window.innerHeight;
+      canvas.width = W; canvas.height = H;
+      setFigureBox();
+
+      if (!seeded) {
+        // Seed dots once (normalized space — resize-independent)
+        setTimeout(() => {
+          seedDots();
+          updateScreenCoords();
+          // Seed crown particles
+          crowns = [];
+          for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
+          setTimeout(buildAdjacency, 10);
+        }, 0);
+      } else {
+        updateScreenCoords();
+        crowns = [];
+        for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
+        setTimeout(buildAdjacency, 10);
+      }
+
+      requestAnimationFrame(draw);
     }
 
-    window.addEventListener('resize',resize);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      const col = canvas.parentElement;
+      W = col.clientWidth; H = col.clientHeight;
+      canvas.width = W; canvas.height = H;
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        updateScreenCoords();
+        crowns = [];
+        for (let i = 0; i < 20; i++) crowns.push(makeCrown(false));
+        buildAdjacency();
+      }, 150);
+    });
 
-    function init(){resize();requestAnimationFrame(draw);}
-    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
-    else setTimeout(init,60);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+    else setTimeout(init, 60);
   })();
   </script>
 
