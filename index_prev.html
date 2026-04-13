@@ -1295,14 +1295,17 @@ nav {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
+    // labelAngle spreads labels evenly around the rings (clock positions)
     const RINGS = [
-      { label: 'Labor',       color: '#2ba854', r: 0.14 },
-      { label: 'Inventory',   color: '#2ba854', r: 0.24 },
-      { label: 'P&L',         color: '#2ba854', r: 0.34 },
-      { label: 'Scheduling',  color: '#2ba854', r: 0.44 },
-      { label: 'Vendors',     color: '#2ba854', r: 0.54 },
-      { label: 'Forecasting', color: '#2ba854', r: 0.64 },
+      { label: 'Labor',       r: 0.16, labelAngle: 10  },
+      { label: 'Inventory',   r: 0.27, labelAngle: 75  },
+      { label: 'P&L',         r: 0.39, labelAngle: 145 },
+      { label: 'Scheduling',  r: 0.51, labelAngle: 210 },
+      { label: 'Vendors',     r: 0.62, labelAngle: 270 },
+      { label: 'Forecasting', r: 0.73, labelAngle: 335 },
     ];
+
+    function toRad(d) { return d * Math.PI / 180; }
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -1318,99 +1321,102 @@ nav {
       ctx.clearRect(0, 0, W, H);
 
       const cx = W * 0.50, cy = H * 0.50;
-      const maxR = Math.min(W, H) * 0.68;
+      const maxR = Math.min(W, H) * 0.46;
 
-      // — Deep background glow centered on core —
-      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
-      bgGrad.addColorStop(0,   'rgba(16,52,28,0.55)');
-      bgGrad.addColorStop(0.5, 'rgba(4,16,8,0.22)');
+      // Background glow
+      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR * 1.5);
+      bgGrad.addColorStop(0,   'rgba(18,56,30,0.62)');
+      bgGrad.addColorStop(0.5, 'rgba(6,20,10,0.28)');
       bgGrad.addColorStop(1,   'rgba(1,10,4,0)');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      // — Rings (outermost first so inner layers paint over) —
+      // Rings — outermost first so inner layers paint over
       [...RINGS].reverse().forEach((ring, ri) => {
         const idx   = RINGS.length - 1 - ri;
-        const rPx   = maxR * ring.r;
-        // Each ring breathes at a slightly different phase — slow, gentle
-        const phase = idx * 0.42;
-        const breathe = 0.88 + 0.12 * Math.sin(t * 0.38 + phase);
-        const rAnim = rPx * breathe;
-        const alpha = 0.10 + 0.06 * Math.sin(t * 0.38 + phase);
+        const phase = idx * 0.55;
+        const breathe = 0.93 + 0.07 * Math.sin(t * 0.30 + phase);
+        const rPx   = maxR * ring.r * breathe;
+        const innerRPx = idx > 0 ? maxR * RINGS[idx - 1].r * breathe : 0;
 
-        // Filled soft zone between this ring and the next inner one
-        const innerR = idx > 0 ? maxR * RINGS[idx - 1].r * breathe : 0;
-        const zoneGrad = ctx.createRadialGradient(cx, cy, innerR, cx, cy, rAnim);
-        const fillAlpha = (0.022 + 0.010 * Math.sin(t * 0.32 + phase)).toFixed(3);
-        zoneGrad.addColorStop(0,   `rgba(43,168,84,${fillAlpha})`);
-        zoneGrad.addColorStop(0.6, `rgba(20,80,42,${(fillAlpha*0.5).toFixed(3)})`);
-        zoneGrad.addColorStop(1,   'rgba(1,10,4,0)');
+        // Zone fill between this ring and next inner one
+        const baseA = (0.055 - idx * 0.005).toFixed(3); // inner rings slightly more opaque
+        const zGrad = ctx.createRadialGradient(cx, cy, innerRPx, cx, cy, rPx);
+        zGrad.addColorStop(0,   `rgba(43,168,84,${baseA})`);
+        zGrad.addColorStop(0.7, `rgba(18,68,36,${(baseA * 0.4).toFixed(3)})`);
+        zGrad.addColorStop(1,   'rgba(1,10,4,0)');
         ctx.beginPath();
-        ctx.arc(cx, cy, rAnim, 0, Math.PI * 2);
-        ctx.fillStyle = zoneGrad;
+        ctx.arc(cx, cy, rPx, 0, Math.PI * 2);
+        ctx.fillStyle = zGrad;
         ctx.fill();
 
-        // Ring stroke — soft glow
+        // Ring stroke with glow
+        const strokeA = 0.28 + 0.14 * Math.sin(t * 0.30 + phase);
         ctx.save();
-        ctx.globalAlpha = alpha;
+        ctx.globalAlpha = strokeA;
         ctx.beginPath();
-        ctx.arc(cx, cy, rAnim, 0, Math.PI * 2);
+        ctx.arc(cx, cy, rPx, 0, Math.PI * 2);
         ctx.strokeStyle = '#2ba854';
-        ctx.lineWidth   = 0.8;
-        ctx.shadowBlur  = 18;
+        ctx.lineWidth   = 1.0;
+        ctx.shadowBlur  = 16;
         ctx.shadowColor = '#2ba854';
         ctx.stroke();
         ctx.restore();
 
-        // Label — placed at the right edge of each ring
-        const labelAngle = -Math.PI * 0.18 + idx * 0.08;
-        const lx = cx + Math.cos(labelAngle) * rAnim;
-        const ly = cy + Math.sin(labelAngle) * rAnim;
-        const lAlpha = 0.38 + 0.20 * Math.sin(t * 0.38 + phase);
-        ctx.save();
-        ctx.globalAlpha  = lAlpha;
-        ctx.font         = "10px 'DM Mono', monospace";
-        ctx.fillStyle    = '#c8f5d4';
-        ctx.textAlign    = 'left';
-        ctx.shadowBlur   = 6;
-        ctx.shadowColor  = '#2ba854';
-        ctx.fillText(ring.label, lx + 8, ly + 4);
-        ctx.restore();
+        // Label at evenly distributed clock position
+        const lAngle = toRad(ring.labelAngle);
+        const lx = cx + Math.cos(lAngle) * rPx;
+        const ly = cy + Math.sin(lAngle) * rPx;
+        const lAlpha = 0.55 + 0.25 * Math.sin(t * 0.30 + phase);
 
-        // Small tick mark at label anchor
+        // Tick dot
         ctx.save();
-        ctx.globalAlpha = lAlpha * 0.7;
+        ctx.globalAlpha = lAlpha;
         ctx.beginPath();
         ctx.arc(lx, ly, 2.5, 0, Math.PI * 2);
         ctx.fillStyle   = '#5dff9e';
-        ctx.shadowBlur  = 10;
+        ctx.shadowBlur  = 8;
         ctx.shadowColor = '#2ba854';
         ctx.fill();
         ctx.restore();
+
+        // Text — align based on quadrant so it doesn't run off ring
+        const cosA = Math.cos(lAngle);
+        const sinA = Math.sin(lAngle);
+        const tAlign = cosA > 0.25 ? 'left' : (cosA < -0.25 ? 'right' : 'center');
+        const tx = lx + cosA * 10;
+        const ty = ly + sinA * 10 + (sinA > 0.25 ? 12 : sinA < -0.25 ? -4 : 4);
+        ctx.save();
+        ctx.globalAlpha = lAlpha;
+        ctx.font        = "10px 'DM Mono', monospace";
+        ctx.fillStyle   = '#c8f5d4';
+        ctx.textAlign   = tAlign;
+        ctx.shadowBlur  = 6;
+        ctx.shadowColor = '#2ba854';
+        ctx.fillText(ring.label, tx, ty);
+        ctx.restore();
       });
 
-      // — Core: the business itself —
-      const corePulse = 0.80 + 0.20 * Math.sin(t * 0.55);
-      // Soft halo layers
-      [maxR*0.065, maxR*0.038, maxR*0.020].forEach((r, i) => {
+      // Core — the business itself
+      const corePulse = 0.82 + 0.18 * Math.sin(t * 0.55);
+      [maxR * 0.09, maxR * 0.055, maxR * 0.028].forEach((r, i) => {
         const hGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, r * corePulse);
-        const a = [0.30, 0.50, 0.80][i] * corePulse;
+        const a = [0.22, 0.46, 0.82][i];
         hGrad.addColorStop(0,   `rgba(220,255,235,${a})`);
-        hGrad.addColorStop(0.5, `rgba(93,255,158,${a*0.5})`);
+        hGrad.addColorStop(0.5, `rgba(93,255,158,${(a * 0.4).toFixed(2)})`);
         hGrad.addColorStop(1,   'rgba(43,168,84,0)');
         ctx.beginPath();
         ctx.arc(cx, cy, r * corePulse, 0, Math.PI * 2);
         ctx.fillStyle = hGrad;
         ctx.fill();
       });
-      // Bright center dot
       ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, 4 * corePulse, 0, Math.PI * 2);
-      ctx.fillStyle   = '#ffffff';
-      ctx.shadowBlur  = 20;
-      ctx.shadowColor = '#90ffcc';
       ctx.globalAlpha = 0.95;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 4.5 * corePulse, 0, Math.PI * 2);
+      ctx.fillStyle   = '#ffffff';
+      ctx.shadowBlur  = 22;
+      ctx.shadowColor = '#90ffcc';
       ctx.fill();
       ctx.restore();
 
@@ -1418,13 +1424,8 @@ nav {
       requestAnimationFrame(draw);
     }
 
-    function init() {
-      resize();
-      draw();
-    }
-
-    window.addEventListener('resize', () => { resize(); });
-
+    function init() { resize(); draw(); }
+    window.addEventListener('resize', resize);
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
@@ -1461,21 +1462,25 @@ nav {
     const ctx = canvas.getContext('2d');
 
     const NODES = [
-      { label: 'Labor',       angle:  18 },
+      { label: 'Labor',       angle:  15 },
       { label: 'Inventory',   angle:  72 },
-      { label: 'P&L',         angle: 126 },
-      { label: 'Scheduling',  angle: 180 },
-      { label: 'Vendors',     angle: 234 },
-      { label: 'Forecasting', angle: 288 },
-      { label: 'Menu',        angle: 342 },
+      { label: 'P&L',         angle: 135 },
+      { label: 'Scheduling',  angle: 192 },
+      { label: 'Vendors',     angle: 252 },
+      { label: 'Forecasting', angle: 315 },
+      { label: 'Menu',        angle: 348 },
     ];
 
-    const WAVES = [];
-    const WAVE_INTERVAL = 1.8;  // seconds between waves
-    let lastWave = 0;
-
-    // Track illumination of each node
     const nodeGlow = NODES.map(() => 0);
+
+    // Radar sweep — slow, calm rotation (full circle ≈ 20 s)
+    let sweepAngle = 0;
+    const SWEEP_SPEED = 0.31; // radians per second
+    let prevSweep    = 0;
+    let lastTime     = null;
+
+    function toRad(d) { return d * Math.PI / 180; }
+    function norm(a)  { return ((a % (Math.PI*2)) + Math.PI*2) % (Math.PI*2); }
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
@@ -1484,164 +1489,163 @@ nav {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    function toRad(d) { return d * Math.PI / 180; }
+    function draw(ts) {
+      if (!lastTime) lastTime = ts;
+      const dt = Math.min((ts - lastTime) / 1000, 0.05);
+      lastTime = ts;
 
-    let t = 0;
-
-    function draw() {
       const W = canvas.offsetWidth, H = canvas.offsetHeight;
       ctx.clearRect(0, 0, W, H);
 
       const cx = W * 0.50, cy = H * 0.50;
-      const nodeR = Math.min(W, H) * 0.40;   // radius where nodes live
-      const maxWaveR = Math.min(W, H) * 0.58;
+      const nodeR = Math.min(W, H) * 0.38;
+      const maxR  = Math.min(W, H) * 0.52;
 
-      // — Background wash —
-      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxWaveR);
-      bgGrad.addColorStop(0,   'rgba(12,40,22,0.50)');
-      bgGrad.addColorStop(0.6, 'rgba(3,12,6,0.20)');
+      // Background
+      const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+      bgGrad.addColorStop(0,   'rgba(12,42,22,0.54)');
+      bgGrad.addColorStop(0.6, 'rgba(3,14,7,0.22)');
       bgGrad.addColorStop(1,   'rgba(1,10,4,0)');
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, W, H);
 
-      // — Spawn new wave —
-      if (t - lastWave > WAVE_INTERVAL) {
-        WAVES.push({ r: 0, speed: maxWaveR / 2.8 });  // will reach nodes in ~2.8s
-        lastWave = t;
-      }
+      // Faint perimeter guide ring
+      ctx.save();
+      ctx.globalAlpha = 0.08;
+      ctx.beginPath();
+      ctx.arc(cx, cy, nodeR, 0, Math.PI * 2);
+      ctx.strokeStyle = '#2ba854';
+      ctx.lineWidth   = 0.8;
+      ctx.stroke();
+      ctx.restore();
 
-      // — Compute node positions —
-      const nodePositions = NODES.map(n => ({
-        ...n,
-        x: cx + Math.cos(toRad(n.angle)) * nodeR,
-        y: cy + Math.sin(toRad(n.angle)) * nodeR,
-      }));
-
-      // — Faint connector lines from center to nodes —
-      nodePositions.forEach(n => {
+      // Sweep trail — multiple thin slices fading behind arm
+      const TRAIL  = Math.PI * 0.70;
+      const STEPS  = 36;
+      for (let s = 0; s < STEPS; s++) {
+        const f  = s / STEPS;
+        const a0 = sweepAngle - TRAIL * (f + 1/STEPS);
+        const a1 = sweepAngle - TRAIL * f;
+        const sa = 0.042 * (1 - f) * (1 - f); // quadratic fade
         ctx.save();
-        ctx.globalAlpha = 0.05;
-        ctx.strokeStyle = '#2ba854';
-        ctx.lineWidth   = 0.6;
-        ctx.setLineDash([4, 8]);
+        ctx.globalAlpha = sa;
         ctx.beginPath();
         ctx.moveTo(cx, cy);
-        ctx.lineTo(n.x, n.y);
-        ctx.stroke();
-        ctx.setLineDash([]);
-        ctx.restore();
-      });
-
-      // — Waves —
-      for (let i = WAVES.length - 1; i >= 0; i--) {
-        const w = WAVES[i];
-        w.r += w.speed * 0.016;
-
-        // When wave reaches node radius, light up those nodes
-        if (Math.abs(w.r - nodeR) < w.speed * 0.016 * 3) {
-          nodeGlow.forEach((_, ni) => { nodeGlow[ni] = 1.0; });
-        }
-
-        if (w.r > maxWaveR) { WAVES.splice(i, 1); continue; }
-
-        const prog   = w.r / maxWaveR;
-        const wAlpha = (1 - prog) * 0.22;
-
-        ctx.save();
-        ctx.globalAlpha = wAlpha;
-        ctx.beginPath();
-        ctx.arc(cx, cy, w.r, 0, Math.PI * 2);
-        ctx.strokeStyle = '#2ba854';
-        ctx.lineWidth   = 1.2;
-        ctx.shadowBlur  = 20;
-        ctx.shadowColor = '#2ba854';
-        ctx.stroke();
-        ctx.restore();
-
-        // Inner fill of wave (very subtle)
-        const wGrad = ctx.createRadialGradient(cx, cy, Math.max(0, w.r - 40), cx, cy, w.r);
-        wGrad.addColorStop(0,   'rgba(43,168,84,0)');
-        wGrad.addColorStop(1,   `rgba(43,168,84,${(wAlpha * 0.15).toFixed(3)})`);
-        ctx.beginPath();
-        ctx.arc(cx, cy, w.r, 0, Math.PI * 2);
-        ctx.fillStyle = wGrad;
+        ctx.arc(cx, cy, maxR * 0.94, a0, a1);
+        ctx.closePath();
+        ctx.fillStyle = '#2ba854';
         ctx.fill();
+        ctx.restore();
       }
 
-      // — Nodes — fade glow down each frame
-      nodePositions.forEach((n, i) => {
-        nodeGlow[i] = Math.max(0, nodeGlow[i] - 0.012);
-        const g   = nodeGlow[i];
-        const base = 0.30 + 0.10 * Math.sin(t * 0.4 + i * 0.9);
-        const total = base + g * 0.65;
+      // Sweep arm — bright gradient line
+      const ax = cx + Math.cos(sweepAngle) * maxR;
+      const ay = cy + Math.sin(sweepAngle) * maxR;
+      const armGrad = ctx.createLinearGradient(cx, cy, ax, ay);
+      armGrad.addColorStop(0,   'rgba(43,168,84,0.92)');
+      armGrad.addColorStop(0.55,'rgba(43,168,84,0.50)');
+      armGrad.addColorStop(1,   'rgba(43,168,84,0.00)');
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(ax, ay);
+      ctx.strokeStyle = armGrad;
+      ctx.lineWidth   = 1.6;
+      ctx.shadowBlur  = 14;
+      ctx.shadowColor = '#2ba854';
+      ctx.stroke();
+      ctx.restore();
 
-        // Outer halo
+      // Advance sweep, check node crossings
+      prevSweep   = sweepAngle;
+      sweepAngle += SWEEP_SPEED * dt;
+
+      const pN = norm(prevSweep);
+      const cN = norm(sweepAngle);
+
+      const nodePositions = NODES.map((n, i) => {
+        const na = norm(toRad(n.angle));
+        // Did arm cross this node's angle this frame?
+        const crossed = cN >= pN ? (na >= pN && na < cN) : (na >= pN || na < cN);
+        if (crossed) nodeGlow[i] = 1.0;
+        return { ...n, x: cx + Math.cos(toRad(n.angle)) * nodeR, y: cy + Math.sin(toRad(n.angle)) * nodeR };
+      });
+
+      // Draw nodes
+      nodePositions.forEach((n, i) => {
+        nodeGlow[i] = Math.max(0, nodeGlow[i] - 0.45 * dt);
+        const g  = nodeGlow[i];
+        const bq = 0.28 + 0.08 * Math.sin(sweepAngle * 0.5 + i * 0.9);
+        const brightness = bq + g * 0.68;
+
+        // Halo
         ctx.save();
-        ctx.globalAlpha = total * 0.45;
+        ctx.globalAlpha = brightness * 0.38;
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 22 + g * 18, 0, Math.PI * 2);
+        ctx.arc(n.x, n.y, 20 + g * 22, 0, Math.PI * 2);
         ctx.fillStyle   = '#2ba854';
-        ctx.shadowBlur  = 28;
+        ctx.shadowBlur  = 26;
         ctx.shadowColor = '#2ba854';
         ctx.fill();
         ctx.restore();
 
-        // Inner dot
+        // Dot
         ctx.save();
-        ctx.globalAlpha = total;
+        ctx.globalAlpha = Math.min(brightness + 0.12, 1);
         ctx.beginPath();
-        ctx.arc(n.x, n.y, 5 + g * 4, 0, Math.PI * 2);
-        ctx.fillStyle   = g > 0.1 ? '#eafff4' : '#5dff9e';
-        ctx.shadowBlur  = 16 + g * 20;
+        ctx.arc(n.x, n.y, 4 + g * 5, 0, Math.PI * 2);
+        ctx.fillStyle   = g > 0.15 ? '#eafff4' : '#5dff9e';
+        ctx.shadowBlur  = 14 + g * 18;
         ctx.shadowColor = '#2ba854';
         ctx.fill();
         ctx.restore();
 
         // Label
-        const textX = n.x + Math.cos(toRad(n.angle)) * 22;
-        const textY = n.y + Math.sin(toRad(n.angle)) * 22;
+        const na   = toRad(n.angle);
+        const cosA = Math.cos(na), sinA = Math.sin(na);
+        const lx   = n.x + cosA * 18;
+        const ly   = n.y + sinA * 18;
+        const tA   = cosA > 0.3 ? 'left' : (cosA < -0.3 ? 'right' : 'center');
+        const tyOff= sinA > 0.3 ? 14 : (sinA < -0.3 ? -4 : 4);
         ctx.save();
-        ctx.globalAlpha  = 0.45 + g * 0.50;
-        ctx.font         = "10px 'DM Mono', monospace";
-        ctx.fillStyle    = '#c8f5d4';
-        ctx.textAlign    = 'center';
-        ctx.shadowBlur   = 6 + g * 10;
-        ctx.shadowColor  = '#2ba854';
-        ctx.fillText(n.label, textX, textY + (Math.sin(toRad(n.angle)) > 0 ? 16 : -8));
+        ctx.globalAlpha = 0.40 + g * 0.52;
+        ctx.font        = "10px 'DM Mono', monospace";
+        ctx.fillStyle   = '#c8f5d4';
+        ctx.textAlign   = tA;
+        ctx.shadowBlur  = 5 + g * 12;
+        ctx.shadowColor = '#2ba854';
+        ctx.fillText(n.label, lx, ly + tyOff);
         ctx.restore();
       });
 
-      // — Core beacon —
-      const pulse = 0.78 + 0.22 * Math.sin(t * 1.1);
-      [52, 32, 16].forEach((r, i) => {
+      // Core beacon pulse
+      const pulse = 0.80 + 0.20 * Math.sin(sweepAngle * 1.2);
+      [48, 28, 14].forEach((r, i) => {
         ctx.save();
-        ctx.globalAlpha = [0.08, 0.18, 0.40][i] * pulse;
+        ctx.globalAlpha = [0.08, 0.18, 0.42][i] * pulse;
         ctx.beginPath();
         ctx.arc(cx, cy, r * pulse, 0, Math.PI * 2);
         ctx.fillStyle   = '#2ba854';
-        ctx.shadowBlur  = 30;
+        ctx.shadowBlur  = 28;
         ctx.shadowColor = '#2ba854';
         ctx.fill();
         ctx.restore();
       });
       ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, 5 * pulse, 0, Math.PI * 2);
-      ctx.fillStyle   = '#ffffff';
-      ctx.shadowBlur  = 22;
-      ctx.shadowColor = '#90ffcc';
       ctx.globalAlpha = 0.95;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5.5 * pulse, 0, Math.PI * 2);
+      ctx.fillStyle   = '#ffffff';
+      ctx.shadowBlur  = 20;
+      ctx.shadowColor = '#90ffcc';
       ctx.fill();
       ctx.restore();
 
-      t += 0.016;
       requestAnimationFrame(draw);
     }
 
-    function init() { resize(); draw(); }
-
+    function init() { resize(); requestAnimationFrame(draw); }
     window.addEventListener('resize', resize);
-
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', init);
     } else {
